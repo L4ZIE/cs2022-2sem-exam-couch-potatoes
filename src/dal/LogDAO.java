@@ -71,7 +71,7 @@ public class LogDAO {
             throw new RuntimeException(e);
         }
 
-        return 1;
+        return 0;
     }
 
     public ArrayList<EditLog> getAllLogs() {
