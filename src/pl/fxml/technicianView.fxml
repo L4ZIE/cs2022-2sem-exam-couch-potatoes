@@ -111,9 +111,9 @@
          </styleClass></Label>
       <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0">
          <children>
-            <Button mnemonicParsing="false" text="_" />
-            <Button mnemonicParsing="false" text="[ ]" />
-            <Button mnemonicParsing="false" styleClass="negative-button" stylesheets="@../css/mainStyle.css" text="X" />
+            <Button fx:id="minBtn" mnemonicParsing="false" text="_" />
+            <Button fx:id="maxBtn" mnemonicParsing="false" text="[ ]" />
+            <Button fx:id="closeBtn" mnemonicParsing="false" styleClass="negative-button" stylesheets="@../css/mainStyle.css" text="X" />
          </children>
       </HBox>
    </children>

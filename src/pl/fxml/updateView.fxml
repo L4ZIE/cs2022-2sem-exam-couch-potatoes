@@ -54,8 +54,8 @@
          </styleClass></Label>
         <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0">
             <children>
-                <Button mnemonicParsing="false" text="_" />
-                <Button mnemonicParsing="false" text="[ ]" />
+                <Button fx:id="minBtn" mnemonicParsing="false" text="_" />
+                <Button fx:id="maxBtn" mnemonicParsing="false" text="[ ]" />
                 <Button mnemonicParsing="false" styleClass="negative-button" stylesheets="@../css/mainStyle.css" text="X" />
             </children>
         </HBox>
@@ -66,6 +66,9 @@
             <String fx:value="common-text-font" />
             <String fx:value="project-button" />
          </styleClass>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
       </Label>
       <Label layoutX="589.0" layoutY="58.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/mainStyle.css" text="Customer name">
          <styleClass>
@@ -114,6 +117,9 @@
             <String fx:value="common-text-font" />
             <String fx:value="project-button" />
          </styleClass>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
       </Label>
       <Canvas height="140.0" layoutX="33.0" layoutY="251.0" width="267.0" />
       <Button fx:id="addBtn" layoutX="33.0" layoutY="199.0" mnemonicParsing="false" stylesheets="@../css/mainStyle.css" text="Add">
