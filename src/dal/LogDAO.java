@@ -76,7 +76,7 @@ public class LogDAO {
 
     public ArrayList<EditLog> getAllLogs() {
         String sql = "SELECT * FROM Log";
-        ArrayList<EditLog> logs = new ArrayList<EditLog>();
+        ArrayList<EditLog> logs = new ArrayList<>();
 
         try {
             preparedStatement = connector.createConnection().prepareStatement(sql);
