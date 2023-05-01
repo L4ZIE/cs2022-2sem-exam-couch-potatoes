@@ -1,7 +1,7 @@
 package dal;
 
 import be.EditLog;
-import dal.connector.dbConnector;
+import dal.connector.DBConnector;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class LogDAO {
 
-    private final dbConnector connector = dbConnector.getInstance();
+    private final DBConnector connector = DBConnector.getInstance();
     private PreparedStatement preparedStatement;
     private static LogDAO instance;
 

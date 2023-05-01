@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="423.0" prefWidth="770.0" styleClass="base-background" stylesheets="@../css/mainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.technicianViewController">
+<AnchorPane prefHeight="423.0" prefWidth="770.0" styleClass="base-background" stylesheets="@../css/mainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
    <children>
       <TableView fx:id="projectTableView" layoutX="14.0" layoutY="52.0" prefHeight="349.0" prefWidth="549.0" stylesheets="@../css/mainStyle.css">
         <columns>

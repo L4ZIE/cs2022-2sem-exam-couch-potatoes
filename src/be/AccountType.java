@@ -8,9 +8,8 @@ public enum AccountType {
 
     private int id;
     private final int value;
-    private AccountType(int value) {
+    AccountType(int value) {
         this.value = value;
-        this.id = id;
     }
 
     public int getValue() {

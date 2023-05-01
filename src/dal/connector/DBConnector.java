@@ -4,26 +4,25 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
 
-public class dbConnector {
+public class DBConnector {
     private static final String file = "resources/sqllogin.properties";
 
     private SQLServerDataSource dataSource = null;
 
-    private static dbConnector instance;
+    private static DBConnector instance;
 
-    public static dbConnector getInstance(){
+    public static DBConnector getInstance(){
         if(instance==null){
-            instance = new dbConnector();
+            instance = new DBConnector();
         }
         return instance;
     }
 
-    private dbConnector(){
+    private DBConnector(){
         Properties properties = getConnectionDetails();
         dataSource = new SQLServerDataSource();
         dataSource.setDatabaseName(properties.getProperty("name"));
@@ -43,8 +42,6 @@ public class dbConnector {
         try {
             FileInputStream sr = new FileInputStream(file);
             properties.load(sr);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
