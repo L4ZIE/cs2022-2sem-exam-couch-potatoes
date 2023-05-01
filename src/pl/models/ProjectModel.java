@@ -17,7 +17,7 @@ public class ProjectModel {
     public void createProject(Project project) {
         projectManager.createProject(project);
     }
-    public void editProject(Project selectedProject) {
-        projectManager.editProject(selectedProject);
+    public void editProject(Project project) {
+        projectManager.editProject(project);
     }
 }

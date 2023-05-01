@@ -30,15 +30,9 @@ public class ProjectManager implements IProjectManager {
     }
 
     @Override
-    public void editProject(Project selectedProject) {
-        projectDAO.editProject(selectedProject);
-        allProjects.remove(selectedProject);
-
-        List<Project> editedList = new ArrayList<>();
-        for(Project p : allProjects) {
-            if(p.equals(selectedProject)) {
-                editedList.add(p);
-            }
-        }
+    public void editProject(Project project) {
+        projectDAO.editProject(project);
+        allProjects.removeIf(obj -> obj.getRefNumber().equals(project.getRefNumber()));
+        allProjects.add(project);
     }
 }
