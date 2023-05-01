@@ -1,4 +1,4 @@
-.root{
+.root {
     -fx-dark-blue: #17263a;
     -fx-light-blue: #4fa8ed;
     -fx-black: #212529;
@@ -9,41 +9,42 @@
     -fx-green: #198754;
     -fx-dirty-white: #e9e9e9;
 }
-.base-background{
-    -fx-background-color:#17263a;
+
+.base-background {
+    -fx-background-color: -fx-dark-blue;
 }
 
-.common-text-colour{
-    -fx-text-fill: #e9e9e9;
+.common-text-colour {
+    -fx-text-fill: -fx-dirty-white;
 
 }
 
-.common-text-font{
+.common-text-font {
     -fx-font-family: Inter;
 }
 
-.canvas-background{
-    -fx-fill: #e9e9e9;
+.canvas-background {
+    -fx-fill: -fx-dirty-white;
 }
 
-.background{
-    -fx-background-color:#e84910;
+.background {
+    -fx-background-color: -fx-dark-orange;
 }
 
-.positive-button{
-    -fx-background-color: #198754;
+.positive-button {
+    -fx-background-color: -fx-green;
 }
 
-.neutral-button{
-    -fx-background-color: #e9e9e9;
+.neutral-button {
+    -fx-background-color: -fx-dirty-white;
 }
 
-.negative-button{
-    -fx-background-color:#dc3545;
+.negative-button {
+    -fx-background-color: -fx-red;
 
 }
 
-.project-button{
-    -fx-background-color:#333;
+.project-button {
+    -fx-background-color: -fx-dark-grey;
 
 }
