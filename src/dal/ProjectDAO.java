@@ -2,7 +2,7 @@ package dal;
 
 import be.Project;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dal.connector.dbConnector;
+import dal.connector.DBConnector;
 import dal.interfaces.IProjectDAO;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ProjectDAO implements IProjectDAO {
     private PreparedStatement preparedStatement;
-    private final dbConnector connector = dbConnector.getInstance();
+    private final DBConnector connector = DBConnector.getInstance();
 
     @Override
     public List<Project> getAllProjects() {

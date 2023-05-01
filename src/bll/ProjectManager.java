@@ -5,7 +5,6 @@ import bll.interfaces.IProjectManager;
 import dal.ProjectDAO;
 import dal.interfaces.IProjectDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectManager implements IProjectManager {

@@ -1,6 +1,6 @@
 package dal;
 
-import dal.connector.dbConnector;
+import dal.connector.DBConnector;
 import dal.interfaces.IPictureDAO;
 
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PictureDAO implements IPictureDAO {
-    private final dbConnector connector = dbConnector.getInstance();
+    private final DBConnector connector = DBConnector.getInstance();
     private PreparedStatement preparedStatement;
     private static PictureDAO instance;
 
