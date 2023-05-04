@@ -10,4 +10,7 @@ public interface IProjectManager {
     void createProject(Project project);
 
     void editProject(Project project);
+    List<Project> getProjectsForAccount(int accountID);
+    List<String> getPicturesForProject(String refNumber);
+    void recordLog(String refNumber, int accountID);
 }
