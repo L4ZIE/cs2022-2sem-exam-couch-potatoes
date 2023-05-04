@@ -129,12 +129,6 @@ public class ProjectViewController implements Initializable {
         //TODO
     }
 
-
-    private void setMaximized(ActionEvent actionEvent) {
-        //TODO
-    }
-
-
     public void startDatePressed(ActionEvent actionEvent) {
     }
 
