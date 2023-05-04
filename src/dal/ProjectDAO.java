@@ -82,7 +82,7 @@ public class ProjectDAO implements IProjectDAO {
     public void editProject(Project selectedProject) {
 
         String sql = "UPDATE Projects SET customerName = ?,customerEmail = ?, customerLocation = ?, note = ?, drawing = ?, " +
-                    "creationDate = ?, projectStartDate = ?, projectEndDate = ?, approved = ? WHERE refNumber = ? ";
+                "creationDate = ?, projectStartDate = ?, projectEndDate = ?, approved = ? WHERE refNumber = ? ";
         try {
             Connection conn = connector.createConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -104,5 +104,21 @@ public class ProjectDAO implements IProjectDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void deleteProject(String refNumber) {
+        String sql = "DELETE FROM Projects WHERE refNumber = ?";
+        try {
+            Connection connection = connector.createConnection();
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, refNumber);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }

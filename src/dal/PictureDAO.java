@@ -20,6 +20,7 @@ public class PictureDAO implements IPictureDAO {
     }
 
 
+    @Override
     public void addPicture(int id, String location, String refNumber) {
         String sql = "INSERT INTO Pictures (id, pLocation, refNumber) VALUES (?,?,?)";
         try {
@@ -36,7 +37,7 @@ public class PictureDAO implements IPictureDAO {
         }
     }
 
-    //TODO for testing purposes only, remove when project is done (logs must not be removed by hand)
+    @Override
     public void deletePicture(int id) {
         String sql = "DELETE FROM Pictures WHERE id = ?";
         try {
@@ -54,6 +55,7 @@ public class PictureDAO implements IPictureDAO {
      *
      * @return Max id inside the Pictures table.
      */
+    @Override
     public int getMaxID() {
         String sql = "SELECT MAX(id) AS maxID from Pictures";
         try {
@@ -69,7 +71,7 @@ public class PictureDAO implements IPictureDAO {
 
         return 0;
     }
-
+    @Override
     public ArrayList<String> getAllPicturesForProject(String refNumber) {
         ArrayList<String> pictures = new ArrayList<>();
         String sql = "SELECT * FROM Pictures WHERE refNumber = ?";
