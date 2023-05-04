@@ -53,7 +53,6 @@ public class ProjectViewController implements Initializable {
             txfCustomerLocation;
     @FXML
     private ChoiceBox chbSelectAccount;
-    private Parent root;
     private ProjectModel projectModel;
 
     @Override
@@ -71,7 +70,7 @@ public class ProjectViewController implements Initializable {
     public void goBackPressed(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("pl/fxml/TechnicianView.fxml"));
-            root = loader.load();
+            Parent root = loader.load();
 
             Scene scene = new Scene(root);
             Stage primaryStage = new Stage();
