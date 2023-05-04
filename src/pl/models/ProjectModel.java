@@ -20,6 +20,9 @@ public class ProjectModel {
     public void editProject(Project project) {
         projectManager.editProject(project);
     }
+    public void deleteProject(Project project){
+        projectManager.deleteProject(project.getRefNumber());
+    }
     public ObservableList<Project> getProjectsForAccount(int accountID){
         return FXCollections.observableArrayList(projectManager.getProjectsForAccount(accountID));
     }
