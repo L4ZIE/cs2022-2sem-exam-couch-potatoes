@@ -28,14 +28,14 @@ public class ProjectViewController implements Initializable {
     private DatePicker startDate,
             endDate;   //// todo need ADD fxml notation
     @FXML
-    private ImageView imvPicture;  //TODO I have add a fx:id.......remember to delete form FXML file
+    private ImageView imvPicture;
     ////// change MAIN class before push
     @FXML
     private Button goBack,
             logoutBtn;
     @FXML
     private Label usernameLbl,
-            lblRefNumberLabel;
+            lblRefNumber;
     @FXML
     private Button minBtn,
             maxBtn,
