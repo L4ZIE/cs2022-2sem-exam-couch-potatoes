@@ -52,9 +52,9 @@
          </styleClass></Label>
         <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button fx:id="minBtn" mnemonicParsing="false" text="_" />
-                <Button fx:id="maxBtn" mnemonicParsing="false" text="[ ]" />
-                <Button mnemonicParsing="false" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
+                <Button fx:id="btnMin" mnemonicParsing="false" onAction="#btnMinPressed" text="_" />
+                <Button fx:id="btnMax" mnemonicParsing="false" onAction="#btnMaxPressed" text="[ ]" />
+                <Button fx:id="btnClose" mnemonicParsing="false" onAction="#btnClosePressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
             </children>
         </HBox>
       <TextArea fx:id="txaNotes" layoutX="322.0" layoutY="79.0" prefHeight="327.0" prefWidth="217.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="80.0" />
@@ -150,8 +150,8 @@
             </Button>
          </children>
       </Pane>
-      <DatePicker fx:id="startDate" layoutX="590.0" layoutY="291.0" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="285.0" />
-      <DatePicker fx:id="endDate" layoutX="589.0" layoutY="338.0" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="335.0" />
+      <DatePicker fx:id="startDate" layoutX="590.0" layoutY="291.0" onAction="#startDatePressed" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="285.0" />
+      <DatePicker fx:id="endDate" layoutX="589.0" layoutY="338.0" onAction="#endDatePressed" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="335.0" />
       <Label layoutX="589.0" layoutY="271.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Start Date:" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="265.0">
          <styleClass>
             <String fx:value="common-text-colour" />

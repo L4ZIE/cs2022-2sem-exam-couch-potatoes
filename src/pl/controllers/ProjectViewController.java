@@ -26,10 +26,10 @@ import java.util.ResourceBundle;
 public class ProjectViewController implements Initializable {
     @FXML
     private DatePicker startDate,
-            endDate;   //// todo need ADD fxml notation
+            endDate;
     @FXML
-    private ImageView imvPicture;
-    ////// change MAIN class before push
+    private ImageView imvPicture,
+            imvDrawing;
     @FXML
     private Button goBack,
             logoutBtn;
@@ -37,13 +37,14 @@ public class ProjectViewController implements Initializable {
     private Label usernameLbl,
             lblRefNumber;
     @FXML
-    private Button minBtn,
-            maxBtn,
+    private Button btnMin,
+            btnMax,
             btnSave,
             btnCancel,
             btnAdd,
             btnRemove,
-            btnDraw;
+            btnDraw,
+            btnClose;
 
     @FXML
     private TextArea txaNotes;
@@ -134,4 +135,18 @@ public class ProjectViewController implements Initializable {
     }
 
 
+    public void startDatePressed(ActionEvent actionEvent) {
+    }
+
+    public void endDatePressed(ActionEvent actionEvent) {
+    }
+
+    public void btnMinPressed(ActionEvent actionEvent) {
+    }
+
+    public void btnMaxPressed(ActionEvent actionEvent) {
+    }
+
+    public void btnClosePressed(ActionEvent actionEvent) {
+    }
 }
