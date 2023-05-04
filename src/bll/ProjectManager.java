@@ -9,6 +9,7 @@ import dal.ProjectAccountDAO;
 import dal.ProjectDAO;
 import dal.interfaces.ILogDAO;
 import dal.interfaces.IPictureDAO;
+import dal.interfaces.IProjectAccountDAO;
 import dal.interfaces.IProjectDAO;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,13 +21,14 @@ public class ProjectManager implements IProjectManager {
     private IProjectDAO projectDAO;
     private ILogDAO logDAO;
     private IPictureDAO pictureDAO;
-    private ProjectAccountDAO projectAccountDAO;
+    private IProjectAccountDAO projectAccountDAO;
     private List<Project> allProjects;
 
     public ProjectManager(){
         projectDAO = new ProjectDAO();
         pictureDAO = new PictureDAO();
         logDAO = LogDAO.getInstance();
+        projectAccountDAO = new ProjectAccountDAO();
         fillAllProjects();
     }
     private void fillAllProjects() {
@@ -37,8 +39,9 @@ public class ProjectManager implements IProjectManager {
         return allProjects;
     }
     @Override
-    public void createProject(Project project) {
+    public void createProject(Project project, int accountID) {
         projectDAO.createProject(project);
+        projectAccountDAO.saveProject(project.getRefNumber(), accountID);
         allProjects.add(project);
     }
 
@@ -82,6 +85,11 @@ public class ProjectManager implements IProjectManager {
     @Override
     public void deleteProject(String refNumber) {
         projectDAO.deleteProject(refNumber);
+    }
+
+    @Override
+    public void createPicture(String path, String refNumber) {
+        pictureDAO.createPicture(path, refNumber);
     }
 }
 
