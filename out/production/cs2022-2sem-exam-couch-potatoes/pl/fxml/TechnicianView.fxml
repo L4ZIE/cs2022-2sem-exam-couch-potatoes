@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="423.0" prefWidth="770.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
+<AnchorPane prefHeight="423.0" prefWidth="770.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.TechnicianViewController">
    <children>
       <TableView fx:id="projectTableView" layoutX="14.0" layoutY="52.0" prefHeight="349.0" prefWidth="549.0" stylesheets="@../css/MainStyle.css">
         <columns>
@@ -24,34 +24,34 @@
       </TableView>
       <VBox alignment="TOP_CENTER" layoutX="579.0" layoutY="89.0" prefHeight="312.0" prefWidth="190.0" spacing="20.0">
          <children>
-            <Button fx:id="createBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Create Project">
+            <Button fx:id="createBtn" mnemonicParsing="false" onAction="#createBtnPressed" prefHeight="25.0" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Create Project">
                <styleClass>
                   <String fx:value="positive-button" />
                   <String fx:value="common-text-colour" />
                   <String fx:value="common-text-font" />
                </styleClass></Button>
-            <Button fx:id="updateBtn" mnemonicParsing="false" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Update Project">
+            <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#updateBtnPressed" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Update Project">
                <styleClass>
                   <String fx:value="background" />
                   <String fx:value="common-text-colour" />
                   <String fx:value="common-text-font" />
                </styleClass></Button>
-            <Button fx:id="previewBtn" mnemonicParsing="false" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Preview Document">
+            <Button fx:id="previewBtn" mnemonicParsing="false" onAction="#previewBtnPressed" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Preview Document">
                <styleClass>
                   <String fx:value="neutral-button" />
                   <String fx:value="common-text-font" />
                </styleClass></Button>
-            <Button fx:id="saveBtn" mnemonicParsing="false" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Save Document">
+            <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#saveBtnPressed" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Save Document">
                <styleClass>
                   <String fx:value="neutral-button" />
                   <String fx:value="common-text-font" />
                </styleClass></Button>
-            <Button fx:id="sendBtn" mnemonicParsing="false" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Send As Email">
+            <Button fx:id="sendBtn" mnemonicParsing="false" onAction="#sendBtnPressed" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Send As Email">
                <styleClass>
                   <String fx:value="neutral-button" />
                   <String fx:value="common-text-font" />
                </styleClass></Button>
-            <Button fx:id="deleteBtn" mnemonicParsing="false" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Delete Project">
+            <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteBtnPressed" prefWidth="125.0" stylesheets="@../css/MainStyle.css" text="Delete Project">
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
@@ -66,11 +66,11 @@
             <Insets top="5.0" />
          </padding>
       </VBox>
-      <TextField fx:id="searchField" layoutX="579.0" layoutY="52.0" />
-      <Button fx:id="searchBtn" layoutX="731.0" layoutY="52.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="?" />
+      <TextField fx:id="searchField" layoutX="579.0" layoutY="52.0" onKeyPressed="#searchFieldKeyPressed" />
+      <Button fx:id="searchBtn" layoutX="731.0" layoutY="52.0" mnemonicParsing="false" onAction="#createProjectPressed" prefHeight="25.0" prefWidth="25.0" text="?" />
       <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-button" stylesheets="@../css/MainStyle.css">
          <children>
-            <Button fx:id="allProjectsBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" stylesheets="@../css/MainStyle.css" text="All Projects">
+            <Button fx:id="allProjectsBtn" mnemonicParsing="false" onAction="#allProjectsBtnPressed" prefHeight="25.0" prefWidth="115.0" stylesheets="@../css/MainStyle.css" text="All Projects">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -80,19 +80,19 @@
                   <String fx:value="common-text-font" />
                </styleClass>
             </Button>
-            <Button fx:id="publicProjectsBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" stylesheets="@../css/MainStyle.css" text="Public Projects">
+            <Button fx:id="publicProjectsBtn" mnemonicParsing="false" onAction="#publicProjectsBtnPressed" prefHeight="25.0" prefWidth="147.0" stylesheets="@../css/MainStyle.css" text="Public Projects">
                <styleClass>
                   <String fx:value="project-button" />
                   <String fx:value="common-text-colour" />
                   <String fx:value="common-text-font" />
                </styleClass></Button>
-            <Button fx:id="privateProjectsBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" stylesheets="@../css/MainStyle.css" text="Private Projects">
+            <Button fx:id="privateProjectsBtn" mnemonicParsing="false" onAction="#privateProjectsBtnPressed" prefHeight="25.0" prefWidth="114.0" stylesheets="@../css/MainStyle.css" text="Private Projects">
                <styleClass>
                   <String fx:value="project-button" />
                   <String fx:value="common-text-colour" />
                   <String fx:value="common-text-font" />
                </styleClass></Button>
-            <Button fx:id="logoutBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" stylesheets="@../css/MainStyle.css" text="Logout">
+            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logoutBtnPressed" prefHeight="25.0" prefWidth="102.0" stylesheets="@../css/MainStyle.css" text="Logout">
                <HBox.margin>
                   <Insets left="100.0" />
                </HBox.margin>
@@ -111,9 +111,9 @@
          </styleClass></Label>
       <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0">
          <children>
-            <Button fx:id="minBtn" mnemonicParsing="false" text="_" />
-            <Button fx:id="maxBtn" mnemonicParsing="false" text="[ ]" />
-            <Button fx:id="closeBtn" mnemonicParsing="false" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
+            <Button fx:id="minBtn" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
+            <Button fx:id="maxBtn" mnemonicParsing="false" onAction="#maxBtnBtn" text="[ ]" />
+            <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
          </children>
       </HBox>
    </children>

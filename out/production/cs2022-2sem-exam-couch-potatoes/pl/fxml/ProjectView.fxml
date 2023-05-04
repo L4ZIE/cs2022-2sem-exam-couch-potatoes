@@ -16,7 +16,7 @@
     <children>
         <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-button" stylesheets="@../css/MainStyle.css">
             <children>
-                <Button fx:id="goBack" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" stylesheets="@../css/MainStyle.css" text="←">
+                <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackPressed" prefHeight="25.0" prefWidth="30.0" stylesheets="@../css/MainStyle.css" text="←">
                     <HBox.margin>
                         <Insets left="10.0" />
                     </HBox.margin>
@@ -98,13 +98,13 @@
             <String fx:value="common-text-font" />
          </styleClass>
       </Label>
-      <Button fx:id="saveBtn" layoutX="577.0" layoutY="370.0" mnemonicParsing="false" stylesheets="@../css/MainStyle.css" text="Save">
+      <Button fx:id="saveBtn" layoutX="577.0" layoutY="370.0" mnemonicParsing="false" onAction="#saveBtnPressed" stylesheets="@../css/MainStyle.css" text="Save">
          <styleClass>
             <String fx:value="positive-button" />
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Button>
-      <Button fx:id="deleteBtn" layoutX="664.0" layoutY="370.0" mnemonicParsing="false" stylesheets="@../css/MainStyle.css" text="Delete Project">
+      <Button fx:id="deleteBtn" layoutX="664.0" layoutY="370.0" mnemonicParsing="false" onAction="#deleteBtnPressed" stylesheets="@../css/MainStyle.css" text="Delete Project">
          <styleClass>
             <String fx:value="negative-button" />
             <String fx:value="common-text-colour" />
@@ -122,21 +122,21 @@
          </padding>
       </Label>
       <Canvas height="140.0" layoutX="33.0" layoutY="251.0" width="267.0" />
-      <Button fx:id="addBtn" layoutX="33.0" layoutY="199.0" mnemonicParsing="false" stylesheets="@../css/MainStyle.css" text="Add">
+      <Button fx:id="addBtn" layoutX="33.0" layoutY="199.0" mnemonicParsing="false" onAction="#addBtnPressed" stylesheets="@../css/MainStyle.css" text="Add">
          <styleClass>
             <String fx:value="project-button" />
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass>
       </Button>
-      <Button fx:id="removeBtn" layoutX="242.0" layoutY="200.0" mnemonicParsing="false" stylesheets="@../css/MainStyle.css" text="Remove">
+      <Button fx:id="removeBtn" layoutX="242.0" layoutY="200.0" mnemonicParsing="false" onAction="#removeBtnPressed" stylesheets="@../css/MainStyle.css" text="Remove">
          <styleClass>
             <String fx:value="project-button" />
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass>
       </Button>
-      <Button fx:id="drawBtn" layoutX="248.0" layoutY="370.0" mnemonicParsing="false" stylesheets="@../css/MainStyle.css" text="Draw">
+      <Button fx:id="drawBtn" layoutX="248.0" layoutY="370.0" mnemonicParsing="false" onAction="#drawBtn" stylesheets="@../css/MainStyle.css" text="Draw">
          <styleClass>
             <String fx:value="project-button" />
             <String fx:value="common-text-colour" />
