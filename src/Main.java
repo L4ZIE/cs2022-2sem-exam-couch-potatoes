@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("pl/fxml/TechnicianView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("pl/fxml/ProjectView.fxml"));
         primaryStage.setTitle("WUAV project");
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(450);

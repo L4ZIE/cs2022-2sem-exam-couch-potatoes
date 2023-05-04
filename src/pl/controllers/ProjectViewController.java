@@ -1,22 +1,16 @@
 package pl.controllers;
 
-import be.Project;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import pl.models.ProjectModel;
 
@@ -40,25 +34,25 @@ public class ProjectViewController implements Initializable {
     private Button goBack,
             logoutBtn;
     @FXML
-    private Label usernameLbl;
+    private Label usernameLbl,
+            lblRefNumberLabel;
     @FXML
     private Button minBtn,
             maxBtn,
-            saveBtn,
-            deleteBtn,
-            addBtn,
-            removeBtn,
-            drawBtn,
-            refnumField;   //TODO why is it a button, but it is called a field?
+            btnSave,
+            btnCancel,
+            btnAdd,
+            btnRemove,
+            btnDraw;
 
     @FXML
-    private TextArea notesField;
+    private TextArea txaNotes;
     @FXML
-    private TextField cNameField,
-            cEmailField,
-            cLocField;
+    private TextField txfCustomerName,
+            txfCustomerEmail,
+            txfCustomerLocation;
     @FXML
-    private ChoiceBox selManagerBox;
+    private ChoiceBox chbSelectAccount;
     private Parent root;
     private ProjectModel projectModel;
 
@@ -99,16 +93,16 @@ public class ProjectViewController implements Initializable {
     }
 
 
-    public void saveBtnPressed(ActionEvent actionEvent) {
+    public void btnSavePressed(ActionEvent actionEvent) {
         //TODO
     }
 
 
-    public void deleteBtnPressed(ActionEvent actionEvent) {
+    public void btnCancelPressed(ActionEvent actionEvent) {
         //TODO//is cancel button
     }
 
-    public void addBtnPressed(ActionEvent actionEvent) {
+    public void btnAddPressed(ActionEvent actionEvent) {
         List<Image> images = new ArrayList<>();
         int currentImageIndex = 0;
 
@@ -127,11 +121,11 @@ public class ProjectViewController implements Initializable {
     }
 
 
-    public void removeBtnPressed(ActionEvent actionEvent) {
+    public void btnRemovePressed(ActionEvent actionEvent) {
         //TODO
     }
 
-    public void drawBtn(ActionEvent actionEvent) {
+    public void btnDrawPressed(ActionEvent actionEvent) {
         //TODO
     }
 

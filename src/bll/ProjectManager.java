@@ -10,15 +10,11 @@ import dal.ProjectDAO;
 import dal.interfaces.ILogDAO;
 import dal.interfaces.IPictureDAO;
 import dal.interfaces.IProjectDAO;
-import javafx.fxml.Initializable;
-
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class ProjectManager implements IProjectManager {
     private IProjectDAO projectDAO;
