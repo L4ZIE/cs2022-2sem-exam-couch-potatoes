@@ -31,6 +31,16 @@
     -fx-background-color: -fx-dark-orange;
 }
 
+.button {
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+}
+
+.button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+
 .positive-button {
     -fx-background-color: -fx-green;
 }
@@ -44,7 +54,29 @@
 
 }
 
-.project-button {
+.project-container {
     -fx-background-color: -fx-dark-grey;
+}
 
+.back-button {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.back-button:hover {
+    -fx-text-fill: -fx-dark-orange;
+}
+
+.grey-button {
+    -fx-background-color: -fx-dark-grey;
+}
+
+.project-button {
+    -fx-background-color: transparent;
+
+}
+
+.project-button:hover {
+    -fx-opacity: 1;
+    -fx-text-fill: -fx-dark-orange;
 }

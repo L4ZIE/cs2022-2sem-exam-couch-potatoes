@@ -2,7 +2,6 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -11,21 +10,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="423.0" prefWidth="770.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
     <children>
-        <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-button" stylesheets="@../css/MainStyle.css">
+        <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-container" stylesheets="@../css/MainStyle.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackPressed" prefHeight="25.0" prefWidth="30.0" stylesheets="@../css/MainStyle.css" text="←">
-                    <HBox.margin>
-                        <Insets left="10.0" />
-                    </HBox.margin>
-               <styleClass>
-                  <String fx:value="project-button" />
-                  <String fx:value="common-text-colour" />
-                  <String fx:value="common-text-font" />
-               </styleClass>
-                </Button>
                 <Button fx:id="refnumField" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" stylesheets="@../css/MainStyle.css" text="Reference Number">
                <HBox.margin>
                   <Insets left="70.0" />
@@ -47,101 +38,120 @@
                 </Button>
             </children>
         </HBox>
+          <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackPressed" prefHeight="0.0" prefWidth="82.0" stylesheets="@../css/MainStyle.css" text="←" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-10.0">
+         <styleClass>
+            <String fx:value="project-button" />
+            <String fx:value="common-text-colour" />
+            <String fx:value="common-text-font" />
+         </styleClass>
+         <font>
+            <Font size="24.0" />
+         </font>
+          </Button>
         <Label fx:id="usernameLbl" alignment="CENTER" layoutX="528.0" layoutY="-1.0" prefHeight="34.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Username">
          <styleClass>
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Label>
-        <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0">
+        <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Button fx:id="minBtn" mnemonicParsing="false" text="_" />
                 <Button fx:id="maxBtn" mnemonicParsing="false" text="[ ]" />
                 <Button mnemonicParsing="false" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
             </children>
         </HBox>
-      <TextArea fx:id="notesField" layoutX="322.0" layoutY="79.0" prefHeight="327.0" prefWidth="217.0" />
-      <Label layoutX="322.0" layoutY="54.0" prefHeight="25.0" prefWidth="217.0" stylesheets="@../css/MainStyle.css" text="Notes">
+      <TextArea fx:id="notesField" layoutX="322.0" layoutY="79.0" prefHeight="327.0" prefWidth="217.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="80.0" />
+      <Label layoutX="322.0" layoutY="54.0" prefHeight="25.0" prefWidth="217.0" stylesheets="@../css/MainStyle.css" text="Notes" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="54.0">
          <styleClass>
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
-            <String fx:value="project-button" />
+            <String fx:value="project-container" />
          </styleClass>
          <padding>
             <Insets left="5.0" />
          </padding>
       </Label>
-      <Label layoutX="589.0" layoutY="58.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Customer name">
+      <Label layoutX="589.0" layoutY="58.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Customer name" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="55.0">
          <styleClass>
             <String fx:value="common-text-font" />
             <String fx:value="common-text-colour" />
          </styleClass>
       </Label>
-      <TextField fx:id="cNameField" layoutX="589.0" layoutY="75.0" />
-      <Label layoutX="589.0" layoutY="113.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Customer Email">
+      <TextField fx:id="cNameField" layoutX="589.0" layoutY="75.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="75.0" />
+      <Label layoutX="589.0" layoutY="113.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Customer Email" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="115.0">
          <styleClass>
             <String fx:value="common-text-font" />
             <String fx:value="common-text-colour" />
          </styleClass>
       </Label>
-      <TextField fx:id="cEmailField" layoutX="589.0" layoutY="130.0" />
-      <Label layoutX="589.0" layoutY="170.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Customer Location">
+      <TextField fx:id="cEmailField" layoutX="589.0" layoutY="130.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="135.0" />
+      <Label layoutX="589.0" layoutY="170.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Customer Location" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="165.0">
          <styleClass>
             <String fx:value="common-text-font" />
             <String fx:value="common-text-colour" />
          </styleClass>
       </Label>
-      <TextField fx:id="cLocField" layoutX="589.0" layoutY="187.0" />
-      <ChoiceBox fx:id="selManagerBox" layoutX="589.0" layoutY="243.0" prefWidth="150.0" />
-      <Label layoutX="589.0" layoutY="226.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Select Manager">
+      <TextField fx:id="cLocField" layoutX="589.0" layoutY="187.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="185.0" />
+      <ChoiceBox fx:id="selManagerBox" layoutX="589.0" layoutY="243.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="245.0" />
+      <Label layoutX="589.0" layoutY="226.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Select Manager" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="225.0">
          <styleClass>
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass>
       </Label>
-      <Button fx:id="saveBtn" layoutX="577.0" layoutY="370.0" mnemonicParsing="false" onAction="#saveBtnPressed" stylesheets="@../css/MainStyle.css" text="Save">
+      <Button fx:id="saveBtn" layoutX="577.0" layoutY="370.0" mnemonicParsing="false" onAction="#saveBtnPressed" stylesheets="@../css/MainStyle.css" text="Save" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="140.0">
          <styleClass>
             <String fx:value="positive-button" />
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Button>
-      <Button fx:id="deleteBtn" layoutX="664.0" layoutY="370.0" mnemonicParsing="false" onAction="#deleteBtnPressed" stylesheets="@../css/MainStyle.css" text="Delete Project">
+      <Button fx:id="deleteBtn" layoutX="664.0" layoutY="370.0" mnemonicParsing="false" onAction="#deleteBtnPressed" stylesheets="@../css/MainStyle.css" text="Delete Project" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="30.0">
          <styleClass>
             <String fx:value="negative-button" />
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Button>
-      <ImageView fitHeight="140.0" fitWidth="267.0" layoutX="33.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="33.0" layoutY="63.0" prefHeight="25.0" prefWidth="267.0" stylesheets="@../css/MainStyle.css" text="Pictures">
-         <styleClass>
-            <String fx:value="common-text-colour" />
-            <String fx:value="common-text-font" />
-            <String fx:value="project-button" />
-         </styleClass>
-         <padding>
-            <Insets left="5.0" />
-         </padding>
-      </Label>
-      <Canvas height="140.0" layoutX="33.0" layoutY="251.0" width="267.0" />
-      <Button fx:id="addBtn" layoutX="33.0" layoutY="199.0" mnemonicParsing="false" onAction="#addBtnPressed" stylesheets="@../css/MainStyle.css" text="Add">
-         <styleClass>
-            <String fx:value="project-button" />
-            <String fx:value="common-text-colour" />
-            <String fx:value="common-text-font" />
-         </styleClass>
-      </Button>
-      <Button fx:id="removeBtn" layoutX="242.0" layoutY="200.0" mnemonicParsing="false" onAction="#removeBtnPressed" stylesheets="@../css/MainStyle.css" text="Remove">
-         <styleClass>
-            <String fx:value="project-button" />
-            <String fx:value="common-text-colour" />
-            <String fx:value="common-text-font" />
-         </styleClass>
-      </Button>
-      <Button fx:id="drawBtn" layoutX="248.0" layoutY="370.0" mnemonicParsing="false" onAction="#drawBtn" stylesheets="@../css/MainStyle.css" text="Draw">
-         <styleClass>
-            <String fx:value="project-button" />
-            <String fx:value="common-text-colour" />
-            <String fx:value="common-text-font" />
-         </styleClass>
-      </Button>
+      <Pane layoutX="32.0" layoutY="78.0" prefHeight="148.0" prefWidth="267.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="80.0">
+         <children>
+              
+                        <ImageView fx:id="imvPictures" fitHeight="140.0" fitWidth="266.0" layoutX="-1.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="addBtn" layoutX="-1.0" layoutY="123.0" mnemonicParsing="false" onAction="#addBtnPressed" stylesheets="@../css/MainStyle.css" text="Add">
+               <styleClass>
+                  <String fx:value="grey-button" />
+                  <String fx:value="common-text-colour" />
+                  <String fx:value="common-text-font" />
+               </styleClass>
+            </Button>
+            <Label layoutY="-26.0" prefHeight="26.0" prefWidth="267.0" stylesheets="@../css/MainStyle.css" text="Pictures">
+               <styleClass>
+                  <String fx:value="common-text-colour" />
+                  <String fx:value="common-text-font" />
+                  <String fx:value="project-container" />
+               </styleClass>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Button fx:id="removeBtn" layoutX="209.0" layoutY="123.0" mnemonicParsing="false" onAction="#removeBtnPressed" stylesheets="@../css/MainStyle.css" text="Remove">
+               <styleClass>
+                  <String fx:value="grey-button" />
+                  <String fx:value="common-text-colour" />
+                  <String fx:value="common-text-font" />
+               </styleClass>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="32.0" layoutY="271.0" prefHeight="140.0" prefWidth="267.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0">
+         <children>
+            <ImageView fx:id="imvDrawing" fitHeight="140.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="drawBtn" layoutX="225.0" layoutY="114.0" mnemonicParsing="false" onAction="#drawBtn" stylesheets="@../css/MainStyle.css" text="Draw">
+               <styleClass>
+                  <String fx:value="grey-button" />
+                  <String fx:value="common-text-colour" />
+                  <String fx:value="common-text-font" />
+               </styleClass>
+            </Button>
+         </children>
+      </Pane>
     </children>
 </AnchorPane>
