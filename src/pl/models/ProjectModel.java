@@ -6,6 +6,8 @@ import bll.interfaces.IProjectManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class ProjectModel {
     private IProjectManager projectManager;
     public ProjectModel () {
@@ -32,4 +34,6 @@ public class ProjectModel {
     public void recordLog(String refNumber, int accountID){
         projectManager.recordLog(refNumber, accountID);
     }
+
+
 }

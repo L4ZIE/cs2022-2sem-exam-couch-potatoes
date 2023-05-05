@@ -36,6 +36,7 @@ public class ProjectManager implements IProjectManager {
     public List<Project> getAllProjects() {
         return allProjects;
     }
+
     @Override
     public void createProject(Project project) {
         projectDAO.createProject(project);
