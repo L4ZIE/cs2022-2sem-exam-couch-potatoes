@@ -98,6 +98,7 @@ public class TechnicianViewController implements Initializable {
 
     }
 
+
     public void fillProjectsTable(TableView projectTableView) {
         colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
         colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
