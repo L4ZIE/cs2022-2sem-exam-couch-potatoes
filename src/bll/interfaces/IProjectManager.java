@@ -7,7 +7,7 @@ import java.util.List;
 public interface IProjectManager {
     List<Project> getAllProjects();
 
-    void createProject(Project project);
+    void createProject(Project project, int accountID);
 
     void editProject(Project project);
     List<Project> getProjectsForAccount(int accountID);
@@ -15,4 +15,5 @@ public interface IProjectManager {
     void recordLog(String refNumber, int accountID);
 
     void deleteProject(String refNumber);
+    void createPicture(String path, String refNumber);
 }

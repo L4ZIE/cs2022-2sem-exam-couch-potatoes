@@ -50,13 +50,27 @@ public class PictureDAO implements IPictureDAO {
         }
     }
 
+    @Override
+    public void createPicture(String path, String refNumber) {
+        String sql = "INSERT INTO Pictures (id, pLocation, refNumber) VALUES (?,?,?)";
+
+        try {
+            preparedStatement = connector.createConnection().prepareStatement(sql);
+            preparedStatement.setInt(1, getMaxID() + 1);
+            preparedStatement.setString(2, path);
+            preparedStatement.setString(3, refNumber);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This method returns the max ID that's inside the Pictures table.
      *
      * @return Max id inside the Pictures table.
      */
-    @Override
-    public int getMaxID() {
+
+    private int getMaxID() {
         String sql = "SELECT MAX(id) AS maxID from Pictures";
         try {
             preparedStatement = connector.createConnection().prepareStatement(sql);
