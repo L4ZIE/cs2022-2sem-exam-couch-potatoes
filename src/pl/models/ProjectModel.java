@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import java.io.File;
 
+import java.util.List;
+
 public class ProjectModel {
     private IProjectManager projectManager;
     public ProjectModel () {
@@ -41,6 +43,7 @@ public class ProjectModel {
     public void recordLog(String refNumber, int accountID){
         projectManager.recordLog(refNumber, accountID);
     }
+
     public void createPicture(String path, String refNumber){
         projectManager.createPicture(path, refNumber);
     }

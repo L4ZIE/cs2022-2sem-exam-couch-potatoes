@@ -8,7 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import pl.models.ProjectModel;
@@ -24,6 +28,15 @@ public class TechnicianViewController implements Initializable {
     private Button createBtn, updateBtn, previewBtn, saveBtn, sendBtn, deleteBtn;
     @FXML
     private TableView<Project> projectTableView;
+
+    @FXML
+    private TextField searchField;
+    @FXML
+    private TableColumn colCustomerName,
+            colCustomerLocation,
+            colStartDate,
+            colEndDate,
+            colApproved;
 
     private ProjectModel projectModel;
 
@@ -74,15 +87,35 @@ public class TechnicianViewController implements Initializable {
     }
 
     public void searchFieldKeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ENTER){
+            projectModel.searchForProject(searchField.getText());
+        }
     }
 
-    //searchbar
+
     public void createProjectPressed(ActionEvent actionEvent) {
+        projectModel.searchForProject(searchField.getText());
+
+    }
+
+
+    public void fillProjectsTable(TableView projectTableView) {
+        colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
+        colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("projectStartDate"));
+        colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("projectEndDate"));
+        colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
+
+        try {
+            projectTableView.setItems(projectModel.getAllProjects());
+            projectTableView.getSelectionModel().select(0);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void allProjectsBtnPressed(ActionEvent actionEvent) {
-
-        projectTableView.setItems(projectModel.getAllProjects());
+        fillProjectsTable(projectTableView);
     }
 
     public void publicProjectsBtnPressed(ActionEvent actionEvent) {
