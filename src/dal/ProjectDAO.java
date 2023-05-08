@@ -53,7 +53,7 @@ public class ProjectDAO implements IProjectDAO {
 
         String sql = "INSERT INTO Projects ( refNumber, customerName, customerEmail, customerLocation, note, " +
                 "drawing, creationDate, projectStartDate, projectEndDate, approved) " +
-                "VALUES ( ?,?,?,?,?,?,?,?,?,?)";
+                "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         try {
             preparedStatement = connector.createConnection().prepareStatement(sql);

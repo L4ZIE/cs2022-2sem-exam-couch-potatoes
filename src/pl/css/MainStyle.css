@@ -39,6 +39,17 @@
 .button:hover {
     -fx-cursor: hand;
     -fx-opacity: 0.8;
+    -fx-scale-x: 1.025;
+    -fx-scale-y: 1.025;
+    -fx-scale-z: 1.025;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 10, 0, 4, 4);
+}
+
+.button:pressed {
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-scale-z: 1;
+    -fx-effect: null;
 }
 
 .positive-button {

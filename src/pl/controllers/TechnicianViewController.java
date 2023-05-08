@@ -14,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.models.ProjectModel;
 
@@ -30,7 +32,7 @@ public class TechnicianViewController implements Initializable {
     private TableView<Project> projectTableView;
 
     @FXML
-    private TextField searchField;
+    private TextField txfSearchField;
     @FXML
     private TableColumn colCustomerName,
             colCustomerLocation,
@@ -39,33 +41,55 @@ public class TechnicianViewController implements Initializable {
             colApproved;
 
     private ProjectModel projectModel;
+    private boolean needsRefresh = false;
+    private static Project selectedProject;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
+        fillProjectsTable(projectTableView);
+        //TODO display public projects
     }
 
 
-    public void createBtnPressed(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pl/fxml/ProjectView.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stageCreate = new Stage();
-        stageCreate.setTitle("New Project");
-
-        stageCreate.setScene(scene);
-        stageCreate.show();
-        stageCreate.setResizable(false);
+    public void createBtnPressed(ActionEvent actionEvent) {
+        openWindow();
     }
 
-    public void updateBtnPressed(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pl/fxml/ProjectView.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stageUpdate = new Stage();
-        stageUpdate.setTitle("Update Project");
+    public void updateBtnPressed(ActionEvent actionEvent) {
+        if (projectTableView.getSelectionModel().getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Please select a project.");
+        } else {
+            selectedProject = projectTableView.getSelectionModel().getSelectedItem();
+            openWindow(projectTableView.getSelectionModel().getSelectedItem());
+        }
+    }
 
-        stageUpdate.setScene(scene);
-        stageUpdate.show();
-        stageUpdate.setResizable(false);
+    private void openWindow(Project project) {
+        needsRefresh = true;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pl/fxml/ProjectView.fxml"));
+
+        try {
+            Scene scene = new Scene(loader.load());
+            Stage stageCreate = new Stage();
+            if (project == null) {
+                stageCreate.setTitle("New Project");
+            } else {
+                stageCreate.setTitle(selectedProject.getRefNumber());
+            }
+            stageCreate.initModality(Modality.APPLICATION_MODAL);
+            stageCreate.setScene(scene);
+            stageCreate.show();
+            stageCreate.setResizable(false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private void openWindow() {
+        openWindow(null);
     }
 
     public void previewBtnPressed(ActionEvent actionEvent) {
@@ -83,18 +107,19 @@ public class TechnicianViewController implements Initializable {
         } else {
             Project selectedProject = projectTableView.getSelectionModel().getSelectedItem();
             projectModel.deleteProject(selectedProject);
+            fillProjectsTable(projectTableView);
         }
     }
 
     public void searchFieldKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.ENTER){
-            projectModel.searchForProject(searchField.getText());
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            //projectModel.searchForProject(searchField.getText());
         }
     }
 
 
     public void createProjectPressed(ActionEvent actionEvent) {
-        projectModel.searchForProject(searchField.getText());
+        //projectModel.searchForProject(searchField.getText());
 
     }
 
@@ -102,8 +127,8 @@ public class TechnicianViewController implements Initializable {
     public void fillProjectsTable(TableView projectTableView) {
         colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
         colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
-        colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("projectStartDate"));
-        colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("projectEndDate"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("startDate"));
+        colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("endDate"));
         colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
 
         try {
@@ -147,6 +172,16 @@ public class TechnicianViewController implements Initializable {
         Node node = (Node) actionEvent.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
+    }
+
+    public void refresh(MouseEvent mouseEvent) {
+        if (needsRefresh) {
+            fillProjectsTable(projectTableView);
+            needsRefresh = false;
+        }
+    }
+    public static Project getSelectedProject(){
+        return selectedProject;
     }
 }
 

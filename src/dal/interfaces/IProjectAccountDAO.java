@@ -23,7 +23,7 @@ public interface IProjectAccountDAO {
      * @param refNumber Reference number of the project.
      * @param accountID ID of the account.
      */
-    void saveProject(String refNumber, int accountID);
+    void saveProject(String refNumber, int accountID, int id);
 
     /**
      * Deletes the connection between an account and a project.
@@ -31,5 +31,6 @@ public interface IProjectAccountDAO {
      * @param accountID
      */
     void deleteConnection(String refNumber, int accountID);
+    int getMaxID();
 
 }

@@ -16,4 +16,6 @@ public interface IProjectManager {
 
     void deleteProject(String refNumber);
     void createPicture(String path, String refNumber);
+    void deletePicture(int id);
+    int getPictureIDByPath(String path);
 }

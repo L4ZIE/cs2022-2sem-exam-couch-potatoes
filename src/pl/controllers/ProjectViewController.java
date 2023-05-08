@@ -19,6 +19,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ProjectViewController implements Initializable {
             btnAdd,
             btnRemove,
             btnDraw,
-            btnClose;  //// need to add 2 button: btnNextPicture, btnPreviousPicture(methods are ready)
+            btnClose;  //TODO need to add 2 button: btnNextPicture, btnPreviousPicture(methods are ready)
 
     @FXML
     private TextArea txaNotes;
@@ -62,49 +63,76 @@ public class ProjectViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
+        if (TechnicianViewController.getSelectedProject() != null)
+            fillFields(TechnicianViewController.getSelectedProject());
+    }
 
+    private void fillFields(Project selectedProject) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        txfCustomerName.setText(selectedProject.getCustomerName());
+        txfCustomerEmail.setText(selectedProject.getCustomerEmail());
+        txfCustomerLocation.setText(selectedProject.getCustomerLocation());
+        lblRefNumber.setText(selectedProject.getRefNumber());
+        startDate.setValue(LocalDate.parse(selectedProject.getStartDate().substring(0, 10), formatter));
+        endDate.setValue(LocalDate.parse(selectedProject.getEndDate().substring(0, 10), formatter));
+        txaNotes.setText(selectedProject.getNote());
+        List<String> imageLocations = projectModel.getPicturesForProject(selectedProject.getRefNumber());
+        for (String s : imageLocations) {
+            images.add(new Image(s));
+        }
+        displayImage();
+        //TODO fill drawing
     }
 
     public void goBackPressed(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("pl/fxml/TechnicianView.fxml"));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage primaryStage = new Stage();
-            primaryStage.setTitle("Projects");
-            primaryStage.setScene(scene);
-            primaryStage.initModality(Modality.APPLICATION_MODAL);
-            primaryStage.show();
-
-            closeWindows();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        closeWindow();
     }
 
     public void btnSavePressed(ActionEvent actionEvent) {
-        int rand = (int) (Math.random() * 10000);
-        String refNumber = txfCustomerName.getText().substring(0,3) + txfCustomerEmail.getText().substring(0,3) + rand;
-        projectModel.createProject(new Project(refNumber,
-                txfCustomerName.getText(),
-                txfCustomerEmail.getText(),
-                txfCustomerLocation.getText(),
-                txaNotes.getText(),
-                "drawing location placeholder",
-                java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                true
-        ));
-        projectModel.recordLog(refNumber,1);
+        int rand = (int) (Math.random() * 10000); //TODO placeholder, change later
+        String refNumber = txfCustomerName.getText().substring(0, 3) + txfCustomerEmail.getText().substring(0, 3) + rand;
+        if (TechnicianViewController.getSelectedProject() == null) {
+
+            projectModel.createProject(new Project(refNumber,
+                    txfCustomerName.getText(),
+                    txfCustomerEmail.getText(),
+                    txfCustomerLocation.getText(),
+                    txaNotes.getText(),
+                    "drawing location placeholder", //TODO placeholder, change later
+                    java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    true
+            ), 1);
+            for (Image img : images) {
+                projectModel.createPicture(img.getUrl(), refNumber);
+            }
+            //projectModel.recordLog(refNumber, 1);
+            JOptionPane.showMessageDialog(null, "Successfully saved Project.");
+        } else {
+            projectModel.editProject(new Project(lblRefNumber.getText(),
+                    txfCustomerName.getText(),
+                    txfCustomerEmail.getText(),
+                    txfCustomerLocation.getText(),
+                    txaNotes.getText(),
+                    "drawing location placeholder", //TODO placeholder, change later
+                    java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    true));
+            for (Image img : images) {
+                projectModel.createPicture(img.getUrl(), lblRefNumber.getText());
+            }
+            JOptionPane.showMessageDialog(null, "Successfully updated Project.");
+        }
+
+        closeWindow();
         //TODO create a picture,create a draw
     }
 
 
     public void btnCancelPressed(ActionEvent actionEvent) {
-       closeWindows();
+        closeWindow();
     }
 
     public void btnAddPressed(ActionEvent actionEvent) {
@@ -112,15 +140,12 @@ public class ProjectViewController implements Initializable {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images",
                 "*.png", "*.jpg"));
         List<File> files = fileChooser.showOpenMultipleDialog(new Stage());
-        if (!files.isEmpty()) {
+        if (files != null) {
             files.forEach((File f) ->
             {
                 images.add(new Image(f.toURI().toString()));
             });
             displayImage();
-        }
-        else {
-            JOptionPane.showMessageDialog(null,"No image has been selected");
         }
     }
 
@@ -147,9 +172,9 @@ public class ProjectViewController implements Initializable {
 
 
     public void btnRemovePressed(ActionEvent actionEvent) {
+        projectModel.deletePicture(projectModel.getPictureIDByPath(imvPictures.getImage().getUrl()));
+        images.remove(imvPictures.getImage());
         imvPictures.setImage(null);
-        // images.remove(projectModel.getPictureByID(id));
-        // projectModel.deletePicture(id);
     }
 
     public Image getPictureByPath(String path) {
@@ -169,7 +194,7 @@ public class ProjectViewController implements Initializable {
             primaryStage.initModality(Modality.APPLICATION_MODAL);
             primaryStage.show();
 
-            closeWindows();
+            closeWindow();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -201,10 +226,10 @@ public class ProjectViewController implements Initializable {
     }
 
     public void btnClosePressed(ActionEvent actionEvent) {
-        closeWindows();
+        closeWindow();
     }
 
-    private void closeWindows() {
+    private void closeWindow() {
         Stage stage = (Stage) btnDraw.getScene().getWindow();
         stage.close();
     }

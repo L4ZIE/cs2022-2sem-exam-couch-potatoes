@@ -23,14 +23,19 @@ public class ProjectModel {
     public ObservableList<Project> getProjectsForAccount(int accountID){
         return FXCollections.observableArrayList(projectManager.getProjectsForAccount(accountID));
     }
-    public ObservableList<String > getPicturesForProject(String refNumber){
+    public ObservableList<String> getPicturesForProject(String refNumber){
         return FXCollections.observableArrayList(projectManager.getPicturesForProject(refNumber));
     }
     public Image getPictureByPath(String path){
         return new Image(path);
     }
 
-
+    public void deletePicture(int id){
+        projectManager.deletePicture(id);
+    }
+    public int getPictureIDByPath(String path){
+        return projectManager.getPictureIDByPath(path);
+    }
     public void createProject(Project project, int accountID) {
         projectManager.createProject(project, accountID);
     }

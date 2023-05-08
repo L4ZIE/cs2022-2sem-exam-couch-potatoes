@@ -52,8 +52,8 @@ public class ProjectAccountDAO implements IProjectAccountDAO {
 
         return results;
     }
-
-    private int getMaxID(){
+    @Override
+    public int getMaxID(){
         int result = 0;
 
         String sql = "SELECT MAX(id) AS maxID FROM Project_Account";
@@ -69,12 +69,12 @@ public class ProjectAccountDAO implements IProjectAccountDAO {
         return result;
     }
     @Override
-    public void saveProject(String refNumber, int accountID) {
+    public void saveProject(String refNumber, int accountID, int id) {
         String sql = "INSERT INTO Project_Account (id, refNumber, accountID) VALUES (?,?,?)";
 
         try {
             preparedStatement = connector.createConnection().prepareStatement(sql);
-            preparedStatement.setInt(1, getMaxID() + 1);
+            preparedStatement.setInt(1, id);
             preparedStatement.setString(2, refNumber);
             preparedStatement.setInt(3, accountID);
 

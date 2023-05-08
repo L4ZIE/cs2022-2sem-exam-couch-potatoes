@@ -42,7 +42,7 @@ public class ProjectManager implements IProjectManager {
     @Override
     public void createProject(Project project, int accountID) {
         projectDAO.createProject(project);
-        projectAccountDAO.saveProject(project.getRefNumber(), accountID);
+        projectAccountDAO.saveProject(project.getRefNumber(), accountID, projectAccountDAO.getMaxID());
         allProjects.add(project);
     }
 
@@ -85,12 +85,26 @@ public class ProjectManager implements IProjectManager {
 
     @Override
     public void deleteProject(String refNumber) {
+        //projectAccountDAO.deleteConnection(refNumber, 1);//TODO change later
         projectDAO.deleteProject(refNumber);
+        fillAllProjects();
     }
 
     @Override
     public void createPicture(String path, String refNumber) {
-        pictureDAO.createPicture(path, refNumber);
+        int id = pictureDAO.getMaxID() + 1;
+        pictureDAO.createPicture(path, refNumber, id);
     }
+
+    @Override
+    public void deletePicture(int id) {
+        pictureDAO.deletePicture(id);
+    }
+
+    @Override
+    public int getPictureIDByPath(String path) {
+        return pictureDAO.getPictureIDByPath(path);
+    }
+
 }
 
