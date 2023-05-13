@@ -1,16 +1,14 @@
 package pl.controllers;
 
 import be.Project;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -27,12 +25,20 @@ import java.util.ResourceBundle;
 public class TechnicianViewController implements Initializable {
 
     @FXML
-    private Button createBtn, updateBtn, previewBtn, saveBtn, sendBtn, deleteBtn;
+    private Button createBtn,
+            updateBtn,
+            previewBtn,
+            saveBtn,
+            sendBtn,
+            deleteBtn,
+            allProjectsBtn,
+            privateProjectsBtn,
+            publicProjectsBtn;
     @FXML
     private TableView<Project> projectTableView;
 
     @FXML
-    private TextField txfSearchField;
+    private TextField searchField;
     @FXML
     private TableColumn colCustomerName,
             colCustomerLocation,
@@ -44,10 +50,13 @@ public class TechnicianViewController implements Initializable {
     private boolean needsRefresh = false;
     private static Project selectedProject;
 
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
-        fillProjectsTable(projectTableView);
+        fillProjectsTable(projectTableView,);
         //TODO display public projects
     }
 
@@ -123,8 +132,48 @@ public class TechnicianViewController implements Initializable {
 
     }
 
+    public void updateProjectTable(ObservableList<Project> selectedProjects){
+        projectTableView.setItems(selectedProjects);
+    }
 
-    public void fillProjectsTable(TableView projectTableView) {
+    public void searchForName(){
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(),"name"));
+    }
+
+    public void searchForLocation(){
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(),"location"));
+    }
+    public void searchForStart(){
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(),"start"));
+    }
+    public void searchForEnd(){
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(),"end"));
+    }
+
+    //TODO change the fill for Approved to be "Approved or pending"
+    public void fillProjectsTable(TableView projectTableView, String projectType) {
+        colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
+        colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("startDate"));
+        colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("endDate"));
+        colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
+
+       try {
+           if (projectType.equals("all")){
+               projectTableView.setItems(projectModel.getAllProjects());
+           }else if (projectType.equals("private")){
+               projectTableView.setItems(projectModel.getPrivateProjects());
+           } else if (projectType.equals("public")) {
+               projectTableView.setItems(projectModel.getPublicProjects());
+           }
+           projectTableView.getSelectionModel().select(0);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+   /* public void fillPrivateTable(TableView projectTableView) {
         colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
         colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
         colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("startDate"));
@@ -132,22 +181,39 @@ public class TechnicianViewController implements Initializable {
         colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
 
         try {
-            projectTableView.setItems(projectModel.getAllProjects());
+            projectTableView.setItems(projectModel.getPrivateProjects());
             projectTableView.getSelectionModel().select(0);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    public void fillPublicTable(TableView projectTableView) {
+        colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
+        colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("startDate"));
+        colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("endDate"));
+        colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
+
+        try {
+            projectTableView.setItems(projectModel.getPublicProjects());
+            projectTableView.getSelectionModel().select(0);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+
+
+
     public void allProjectsBtnPressed(ActionEvent actionEvent) {
-        fillProjectsTable(projectTableView);
+        fillProjectsTable(projectTableView, "all");
     }
 
-    public void publicProjectsBtnPressed(ActionEvent actionEvent) {
-    }
+    public void publicProjectsBtnPressed(ActionEvent actionEvent) {fillProjectsTable(projectTableView,"public"); }
 
-    public void privateProjectsBtnPressed(ActionEvent actionEvent) {
-    }
+    public void privateProjectsBtnPressed(ActionEvent actionEvent) {fillProjectsTable(projectTableView,"private");}
 
     public void logoutBtnPressed(ActionEvent actionEvent) {
     }
