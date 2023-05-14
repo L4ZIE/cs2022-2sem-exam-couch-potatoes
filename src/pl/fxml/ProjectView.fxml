@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -150,8 +151,8 @@
             </Button>
          </children>
       </Pane>
-      <DatePicker fx:id="startDate" layoutX="590.0" layoutY="291.0" onAction="#startDatePressed" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="285.0" />
-      <DatePicker fx:id="endDate" layoutX="589.0" layoutY="338.0" onAction="#endDatePressed" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="335.0" />
+      <DatePicker fx:id="startDate" layoutX="590.0" layoutY="291.0" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="285.0" />
+      <DatePicker fx:id="endDate" layoutX="589.0" layoutY="338.0" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="335.0" />
       <Label layoutX="589.0" layoutY="271.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Start Date:" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="265.0">
          <styleClass>
             <String fx:value="common-text-colour" />
@@ -164,5 +165,7 @@
             <String fx:value="common-text-font" />
          </styleClass>
       </Label>
+      <CheckBox fx:id="checkBoxPublic" layoutX="548.0" layoutY="32.0" mnemonicParsing="false" text="Public" textFill="WHITE" />
+      <CheckBox fx:id="checkBoxPrivate" layoutX="648.0" layoutY="32.0" mnemonicParsing="false" text="Private" textFill="WHITE" />
     </children>
 </AnchorPane>

@@ -8,6 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -16,16 +20,23 @@ import javafx.stage.Stage;
 import pl.models.ProjectModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProjectViewController implements Initializable {
+    @FXML
+    private CheckBox checkBoxPublic,
+            checkBoxPrivate;
     @FXML
     private DatePicker startDate,
             endDate;
@@ -88,22 +99,37 @@ public class ProjectViewController implements Initializable {
         closeWindow();
     }
 
+
+    public Boolean selectPublicOrPrivate() {
+        boolean isSelected;
+        if (checkBoxPrivate.isSelected()) {
+            isSelected = false;
+        } else {
+            isSelected = true;
+        }
+        return isSelected;
+    }
+
+
     public void btnSavePressed(ActionEvent actionEvent) {
         int rand = (int) (Math.random() * 10000); //TODO placeholder, change later
         String refNumber = txfCustomerName.getText().substring(0, 3) + txfCustomerEmail.getText().substring(0, 3) + rand;
         if (TechnicianViewController.getSelectedProject() == null) {
 
             projectModel.createProject(new Project(refNumber,
-                    txfCustomerName.getText(),
-                    txfCustomerEmail.getText(),
-                    txfCustomerLocation.getText(),
-                    txaNotes.getText(),
-                    "drawing location placeholder", //TODO placeholder, change later
-                    java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    true
-            ), 1);
+                            txfCustomerName.getText(),
+                            txfCustomerEmail.getText(),
+                            txfCustomerLocation.getText(),
+                            txaNotes.getText(),
+                            "drawing location placeholder", //TODO placeholder, change later
+                            java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            true,
+                            selectPublicOrPrivate()),
+                    1);
+
+
             for (Image img : images) {
                 projectModel.createPicture(img.getUrl(), refNumber);
             }
@@ -119,14 +145,15 @@ public class ProjectViewController implements Initializable {
                     java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    true));
+                    true, true));
             for (Image img : images) {
                 projectModel.createPicture(img.getUrl(), lblRefNumber.getText());
             }
             JOptionPane.showMessageDialog(null, "Successfully updated Project.");
-        }
 
+        }
         closeWindow();
+
         //TODO create a picture,create a draw
     }
 
@@ -149,20 +176,6 @@ public class ProjectViewController implements Initializable {
         }
     }
 
-    public void btnNextPicturePressed(ActionEvent actionEvent) {
-        if (!images.isEmpty()) {
-            currentImageIndex = (currentImageIndex + 1) % images.size();
-            displayImage();
-        }
-    }
-
-    public void btnPreviousPicturePressed(ActionEvent actionEvent) {
-        if (!images.isEmpty()) {
-            currentImageIndex =
-                    (currentImageIndex - 1 + images.size()) % images.size();
-            displayImage();
-        }
-    }
 
     private void displayImage() {
         if (!images.isEmpty()) {
@@ -177,9 +190,6 @@ public class ProjectViewController implements Initializable {
         imvPictures.setImage(null);
     }
 
-    public Image getPictureByPath(String path) {
-        return new Image(path);
-    }
 
     public void btnDrawPressed(ActionEvent actionEvent) {
         //TODO ADD  FXML
@@ -201,15 +211,6 @@ public class ProjectViewController implements Initializable {
         }
     }
 
-    public void startDatePressed(ActionEvent actionEvent) { // TODO DELETE LATER
-        //LocalDate data = startDate.getValue();
-        //data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    }
-
-    public void endDatePressed(ActionEvent actionEvent) {// TODO DELETE LATER
-        // LocalDate data = endDate.getValue();
-        // data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    }
 
     public void btnMinPressed(ActionEvent actionEvent) {
         Stage stage = (Stage) btnMin.getScene().getWindow();
@@ -232,5 +233,29 @@ public class ProjectViewController implements Initializable {
     private void closeWindow() {
         Stage stage = (Stage) btnDraw.getScene().getWindow();
         stage.close();
+    }
+
+    public void displayInactiveProjects() {
+
+        String message = "Please delete unused projects in the last 48 months :\n";
+        boolean showPopup = false;
+        try {
+            List<Project> allProjects = projectModel.getAllProjects();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+            int thisYear = Integer.parseInt(sdf.format(new Date()));
+
+            String endProject;
+            for (Project p : allProjects) {
+                endProject = p.getEndDate();
+                if (thisYear - Integer.parseInt(endProject.substring(6)) >= 4) {
+                    showPopup = true;
+                    message = message + "\n" + p.getRefNumber();
+                }
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+        if (showPopup)
+            JOptionPane.showMessageDialog(null, message);
     }
 }
