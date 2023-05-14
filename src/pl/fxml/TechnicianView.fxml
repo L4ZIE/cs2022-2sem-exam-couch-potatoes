@@ -94,12 +94,12 @@
                </styleClass></Button>
          </children>
       </HBox>
-      <Label fx:id="usernameLbl" alignment="CENTER" layoutX="528.0" layoutY="-1.0" prefHeight="34.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Username" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="0.0">
+      <Label fx:id="lblUsername" alignment="CENTER" layoutX="528.0" layoutY="-1.0" prefHeight="34.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Username" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="0.0">
          <styleClass>
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Label>
-      <Button fx:id="logoutBtn" layoutX="440.0" layoutY="3.0" mnemonicParsing="false" onAction="#logoutBtnPressed" prefHeight="25.0" prefWidth="102.0" stylesheets="@../css/MainStyle.css" text="Logout" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="3.0">
+      <Button fx:id="btnLogout" layoutX="440.0" layoutY="3.0" mnemonicParsing="false" onAction="#logoutBtnPressed" prefHeight="25.0" prefWidth="102.0" stylesheets="@../css/MainStyle.css" text="Logout" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="3.0">
          <styleClass>
             <String fx:value="project-button" />
             <String fx:value="common-text-colour" />
@@ -108,15 +108,15 @@
       </Button>
       <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="minBtn" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
-            <Button fx:id="maxBtn" focusTraversable="false" mnemonicParsing="false" onAction="#maxBtnBtn" text="[ ]" />
-            <Button fx:id="closeBtn" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
+            <Button fx:id="btnMin" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
+            <Button fx:id="btnMax" focusTraversable="false" mnemonicParsing="false" onAction="#maxBtnBtn" text="[ ]" />
+            <Button fx:id="btnClose" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="15.0" layoutY="40.0" prefHeight="41.0" prefWidth="545.0">
          <children>
-            <Button fx:id="BtncNameSearch" minWidth="150.0" mnemonicParsing="false" onAction="#searchForName" text="Customer Name" />
-            <Button fx:id="BtncLocSearch" minWidth="150.0" mnemonicParsing="false" onAction="#searchForLocation" text="Customer Location" />
+            <Button fx:id="BtnNameSearch" minWidth="150.0" mnemonicParsing="false" onAction="#searchForName" text="Customer Name" />
+            <Button fx:id="BtnLocSearch" minWidth="150.0" mnemonicParsing="false" onAction="#searchForLocation" text="Customer Location" />
             <Button fx:id="BtnStartSearch" minWidth="80.0" mnemonicParsing="false" onAction="#searchForStart" text="Start Date" />
             <Button fx:id="BtnEndSearch" minWidth="80.0" mnemonicParsing="false" onAction="#searchForEnd" text="End Date" />
             <Button fx:id="BtnApprovedSearch" minWidth="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Approved" />

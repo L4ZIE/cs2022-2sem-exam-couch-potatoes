@@ -25,7 +25,18 @@ import java.util.ResourceBundle;
 public class TechnicianViewController implements Initializable {
 
     @FXML
-    private Button createBtn,
+    public Label lblUsername;
+    @FXML
+    public Button btnLogout,
+            btnMin,
+            btnMax,
+            btnClose,
+            BtnNameSearch,
+            BtnLocSearch,
+            BtnStartSearch,
+            BtnEndSearch,
+            BtnApprovedSearch,
+            createBtn,
             updateBtn,
             previewBtn,
             saveBtn,
@@ -55,6 +66,7 @@ public class TechnicianViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
         fillProjectsTable(projectTableView);
+        lblUsername.setText(LoginController.getUsername());
         //TODO display public projects
     }
 
@@ -172,6 +184,7 @@ public class TechnicianViewController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     public void fillProjectsTable(TableView projectTableView) {
         fillProjectsTable(projectTableView, "all");
     }
