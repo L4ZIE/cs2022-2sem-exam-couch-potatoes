@@ -36,7 +36,8 @@ public class ProjectDAO implements IProjectDAO {
                         resultSet.getString("creationDate"),
                         resultSet.getString("projectStartDate"),
                         resultSet.getString("projectEndDate"),
-                        resultSet.getBoolean("approved")
+                        resultSet.getBoolean("approved"),
+                        resultSet.getBoolean("private")
                 ));
             }
             return projects;

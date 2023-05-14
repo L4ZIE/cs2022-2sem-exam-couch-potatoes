@@ -1,11 +1,14 @@
 package bll.interfaces;
 
 import be.Project;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
 public interface IProjectManager {
     List<Project> getAllProjects();
+    List<Project> getPrivateProjects();
+    List<Project> getPublicProjects();
 
     void createProject(Project project, int accountID);
 
@@ -18,4 +21,5 @@ public interface IProjectManager {
     void createPicture(String path, String refNumber);
     void deletePicture(int id);
     int getPictureIDByPath(String path);
+    List<Project> searchForProjects(String userSearchInput, String searchOption);
 }

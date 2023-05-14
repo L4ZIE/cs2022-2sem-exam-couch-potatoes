@@ -108,7 +108,7 @@ public class ProjectViewController implements Initializable {
         closeWindow();
     }
 
-    public void btnSavePressed(ActionEvent actionEvent) {
+    /*public void btnSavePressed(ActionEvent actionEvent) {
         int rand = (int) (Math.random() * 10000); //TODO placeholder, change later
         String refNumber = txfCustomerName.getText().substring(0, 3) + txfCustomerEmail.getText().substring(0, 3) + rand;
         if (TechnicianViewController.getSelectedProject() == null) {
@@ -148,7 +148,7 @@ public class ProjectViewController implements Initializable {
 
         closeWindow();
         //TODO create a picture,create a draw
-    }
+    }*/
 
 
     public void btnCancelPressed(ActionEvent actionEvent) {

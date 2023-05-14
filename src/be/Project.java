@@ -14,9 +14,11 @@ public class Project {
     private String endDate;
     private Boolean approved;
 
+    private Boolean privateProject;
+
     public Project (String refNumber, String customerName, String customerEmail,
                     String customerLocation, String note, String drawing, String creationDate,
-                    String startDate, String endDate, Boolean approved)
+                    String startDate, String endDate, Boolean approved, Boolean privateProject)
     {
         this.refNumber = refNumber;
         this.customerName = customerName;
@@ -28,6 +30,7 @@ public class Project {
         this.startDate = startDate;
         this.endDate = endDate;
         this.approved = approved;
+        this.privateProject = privateProject;
     }
 
     public String getRefNumber() {
@@ -84,6 +87,8 @@ public class Project {
     public void setApproved(Boolean approved) {
         this.approved = approved;
     }
+    public void setPrivateProject (Boolean privateProject){this.privateProject = privateProject;}
+    public Boolean getPrivateProject(){return privateProject;}
     @Override
     public String toString() {
         return refNumber + " " + customerName + " " + customerEmail+ " " + customerLocation + " " + note+ " " +

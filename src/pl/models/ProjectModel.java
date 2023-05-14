@@ -20,11 +20,23 @@ public class ProjectModel {
     public ObservableList<Project> getAllProjects() {
         return FXCollections.observableArrayList(projectManager.getAllProjects());
     }
+
+    public ObservableList<Project> getPrivateProjects(){
+        return FXCollections.observableArrayList(projectManager.getPrivateProjects());
+    }
+
+    public ObservableList<Project> getPublicProjects(){
+        return FXCollections.observableArrayList(projectManager.getPublicProjects());
+    }
     public ObservableList<Project> getProjectsForAccount(int accountID){
         return FXCollections.observableArrayList(projectManager.getProjectsForAccount(accountID));
     }
     public ObservableList<String> getPicturesForProject(String refNumber){
         return FXCollections.observableArrayList(projectManager.getPicturesForProject(refNumber));
+    }
+
+    public ObservableList<Project> searchForProjects(String userSearchInput, String searchOption){
+        return FXCollections.observableArrayList(projectManager.searchForProjects(userSearchInput,searchOption));
     }
     public Image getPictureByPath(String path){
         return new Image(path);

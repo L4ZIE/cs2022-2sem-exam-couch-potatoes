@@ -11,6 +11,9 @@ import dal.interfaces.ILogDAO;
 import dal.interfaces.IPictureDAO;
 import dal.interfaces.IProjectAccountDAO;
 import dal.interfaces.IProjectDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -23,6 +26,7 @@ public class ProjectManager implements IProjectManager {
     private IPictureDAO pictureDAO;
     private IProjectAccountDAO projectAccountDAO;
     private List<Project> allProjects;
+    private List<Project> privateProjects;
 
     public ProjectManager(){
         projectDAO = new ProjectDAO();
@@ -37,6 +41,27 @@ public class ProjectManager implements IProjectManager {
     @Override
     public List<Project> getAllProjects() {
         return allProjects;
+    }
+
+    @Override
+    public List<Project> getPrivateProjects() {
+        List<Project> listPrivateProjects = new ArrayList<>();
+        for (Project project : allProjects){
+            if (project.getPrivateProject()== false){
+                listPrivateProjects.add(project);
+            }
+        }
+        return listPrivateProjects;
+    }
+
+    public List<Project> getPublicProjects(){
+        List<Project> listPublicProjects = new ArrayList<>();
+        for (Project project : allProjects){
+            if (project.getPrivateProject()==true){
+                listPublicProjects.add(project);
+            }
+        }
+        return listPublicProjects;
     }
 
     @Override
@@ -104,6 +129,33 @@ public class ProjectManager implements IProjectManager {
     @Override
     public int getPictureIDByPath(String path) {
         return pictureDAO.getPictureIDByPath(path);
+    }
+
+
+    public List<Project> searchForProjects(String userSearchInput, String searchOption) {
+        List<Project> matchingProjects = FXCollections.observableArrayList();
+
+        for (Project project: allProjects){
+            switch (searchOption){
+                case "name":
+                    if (project.getCustomerName().toLowerCase().contains(userSearchInput.toLowerCase()))
+                        matchingProjects.add(project);
+                    break;
+                case "location":
+                    if (project.getCustomerLocation().toLowerCase().contains(userSearchInput.toLowerCase()))
+                        matchingProjects.add(project);
+                    break;
+                case "start":
+                    if (project.getStartDate().toLowerCase().contains(userSearchInput.toLowerCase()))
+                        matchingProjects.add(project);
+                    break;
+                case "end":
+                    if (project.getEndDate().toLowerCase().contains(userSearchInput.toLowerCase()))
+                        matchingProjects.add(project);
+                    break;
+            }
+        }
+        return matchingProjects;
     }
 
 }
