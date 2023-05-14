@@ -53,10 +53,10 @@ public class LoginController implements Initializable {
     private void login() {
         //Bob, 123
         if(accountModel.checkCredentials(txfUsername.getText(), pwfPassword.getText())){
-            System.out.println("yes");
+            System.out.println("yes.");
         }
         else
-            System.out.println("no");
+            System.out.println("no.");
     }
 
 
