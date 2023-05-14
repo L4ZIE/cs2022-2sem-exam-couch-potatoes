@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="314.0" prefWidth="600.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.LoginController">
+   <children>
+      <Label layoutX="246.0" layoutY="157.0" styleClass="common-text-colour" text="Password" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Pane prefHeight="34.0" prefWidth="446.0" styleClass="project-container" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="14.0" layoutY="4.0" styleClass="common-text-colour" text="WUAV Documentation System">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <HBox alignment="TOP_RIGHT" layoutX="706.0" layoutY="14.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="btnMin" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_">
+               <styleClass>
+                  <String fx:value="control-buttons" />
+                  <String fx:value="control-buttons" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnClose" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" stylesheets="@../css/MainStyle.css" text="X">
+               <styleClass>
+                  <String fx:value="negative-button" />
+                  <String fx:value="control-buttons" />
+               </styleClass>
+            </Button>
+         </children>
+      </HBox>
+      <TextField fx:id="txfUsername" focusTraversable="false" layoutX="158.0" layoutY="102.0" prefHeight="34.0" prefWidth="258.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0" />
+      <Button fx:id="btnLogin" focusTraversable="false" layoutX="232.0" layoutY="251.0" mnemonicParsing="false" onAction="#btnLoginPressed" prefHeight="37.0" prefWidth="136.0" styleClass="login-button" text="Login" />
+      <Label layoutX="243.0" layoutY="66.0" styleClass="common-text-colour" text="Username" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="pwfPassword" focusTraversable="false" layoutX="225.0" layoutY="193.0" onKeyPressed="#pwfPasswordKeyPressed" prefHeight="34.0" prefWidth="260.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0" />
+      <Polygon fill="#333333" layoutX="430.0" layoutY="60.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" />
+   </children>
+</AnchorPane>
