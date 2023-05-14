@@ -51,12 +51,10 @@ public class TechnicianViewController implements Initializable {
     private static Project selectedProject;
 
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
-        fillProjectsTable(projectTableView,);
+        fillProjectsTable(projectTableView, "all");
         //TODO display public projects
     }
 
@@ -116,7 +114,7 @@ public class TechnicianViewController implements Initializable {
         } else {
             Project selectedProject = projectTableView.getSelectionModel().getSelectedItem();
             projectModel.deleteProject(selectedProject);
-            fillProjectsTable(projectTableView);
+            fillProjectsTable(projectTableView, "all");
         }
     }
 
@@ -132,22 +130,24 @@ public class TechnicianViewController implements Initializable {
 
     }
 
-    public void updateProjectTable(ObservableList<Project> selectedProjects){
+    public void updateProjectTable(ObservableList<Project> selectedProjects) {
         projectTableView.setItems(selectedProjects);
     }
 
-    public void searchForName(){
-        updateProjectTable(projectModel.searchForProjects(searchField.getText(),"name"));
+    public void searchForName() {
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(), "name"));
     }
 
-    public void searchForLocation(){
-        updateProjectTable(projectModel.searchForProjects(searchField.getText(),"location"));
+    public void searchForLocation() {
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(), "location"));
     }
-    public void searchForStart(){
-        updateProjectTable(projectModel.searchForProjects(searchField.getText(),"start"));
+
+    public void searchForStart() {
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(), "start"));
     }
-    public void searchForEnd(){
-        updateProjectTable(projectModel.searchForProjects(searchField.getText(),"end"));
+
+    public void searchForEnd() {
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(), "end"));
     }
 
     //TODO change the fill for Approved to be "Approved or pending"
@@ -158,15 +158,15 @@ public class TechnicianViewController implements Initializable {
         colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("endDate"));
         colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
 
-       try {
-           if (projectType.equals("all")){
-               projectTableView.setItems(projectModel.getAllProjects());
-           }else if (projectType.equals("private")){
-               projectTableView.setItems(projectModel.getPrivateProjects());
-           } else if (projectType.equals("public")) {
-               projectTableView.setItems(projectModel.getPublicProjects());
-           }
-           projectTableView.getSelectionModel().select(0);
+        try {
+            if (projectType.equals("all")) {
+                projectTableView.setItems(projectModel.getAllProjects());
+            } else if (projectType.equals("private")) {
+                projectTableView.setItems(projectModel.getPrivateProjects());
+            } else if (projectType.equals("public")) {
+                projectTableView.setItems(projectModel.getPublicProjects());
+            }
+            projectTableView.getSelectionModel().select(0);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -206,14 +206,17 @@ public class TechnicianViewController implements Initializable {
     }*/
 
 
-
     public void allProjectsBtnPressed(ActionEvent actionEvent) {
         fillProjectsTable(projectTableView, "all");
     }
 
-    public void publicProjectsBtnPressed(ActionEvent actionEvent) {fillProjectsTable(projectTableView,"public"); }
+    public void publicProjectsBtnPressed(ActionEvent actionEvent) {
+        fillProjectsTable(projectTableView, "public");
+    }
 
-    public void privateProjectsBtnPressed(ActionEvent actionEvent) {fillProjectsTable(projectTableView,"private");}
+    public void privateProjectsBtnPressed(ActionEvent actionEvent) {
+        fillProjectsTable(projectTableView, "private");
+    }
 
     public void logoutBtnPressed(ActionEvent actionEvent) {
     }
@@ -242,11 +245,12 @@ public class TechnicianViewController implements Initializable {
 
     public void refresh(MouseEvent mouseEvent) {
         if (needsRefresh) {
-            fillProjectsTable(projectTableView);
+            fillProjectsTable(projectTableView, "all");
             needsRefresh = false;
         }
     }
-    public static Project getSelectedProject(){
+
+    public static Project getSelectedProject() {
         return selectedProject;
     }
 }
