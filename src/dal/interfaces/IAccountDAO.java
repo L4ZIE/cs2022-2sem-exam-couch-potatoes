@@ -12,5 +12,7 @@ public interface IAccountDAO {
     void changePassword(int id, String newPassword);
 
     void deleteAccount(int id);
+    void changeType(int id, int type);
+    void changeAccountName(int id, String name);
     int getMaxID();
 }

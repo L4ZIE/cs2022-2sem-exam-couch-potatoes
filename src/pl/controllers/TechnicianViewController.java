@@ -1,5 +1,6 @@
 package pl.controllers;
 
+import be.AccountType;
 import be.Project;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,15 +28,14 @@ public class TechnicianViewController implements Initializable {
     @FXML
     public Label lblUsername;
     @FXML
-    public Button btnLogout,
-            btnMin,
+    public Button btnMin,
             btnMax,
             btnClose,
-            BtnNameSearch,
-            BtnLocSearch,
-            BtnStartSearch,
-            BtnEndSearch,
-            BtnApprovedSearch,
+            btnNameSearch,
+            btnLocSearch,
+            btnStartSearch,
+            btnEndSearch,
+            btnApprovedSearch,
             createBtn,
             updateBtn,
             previewBtn,
@@ -44,7 +44,8 @@ public class TechnicianViewController implements Initializable {
             deleteBtn,
             allProjectsBtn,
             privateProjectsBtn,
-            publicProjectsBtn;
+            publicProjectsBtn,
+            btnAccounts;
     @FXML
     private TableView<Project> projectTableView;
 
@@ -67,6 +68,11 @@ public class TechnicianViewController implements Initializable {
         projectModel = new ProjectModel();
         fillProjectsTable(projectTableView);
         lblUsername.setText(LoginController.getUsername());
+
+        if (LoginController.getAccountType().equals(AccountType.PROJECTMANAGER) ||
+                LoginController.getAccountType().equals(AccountType.CEO)) {
+            btnAccounts.setVisible(true);
+        }
         //TODO display public projects
     }
 
@@ -223,6 +229,7 @@ public class TechnicianViewController implements Initializable {
     public void closeBtnPressed(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
+        LoginController.bringUpWindow();
         stage.close();
     }
 
@@ -235,6 +242,9 @@ public class TechnicianViewController implements Initializable {
 
     public static Project getSelectedProject() {
         return selectedProject;
+    }
+
+    public void btnAccountsPressed(ActionEvent actionEvent) {
     }
 }
 

@@ -16,6 +16,15 @@ public class AccountModel {
     public void deleteAccount(int id){
         accountManager.deleteAccount(id);
     }
+    public void changeAccountName(int id, String name){
+        accountManager.changeAccountName(id, name);
+    }
+    public void changeAccountType(int id, AccountType type){
+        accountManager.changeAccountType(id, type);
+    }
+    public void changePassword(int id, String password){
+        accountManager.changePassword(id, password);
+    }
     public Account getAccountByName(String name){
         return accountManager.getAccountByName(name);
     }

@@ -15,9 +15,9 @@ public enum AccountType {
     public int getValue() {
         return value;
     }
-    public static AccountType fromId(int id) {
+    public static AccountType fromValue(int id) {
         for (AccountType type : values()) {
-            if (type.getId() == id) {
+            if (type.getValue() == id) {
                 return type;
             }
         }

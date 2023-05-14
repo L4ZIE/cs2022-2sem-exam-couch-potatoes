@@ -49,6 +49,15 @@ public class AccountManager implements IAccountManager {
     }
 
     @Override
+    public Account getAccountByID(int id) {
+        for (Account a : accounts) {
+            if(a.getId() == id)
+                return a;
+        }
+        return null;
+    }
+
+    @Override
     public AccountType getAccountTypeByName(String name) {
         for (Account a : accounts) {
             if(a.getName().equals(name))
@@ -64,12 +73,45 @@ public class AccountManager implements IAccountManager {
 
     @Override
     public void deleteAccount(int id) {
+        accounts.remove(getAccountByID(id));
         accountDAO.deleteAccount(id);
     }
 
     @Override
     public void createAccount(Account account) {
+        account.setPassword(hashPassword(account.getPassword()));
         accountDAO.createAccount(account);
+        accounts.add(account);
+    }
+
+    @Override
+    public void changePassword(int id, String password) {
+        accountDAO.changePassword(id, password);
+
+        Account changedAccount = getAccountByID(id);
+        accounts.remove(changedAccount);
+        changedAccount.setPassword(hashPassword(password));
+        accounts.add(changedAccount);
+    }
+
+    @Override
+    public void changeAccountType(int id, AccountType type) {
+        accountDAO.changeType(id, type.getValue());
+
+        Account changedAccount = getAccountByID(id);
+        accounts.remove(changedAccount);
+        changedAccount.setType(type);
+        accounts.add(changedAccount);
+    }
+
+    @Override
+    public void changeAccountName(int id, String name) {
+        accountDAO.changeAccountName(id, name);
+
+        Account changedAccount = getAccountByID(id);
+        accounts.remove(changedAccount);
+        changedAccount.setName(name);
+        accounts.add(changedAccount);
     }
 
 }
