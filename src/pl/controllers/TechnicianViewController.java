@@ -54,7 +54,7 @@ public class TechnicianViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
-        fillProjectsTable(projectTableView, "all");
+        fillProjectsTable(projectTableView);
         //TODO display public projects
     }
 
@@ -114,7 +114,7 @@ public class TechnicianViewController implements Initializable {
         } else {
             Project selectedProject = projectTableView.getSelectionModel().getSelectedItem();
             projectModel.deleteProject(selectedProject);
-            fillProjectsTable(projectTableView, "all");
+            fillProjectsTable(projectTableView);
         }
     }
 
@@ -172,6 +172,9 @@ public class TechnicianViewController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+    public void fillProjectsTable(TableView projectTableView) {
+        fillProjectsTable(projectTableView, "all");
+    }
 
     public void allProjectsBtnPressed(ActionEvent actionEvent) {
         fillProjectsTable(projectTableView, "all");
@@ -212,7 +215,7 @@ public class TechnicianViewController implements Initializable {
 
     public void refresh(MouseEvent mouseEvent) {
         if (needsRefresh) {
-            fillProjectsTable(projectTableView, "all");
+            fillProjectsTable(projectTableView);
             needsRefresh = false;
         }
     }
