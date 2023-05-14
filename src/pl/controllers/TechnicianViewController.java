@@ -173,39 +173,6 @@ public class TechnicianViewController implements Initializable {
         }
     }
 
-   /* public void fillPrivateTable(TableView projectTableView) {
-        colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
-        colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
-        colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("startDate"));
-        colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("endDate"));
-        colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
-
-        try {
-            projectTableView.setItems(projectModel.getPrivateProjects());
-            projectTableView.getSelectionModel().select(0);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void fillPublicTable(TableView projectTableView) {
-        colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
-        colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
-        colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("startDate"));
-        colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("endDate"));
-        colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
-
-        try {
-            projectTableView.setItems(projectModel.getPublicProjects());
-            projectTableView.getSelectionModel().select(0);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
-
     public void allProjectsBtnPressed(ActionEvent actionEvent) {
         fillProjectsTable(projectTableView, "all");
     }
