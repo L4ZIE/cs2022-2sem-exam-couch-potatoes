@@ -8,8 +8,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,7 +33,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
 public class ProjectViewController implements Initializable {
+    @FXML
+    private FlowPane flowPane;
+    @FXML
+    private CheckBox checkBoxBold,
+            checkBoxItalic;
+    @FXML
+    private ComboBox<String> comboBoxFont;
+    @FXML
+    private ComboBox<Integer> comboBoxFontSize;
     @FXML
     private DatePicker startDate,
             endDate;
@@ -46,7 +64,8 @@ public class ProjectViewController implements Initializable {
             btnAdd,
             btnRemove,
             btnDraw,
-            btnClose;  //TODO need to add 2 button: btnNextPicture, btnPreviousPicture(methods are ready)
+            btnClose;
+
 
     @FXML
     private TextArea txaNotes;
@@ -65,6 +84,7 @@ public class ProjectViewController implements Initializable {
         projectModel = new ProjectModel();
         if (TechnicianViewController.getSelectedProject() != null)
             fillFields(TechnicianViewController.getSelectedProject());
+        fillComboBox();
     }
 
     private void fillFields(Project selectedProject) {
@@ -80,7 +100,7 @@ public class ProjectViewController implements Initializable {
         for (String s : imageLocations) {
             images.add(new Image(s));
         }
-        displayImage();
+        displayImages();
         //TODO fill drawing
     }
 
@@ -145,26 +165,12 @@ public class ProjectViewController implements Initializable {
             {
                 images.add(new Image(f.toURI().toString()));
             });
-            displayImage();
+            displayImages();
         }
     }
 
-    public void btnNextPicturePressed(ActionEvent actionEvent) {
-        if (!images.isEmpty()) {
-            currentImageIndex = (currentImageIndex + 1) % images.size();
-            displayImage();
-        }
-    }
 
-    public void btnPreviousPicturePressed(ActionEvent actionEvent) {
-        if (!images.isEmpty()) {
-            currentImageIndex =
-                    (currentImageIndex - 1 + images.size()) % images.size();
-            displayImage();
-        }
-    }
-
-    private void displayImage() {
+    public void displayImages() {
         if (!images.isEmpty()) {
             imvPictures.setImage(images.get(currentImageIndex));
         }
@@ -182,9 +188,8 @@ public class ProjectViewController implements Initializable {
     }
 
     public void btnDrawPressed(ActionEvent actionEvent) {
-        //TODO ADD  FXML
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ADD FXML"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("pl/fxml/DrawingView.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
@@ -199,16 +204,6 @@ public class ProjectViewController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void startDatePressed(ActionEvent actionEvent) { // TODO DELETE LATER
-        //LocalDate data = startDate.getValue();
-        //data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    }
-
-    public void endDatePressed(ActionEvent actionEvent) {// TODO DELETE LATER
-        // LocalDate data = endDate.getValue();
-        // data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public void btnMinPressed(ActionEvent actionEvent) {
@@ -232,5 +227,37 @@ public class ProjectViewController implements Initializable {
     private void closeWindow() {
         Stage stage = (Stage) btnDraw.getScene().getWindow();
         stage.close();
+    }
+
+    public void fillComboBox() {
+        List<String> fontName = Font.getFamilies();
+        comboBoxFont.getItems().addAll(fontName);
+        comboBoxFont.setValue(fontName.get(0));
+
+        for (int i = 1; i <= 100; i++) {
+            comboBoxFontSize.getItems().add(i);
+        }
+        comboBoxFontSize.setValue(1);
+
+        comboBoxFont.setOnAction(e -> setFont());
+        comboBoxFontSize.setOnAction(e -> setFont());
+        checkBoxBold.setOnAction(e -> setFont());
+        checkBoxItalic.setOnAction(e -> setFont());
+    }
+
+    private void setFont() {
+        FontWeight weight;
+        if (checkBoxBold.isSelected()) {
+            weight = FontWeight.BOLD;
+        } else {
+            weight = FontWeight.NORMAL;
+        }
+        FontPosture posture;
+        if (checkBoxItalic.isSelected()) {
+            posture = FontPosture.ITALIC;
+        } else {
+            posture = FontPosture.REGULAR;
+        }
+        txaNotes.setFont(Font.font(comboBoxFont.getValue(), weight, posture, comboBoxFontSize.getValue()));
     }
 }
