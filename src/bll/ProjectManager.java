@@ -1,43 +1,43 @@
 package bll;
 
+import be.Account;
+import be.Devices;
 import be.EditLog;
 import be.Project;
 import bll.interfaces.IProjectManager;
-import dal.LogDAO;
-import dal.PictureDAO;
-import dal.ProjectAccountDAO;
-import dal.ProjectDAO;
-import dal.interfaces.ILogDAO;
-import dal.interfaces.IPictureDAO;
-import dal.interfaces.IProjectAccountDAO;
-import dal.interfaces.IProjectDAO;
+import dal.*;
+import dal.interfaces.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProjectManager implements IProjectManager {
     private IProjectDAO projectDAO;
     private ILogDAO logDAO;
     private IPictureDAO pictureDAO;
     private IProjectAccountDAO projectAccountDAO;
+    private IDevicesDAO devicesDAO;
     private List<Project> allProjects;
-    private List<Project> privateProjects;
 
-    public ProjectManager(){
+
+    public ProjectManager() {
         projectDAO = new ProjectDAO();
         pictureDAO = new PictureDAO();
         logDAO = LogDAO.getInstance();
         projectAccountDAO = new ProjectAccountDAO();
+        devicesDAO = new DevicesDAO();
         fillAllProjects();
     }
+
     private void fillAllProjects() {
         allProjects = projectDAO.getAllProjects();
     }
+
     @Override
     public List<Project> getAllProjects() {
         return allProjects;
@@ -46,18 +46,18 @@ public class ProjectManager implements IProjectManager {
     @Override
     public List<Project> getPrivateProjects() {
         List<Project> listPrivateProjects = new ArrayList<>();
-        for (Project project : allProjects){
-            if (project.getPrivateProject()== false){
+        for (Project project : allProjects) {
+            if (project.getPrivateProject() == false) {
                 listPrivateProjects.add(project);
             }
         }
         return listPrivateProjects;
     }
 
-    public List<Project> getPublicProjects(){
+    public List<Project> getPublicProjects() {
         List<Project> listPublicProjects = new ArrayList<>();
-        for (Project project : allProjects){
-            if (project.getPrivateProject()==true){
+        for (Project project : allProjects) {
+            if (project.getPrivateProject() == true) {
                 listPublicProjects.add(project);
             }
         }
@@ -67,7 +67,7 @@ public class ProjectManager implements IProjectManager {
     @Override
     public void createProject(Project project, int accountID) {
         projectDAO.createProject(project);
-        projectAccountDAO.saveProject(project.getRefNumber(), accountID, projectAccountDAO.getMaxID());
+        //projectAccountDAO.saveProject(project.getRefNumber(), accountID, projectAccountDAO.getMaxID());
         allProjects.add(project);
     }
 
@@ -80,11 +80,12 @@ public class ProjectManager implements IProjectManager {
 
     /**
      * Returns all the projects for an account.
+     *
      * @param accountID The id of the account.
      * @return A list of projects.
      */
     @Override
-    public List<Project> getProjectsForAccount(int accountID){
+    public List<Project> getProjectsForAccount(int accountID) {
         List<Project> results = new ArrayList<>();
         //TODO develop ProjectAccountDAO
         return results;
@@ -93,15 +94,17 @@ public class ProjectManager implements IProjectManager {
 
     /**
      * Returns all the pictures for a project.
+     *
      * @param refNumber The reference number for the project.
      * @return The path of all pictures.
      */
     @Override
-    public List<String> getPicturesForProject(String refNumber){
+    public List<String> getPicturesForProject(String refNumber) {
         return pictureDAO.getAllPicturesForProject(refNumber);
     }
+
     @Override
-    public void recordLog(String refNumber, int accountID){
+    public void recordLog(String refNumber, int accountID) {
         int id = logDAO.getMaxID() + 1;
         String date = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
                 + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
@@ -135,8 +138,8 @@ public class ProjectManager implements IProjectManager {
     public List<Project> searchForProjects(String userSearchInput, String searchOption) {
         List<Project> matchingProjects = FXCollections.observableArrayList();
 
-        for (Project project: allProjects){
-            switch (searchOption){
+        for (Project project : allProjects) {
+            switch (searchOption) {
                 case "name":
                     if (project.getCustomerName().toLowerCase().contains(userSearchInput.toLowerCase()))
                         matchingProjects.add(project);
@@ -158,6 +161,15 @@ public class ProjectManager implements IProjectManager {
         return matchingProjects;
     }
 
+    @Override
+    public void createDevice(Devices devices) {
+        devicesDAO.createDevice(devices);
+    }
+
+    @Override
+    public int getMaxIdForDevice() {
+        return devicesDAO.getMaxIdForDevice();
+    }
 
 }
 
