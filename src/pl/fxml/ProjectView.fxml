@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="476.0" prefWidth="1120.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
+<AnchorPane prefHeight="532.0" prefWidth="1120.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
     <children>
         <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-container" stylesheets="@../css/MainStyle.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -168,20 +168,23 @@
             <String fx:value="common-text-font" />
          </styleClass>
       </Label>
-      <ComboBox fx:id="comboBoxFont" layoutX="384.0" layoutY="51.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.bottomAnchor="434.0" AnchorPane.leftAnchor="384.0" AnchorPane.rightAnchor="542.0" AnchorPane.topAnchor="51.0" />
-      <ComboBox fx:id="comboBoxFontSize" layoutX="646.0" layoutY="50.0" prefHeight="27.0" prefWidth="82.0" AnchorPane.bottomAnchor="433.0" AnchorPane.rightAnchor="392.0" AnchorPane.topAnchor="50.0">
+      <ComboBox fx:id="comboBoxFont" layoutX="384.0" layoutY="51.0" prefHeight="27.0" prefWidth="194.0" AnchorPane.bottomAnchor="454.0" AnchorPane.leftAnchor="384.0" AnchorPane.rightAnchor="542.0" AnchorPane.topAnchor="51.0" />
+      <ComboBox fx:id="comboBoxFontSize" layoutX="646.0" layoutY="50.0" prefHeight="27.0" prefWidth="82.0" AnchorPane.bottomAnchor="455.0" AnchorPane.rightAnchor="392.0" AnchorPane.topAnchor="50.0">
          <padding>
             <Insets left="20.0" />
          </padding></ComboBox>
-      <CheckBox fx:id="checkBoxBold" layoutX="748.0" layoutY="56.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" text="Bold" textFill="WHITE" AnchorPane.bottomAnchor="437.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="56.0">
+      <CheckBox fx:id="checkBoxBold" layoutX="748.0" layoutY="44.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" text="Bold" textFill="WHITE" AnchorPane.bottomAnchor="449.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="44.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></CheckBox>
-      <CheckBox fx:id="checkBoxItalic" layoutX="820.0" layoutY="47.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="71.0" text="Italic" textFill="WHITE" AnchorPane.bottomAnchor="429.0" AnchorPane.rightAnchor="228.66666666666663" AnchorPane.topAnchor="47.0">
+      <CheckBox fx:id="checkBoxItalic" layoutX="820.0" layoutY="37.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="71.0" text="Italic" textFill="WHITE" AnchorPane.bottomAnchor="439.0" AnchorPane.rightAnchor="228.66666666666663" AnchorPane.topAnchor="37.0">
          <font>
             <Font name="System Italic" size="12.0" />
          </font></CheckBox>
       <Label layoutX="590.0" layoutY="50.0" prefHeight="27.0" prefWidth="55.0" text="Font Size" textFill="WHITE" />
       <Label layoutX="328.0" layoutY="50.0" prefHeight="27.0" prefWidth="55.0" text="Font Style" textFill="WHITE" />
+      <CheckBox fx:id="checkBoxPublicProject" layoutX="939.0" layoutY="373.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" text="Public" textFill="WHITE" />
+      <CheckBox fx:id="checkBoxPrivateProject" layoutX="939.0" layoutY="408.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Private " textFill="WHITE" />
+      <Button fx:id="btnAddDevice" layoutX="941.0" layoutY="441.0" mnemonicParsing="false" onAction="#addDevicePressed" prefHeight="25.0" prefWidth="149.0" text=" Add Device" />
     </children>
 </AnchorPane>

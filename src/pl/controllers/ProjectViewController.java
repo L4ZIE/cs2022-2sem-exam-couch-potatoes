@@ -1,6 +1,10 @@
 package pl.controllers;
 
+import be.Account;
+import be.Devices;
 import be.Project;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,9 +31,11 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -39,7 +45,9 @@ public class ProjectViewController implements Initializable {
     private FlowPane flowPane;
     @FXML
     private CheckBox checkBoxBold,
-            checkBoxItalic;
+            checkBoxItalic,
+            checkBoxPublicProject,
+            checkBoxPrivateProject;
     @FXML
     private ComboBox<String> comboBoxFont;
     @FXML
@@ -54,8 +62,9 @@ public class ProjectViewController implements Initializable {
     private Button goBack,
             logoutBtn;
     @FXML
-    private Label usernameLbl,
-            lblRefNumber;
+    private Label usernameLbl;
+    @FXML
+    private Label lblRefNumber;
     @FXML
     private Button btnMin,
             btnMax,
@@ -64,27 +73,36 @@ public class ProjectViewController implements Initializable {
             btnAdd,
             btnRemove,
             btnDraw,
-            btnClose;
+            btnClose,
+            btnAddDevice;
 
 
     @FXML
     private TextArea txaNotes;
     @FXML
-    private TextField txfCustomerName,
-            txfCustomerEmail,
-            txfCustomerLocation;
+    private TextField txfCustomerName;
+    @FXML
+    private TextField txfCustomerEmail;
+    @FXML
+    private TextField txfCustomerLocation;
     @FXML
     private ChoiceBox chbSelectAccount;
     private ProjectModel projectModel;
     private List<Image> images = new ArrayList<>();
     private int currentImageIndex = 0;
+    private DevicesViewController devicesViewController;
+    private static String staticRefNumber;
+    public static List<Devices> devices = new ArrayList<>();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
+        devicesViewController = new DevicesViewController();
         if (TechnicianViewController.getSelectedProject() != null)
             fillFields(TechnicianViewController.getSelectedProject());
         fillComboBox();
+
     }
 
     private void fillFields(Project selectedProject) {
@@ -104,31 +122,44 @@ public class ProjectViewController implements Initializable {
         //TODO fill drawing
     }
 
-    public void goBackPressed(ActionEvent actionEvent) {
-        closeWindow();
+
+    public static void saveDeviceToList(Devices device) {
+        device.setRefNumber(staticRefNumber);
+        devices.add(device);
     }
 
-    /*public void btnSavePressed(ActionEvent actionEvent) {
-        int rand = (int) (Math.random() * 10000); //TODO placeholder, change later
-        String refNumber = txfCustomerName.getText().substring(0, 3) + txfCustomerEmail.getText().substring(0, 3) + rand;
-        if (TechnicianViewController.getSelectedProject() == null) {
 
-            projectModel.createProject(new Project(refNumber,
-                    txfCustomerName.getText(),
-                    txfCustomerEmail.getText(),
-                    txfCustomerLocation.getText(),
-                    txaNotes.getText(),
-                    "drawing location placeholder", //TODO placeholder, change later
-                    java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    true
-            ), 1);
+    public void btnSavePressed(ActionEvent actionEvent) {
+        int rand = (int) (Math.random() * 10000);
+        String refNumber = txfCustomerName.getText().substring(0, 3) + txfCustomerEmail.getText().substring(0, 3) + rand;
+
+        if (TechnicianViewController.getSelectedProject() == null) {
+            projectModel.createProject(new Project(
+                            refNumber,
+                            txfCustomerName.getText(),
+                            txfCustomerEmail.getText(),
+                            txfCustomerLocation.getText(),
+                            txaNotes.getText(),
+                            "drawing location placeholder", //TODO placeholder, change later
+                            java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            true,
+                            selectPublicOrPrivate()),
+                    2);
             for (Image img : images) {
                 projectModel.createPicture(img.getUrl(), refNumber);
             }
+            for (Devices d : devices) {
+                d.setRefNumber(refNumber);
+                projectModel.createDevice(d);// save to DB
+
+            }
+            devices.clear();
+
             //projectModel.recordLog(refNumber, 1);
             JOptionPane.showMessageDialog(null, "Successfully saved Project.");
+
         } else {
             projectModel.editProject(new Project(lblRefNumber.getText(),
                     txfCustomerName.getText(),
@@ -139,21 +170,32 @@ public class ProjectViewController implements Initializable {
                     java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    true));
+                    true,
+                    selectPublicOrPrivate())); // change later
             for (Image img : images) {
                 projectModel.createPicture(img.getUrl(), lblRefNumber.getText());
+
+            }
+            for (Devices d : devices) {
+                Project selectedProject = TechnicianViewController.getSelectedProject();
+                if (d.getRefNumber() == selectedProject.getRefNumber()) {
+                    devices.remove(d);
+                    JOptionPane.showMessageDialog(null, "This document has a device");
+                }
             }
             JOptionPane.showMessageDialog(null, "Successfully updated Project.");
         }
-
         closeWindow();
         //TODO create a picture,create a draw
-    }*/
+    }
 
 
     public void btnCancelPressed(ActionEvent actionEvent) {
         closeWindow();
     }
+
+    private String path;
+    private File file;
 
     public void btnAddPressed(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -169,7 +211,6 @@ public class ProjectViewController implements Initializable {
         }
     }
 
-
     public void displayImages() {
         if (!images.isEmpty()) {
             imvPictures.setImage(images.get(currentImageIndex));
@@ -183,9 +224,6 @@ public class ProjectViewController implements Initializable {
         imvPictures.setImage(null);
     }
 
-    public Image getPictureByPath(String path) {
-        return new Image(path);
-    }
 
     public void btnDrawPressed(ActionEvent actionEvent) {
         try {
@@ -260,4 +298,64 @@ public class ProjectViewController implements Initializable {
         }
         txaNotes.setFont(Font.font(comboBoxFont.getValue(), weight, posture, comboBoxFontSize.getValue()));
     }
+
+    public Boolean selectPublicOrPrivate() {
+        boolean isSelected;
+        if (checkBoxPublicProject.isSelected()) {
+            isSelected = true;//1
+        } else {
+            isSelected = false;//0
+        }
+        return isSelected;
+    }
+
+    public void displayInactiveProjects() {
+
+        String message = "Please delete unused projects in the last 48 months :\n";
+        boolean showPopup = false;
+        try {
+            List<Project> allProjects = projectModel.getAllProjects();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+            int thisYear = Integer.parseInt(sdf.format(new Date()));
+
+            String endProject;
+            for (Project p : allProjects) {
+                endProject = p.getEndDate();
+                if (thisYear - Integer.parseInt(endProject.substring(6)) >= 4) {
+                    showPopup = true;
+                    message = message + "\n" + p.getRefNumber();
+                }
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+        if (showPopup)
+            JOptionPane.showMessageDialog(null, message);
+    }
+
+    public void addDevicePressed(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("pl/fxml/DevicesView.fxml"));
+            Parent root = loader.load();
+
+            staticRefNumber = lblRefNumber.getText();
+
+            Scene scene = new Scene(root);
+            Stage primaryStage = new Stage();
+            primaryStage.setTitle("Device");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void goBackPressed(ActionEvent actionEvent) {
+        closeWindow();
+    }
+
+
 }
+
