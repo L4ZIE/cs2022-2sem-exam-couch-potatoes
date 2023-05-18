@@ -18,7 +18,9 @@ public class ProjectModel {
         projectManager = new ProjectManager();
     }
 
-
+    public Project getProjectByRefNumber(String refNumber) {
+        return projectManager.getProjectByRefNumber(refNumber);
+    }
     public ObservableList<Project> getAllProjects() {
         return FXCollections.observableArrayList(projectManager.getAllProjects());
     }

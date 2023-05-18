@@ -17,7 +17,7 @@ public interface IProjectManager {
     List<Project> getProjectsForAccount(int accountID);
     List<String> getPicturesForProject(String refNumber);
     void recordLog(String refNumber, int accountID);
-
+    Project getProjectByRefNumber(String refNumber);
     void deleteProject(String refNumber);
     void createPicture(String path, String refNumber);
     void deletePicture(int id);

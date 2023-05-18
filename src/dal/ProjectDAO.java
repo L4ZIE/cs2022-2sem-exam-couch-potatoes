@@ -122,4 +122,34 @@ public class ProjectDAO implements IProjectDAO {
 
 
     }
+    @Override
+    public Project getProjectByRefNumber(String refNumber){
+        String sql = "SELECT * FROM Projects WHERE refNumber = ? ";
+        Project project = null;
+        try {
+            PreparedStatement preparedStatement = connector.createConnection().prepareStatement(sql);
+            preparedStatement.setString(1,refNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                project = new Project(
+                        resultSet.getString("refNumber"),
+                        resultSet.getString("customerName"),
+                        resultSet.getString("customerEmail"),
+                        resultSet.getString("customerLocation"),
+                        resultSet.getString("note"),
+                        resultSet.getString("drawing"),
+                        resultSet.getString("creationDate"),
+                        resultSet.getString("projectStartDate"),
+                        resultSet.getString("projectEndDate"),
+                        resultSet.getBoolean("approved"),
+                        resultSet.getBoolean("private")
+                );
+            }
+            resultSet.close();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return project;
+    }
 }

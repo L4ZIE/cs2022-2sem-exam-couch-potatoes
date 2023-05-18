@@ -132,7 +132,7 @@ public class TechnicianViewController implements Initializable {
 
     //TODO fix connection
     public void previewPressed(String refNumber) {
-        Project project =projectModel.getProjectByRefNumber(refNumber);
+        Project project = projectModel.getProjectByRefNumber(refNumber);
 
         if (project != null){
             try {

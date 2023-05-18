@@ -170,6 +170,10 @@ public class ProjectManager implements IProjectManager {
     public int getMaxIdForDevice() {
         return devicesDAO.getMaxIdForDevice();
     }
+    @Override
+    public Project getProjectByRefNumber(String refNumber) {
+        return projectDAO.getProjectByRefNumber(refNumber);
+    }
 
 }
 

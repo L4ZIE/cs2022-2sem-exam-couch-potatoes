@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="532.0" prefWidth="1120.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
@@ -116,7 +117,7 @@
               
                                     <ImageView fx:id="imvPictures" fitHeight="140.0" fitWidth="266.0" layoutX="1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
             <FlowPane fx:id="flowPane" prefHeight="155.0" prefWidth="267.0" />
-            <Button fx:id="btnAdd" layoutX="1.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnAddPressed" stylesheets="@../css/MainStyle.css" text="Add">
+            <Button fx:id="btnAdd" layoutX="-1.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnAddPressed" stylesheets="@../css/MainStyle.css" text="Add">
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />
@@ -133,7 +134,7 @@
                   <Insets left="5.0" />
                </padding>
             </Label>
-            <Button fx:id="btnRemove" layoutX="205.0" layoutY="124.0" mnemonicParsing="false" onAction="#btnRemovePressed" stylesheets="@../css/MainStyle.css" text="Remove">
+            <Button fx:id="btnRemove" layoutX="210.0" layoutY="124.0" mnemonicParsing="false" onAction="#btnRemovePressed" stylesheets="@../css/MainStyle.css" text="Remove">
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />
@@ -145,7 +146,7 @@
       <Pane layoutX="32.0" layoutY="271.0" prefHeight="140.0" prefWidth="267.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0">
          <children>
             <ImageView fx:id="imvDrawing" fitHeight="140.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="btnDraw" layoutX="225.0" layoutY="114.0" mnemonicParsing="false" onAction="#btnDrawPressed" stylesheets="@../css/MainStyle.css" text="Draw">
+            <Button fx:id="btnDraw" layoutX="225.0" layoutY="115.0" mnemonicParsing="false" onAction="#btnDrawPressed" stylesheets="@../css/MainStyle.css" text="Draw">
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />
@@ -168,23 +169,24 @@
             <String fx:value="common-text-font" />
          </styleClass>
       </Label>
-      <ComboBox fx:id="comboBoxFont" layoutX="384.0" layoutY="51.0" prefHeight="27.0" prefWidth="194.0" AnchorPane.bottomAnchor="454.0" AnchorPane.leftAnchor="384.0" AnchorPane.rightAnchor="542.0" AnchorPane.topAnchor="51.0" />
-      <ComboBox fx:id="comboBoxFontSize" layoutX="646.0" layoutY="50.0" prefHeight="27.0" prefWidth="82.0" AnchorPane.bottomAnchor="455.0" AnchorPane.rightAnchor="392.0" AnchorPane.topAnchor="50.0">
+      <ComboBox fx:id="comboBoxFont" layoutX="384.0" layoutY="51.0" prefHeight="27.0" prefWidth="194.0" AnchorPane.leftAnchor="384.0" AnchorPane.topAnchor="51.0" />
+      <ComboBox fx:id="comboBoxFontSize" layoutX="646.0" layoutY="50.0" prefHeight="27.0" prefWidth="82.0" AnchorPane.leftAnchor="646.0" AnchorPane.topAnchor="50.0">
          <padding>
             <Insets left="20.0" />
          </padding></ComboBox>
-      <CheckBox fx:id="checkBoxBold" layoutX="748.0" layoutY="44.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" text="Bold" textFill="WHITE" AnchorPane.bottomAnchor="449.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="44.0">
+      <CheckBox fx:id="checkBoxBold" layoutX="748.0" layoutY="44.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" text="Bold" textFill="WHITE" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="55.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></CheckBox>
-      <CheckBox fx:id="checkBoxItalic" layoutX="820.0" layoutY="37.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="71.0" text="Italic" textFill="WHITE" AnchorPane.bottomAnchor="439.0" AnchorPane.rightAnchor="228.66666666666663" AnchorPane.topAnchor="37.0">
+      <CheckBox fx:id="checkBoxItalic" layoutX="820.0" layoutY="37.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="71.0" text="Italic" textFill="WHITE" AnchorPane.rightAnchor="228.66666666666663" AnchorPane.topAnchor="47.0">
          <font>
             <Font name="System Italic" size="12.0" />
          </font></CheckBox>
-      <Label layoutX="590.0" layoutY="50.0" prefHeight="27.0" prefWidth="55.0" text="Font Size" textFill="WHITE" />
-      <Label layoutX="328.0" layoutY="50.0" prefHeight="27.0" prefWidth="55.0" text="Font Style" textFill="WHITE" />
-      <CheckBox fx:id="checkBoxPublicProject" layoutX="939.0" layoutY="373.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" text="Public" textFill="WHITE" />
-      <CheckBox fx:id="checkBoxPrivateProject" layoutX="939.0" layoutY="408.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Private " textFill="WHITE" />
-      <Button fx:id="btnAddDevice" layoutX="941.0" layoutY="441.0" mnemonicParsing="false" onAction="#addDevicePressed" prefHeight="25.0" prefWidth="149.0" text=" Add Device" />
+      <Label layoutX="590.0" layoutY="50.0" prefHeight="27.0" prefWidth="55.0" text="Font Size" textFill="WHITE" AnchorPane.leftAnchor="590.0" AnchorPane.topAnchor="50.0" />
+      <Label layoutX="328.0" layoutY="50.0" prefHeight="27.0" prefWidth="55.0" text="Font Style" textFill="WHITE" AnchorPane.leftAnchor="325.0" AnchorPane.topAnchor="50.0" />
+      <CheckBox fx:id="checkBoxPublicProject" layoutX="939.0" layoutY="373.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" text="Public" textFill="WHITE" AnchorPane.bottomAnchor="130.0" AnchorPane.rightAnchor="100.0" />
+      <CheckBox fx:id="checkBoxPrivateProject" layoutX="939.0" layoutY="408.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Private " textFill="WHITE" AnchorPane.bottomAnchor="98.0" AnchorPane.rightAnchor="110.0" />
+      <Button fx:id="btnAddDevice" layoutX="941.0" layoutY="441.0" mnemonicParsing="false" onAction="#addDevicePressed" prefHeight="25.0" prefWidth="149.0" text=" Add Device" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="30.0" />
+      <Polygon fill="#333333" layoutX="850.0" layoutY="60.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="0.0" />
     </children>
 </AnchorPane>
