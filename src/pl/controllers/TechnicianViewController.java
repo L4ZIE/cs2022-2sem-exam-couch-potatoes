@@ -1,5 +1,6 @@
 package pl.controllers;
 
+import be.AccountType;
 import be.Project;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +26,17 @@ import java.util.ResourceBundle;
 public class TechnicianViewController implements Initializable {
 
     @FXML
-    private Button createBtn,
+    public Label lblUsername;
+    @FXML
+    public Button btnMin,
+            btnMax,
+            btnClose,
+            btnNameSearch,
+            btnLocSearch,
+            btnStartSearch,
+            btnEndSearch,
+            btnApprovedSearch,
+            createBtn,
             updateBtn,
             previewBtn,
             saveBtn,
@@ -33,7 +44,8 @@ public class TechnicianViewController implements Initializable {
             deleteBtn,
             allProjectsBtn,
             privateProjectsBtn,
-            publicProjectsBtn;
+            publicProjectsBtn,
+            btnAccounts;
     @FXML
     private TableView<Project> projectTableView;
 
@@ -55,6 +67,12 @@ public class TechnicianViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
         fillProjectsTable(projectTableView);
+        lblUsername.setText(LoginController.getUsername());
+
+        if (LoginController.getAccountType().equals(AccountType.PROJECTMANAGER) ||
+                LoginController.getAccountType().equals(AccountType.CEO)) {
+            btnAccounts.setVisible(true);
+        }
         //TODO display public projects
     }
 
@@ -172,6 +190,7 @@ public class TechnicianViewController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     public void fillProjectsTable(TableView projectTableView) {
         fillProjectsTable(projectTableView, "all");
     }
@@ -210,6 +229,7 @@ public class TechnicianViewController implements Initializable {
     public void closeBtnPressed(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
+        LoginController.bringUpWindow();
         stage.close();
     }
 
@@ -222,6 +242,9 @@ public class TechnicianViewController implements Initializable {
 
     public static Project getSelectedProject() {
         return selectedProject;
+    }
+
+    public void btnAccountsPressed(ActionEvent actionEvent) {
     }
 }
 

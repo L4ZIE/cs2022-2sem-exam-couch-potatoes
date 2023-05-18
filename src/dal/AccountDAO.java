@@ -2,7 +2,6 @@ package dal;
 
 import be.Account;
 import be.AccountType;
-import be.Project;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.connector.DBConnector;
 import dal.interfaces.IAccountDAO;
@@ -40,7 +39,7 @@ public class AccountDAO implements IAccountDAO {
                         resultSet.getInt("id"),
                         resultSet.getString("uName"),
                         resultSet.getString("uPassword"),
-                        AccountType.fromId(resultSet.getInt("uType"))
+                        AccountType.fromValue(resultSet.getInt("uType"))
                 ));
             }
             return accounts;
@@ -77,6 +76,36 @@ public class AccountDAO implements IAccountDAO {
 
             preparedStatement = connector.createConnection().prepareStatement(sql);
             preparedStatement.setString(1, newPassword);
+            preparedStatement.setInt(2, id);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void changeType(int id, int type) {
+        String sql = "UPDATE Accounts uType = ? WHERE id = ?";
+        try {
+
+            preparedStatement = connector.createConnection().prepareStatement(sql);
+            preparedStatement.setInt(1, type);
+            preparedStatement.setInt(2, id);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void changeAccountName(int id, String name) {
+        String sql = "UPDATE Accounts uName = ? WHERE id = ?";
+        try {
+
+            preparedStatement = connector.createConnection().prepareStatement(sql);
+            preparedStatement.setString(1, name);
             preparedStatement.setInt(2, id);
 
             preparedStatement.executeUpdate();

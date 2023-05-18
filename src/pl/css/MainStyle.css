@@ -1,8 +1,9 @@
 .root {
     -fx-dark-blue: #17263a;
-    -fx-light-blue: #4fa8ed;
+    -fx-light-blue: #2d6086;
     -fx-black: #212529;
     -fx-dark-grey: #333;
+    -fx-light-grey: #a8a8a8;
     -fx-orange: #f84d3b;
     -fx-dark-orange: #e84910;
     -fx-red: #dc3545;
@@ -63,6 +64,9 @@
     -fx-background-color: -fx-red;
 
 }
+.orange-button{
+    -fx-background-color: -fx-dark-orange;
+}
 
 .project-container {
     -fx-background-color: -fx-dark-grey;
@@ -102,4 +106,26 @@
 .project-button:hover {
     -fx-opacity: 1;
     -fx-text-fill: -fx-dark-orange;
+}
+
+.table-view{
+    -fx-background-color: -fx-black;
+}
+
+.table-view .column-header {
+    -fx-background-color: -fx-dark-orange;
+    -fx-border-width: 0px;
+}
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dirty-white;
+}
+.table-row-cell{
+    -fx-background-color: -fx-dirty-white;
+}
+.table-row-cell:odd{
+    -fx-background-color: -fx-light-grey;
+}
+.table-row-cell:selected{
+    -fx-background-color: -fx-light-blue;
 }

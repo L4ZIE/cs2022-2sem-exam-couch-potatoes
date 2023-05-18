@@ -1,5 +1,7 @@
 package pl.models;
 
+import be.Account;
+import be.AccountType;
 import bll.AccountManager;
 
 public class AccountModel {
@@ -7,6 +9,27 @@ public class AccountModel {
 
     public Boolean checkCredentials(String username, String password) {
         return accountManager.checkCredentials(username, password);
+    }
+    public void createAccount(Account account){
+        accountManager.createAccount(account);
+    }
+    public void deleteAccount(int id){
+        accountManager.deleteAccount(id);
+    }
+    public void changeAccountName(int id, String name){
+        accountManager.changeAccountName(id, name);
+    }
+    public void changeAccountType(int id, AccountType type){
+        accountManager.changeAccountType(id, type);
+    }
+    public void changePassword(int id, String password){
+        accountManager.changePassword(id, password);
+    }
+    public Account getAccountByName(String name){
+        return accountManager.getAccountByName(name);
+    }
+    public AccountType getAccountTypeByName(String name){
+        return accountManager.getAccountTypeByName(name);
     }
 
 }
