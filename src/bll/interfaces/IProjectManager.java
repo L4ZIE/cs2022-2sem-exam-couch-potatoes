@@ -1,7 +1,8 @@
 package bll.interfaces;
 
+import be.Account;
+import be.Devices;
 import be.Project;
-import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface IProjectManager {
     void deletePicture(int id);
     int getPictureIDByPath(String path);
     List<Project> searchForProjects(String userSearchInput, String searchOption);
+
+    void createDevice(Devices devices);
+    int  getMaxIdForDevice();
+
 }

@@ -1,5 +1,6 @@
 package pl.controllers;
 
+import be.AccountType;
 import be.Project;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
@@ -31,7 +32,17 @@ import java.util.ResourceBundle;
 public class TechnicianViewController implements Initializable {
 
     @FXML
-    private Button createBtn,
+    public Label lblUsername;
+    @FXML
+    public Button btnMin,
+            btnMax,
+            btnClose,
+            btnNameSearch,
+            btnLocSearch,
+            btnStartSearch,
+            btnEndSearch,
+            btnApprovedSearch,
+            createBtn,
             updateBtn,
             previewBtn,
             saveBtn,
@@ -39,7 +50,8 @@ public class TechnicianViewController implements Initializable {
             deleteBtn,
             allProjectsBtn,
             privateProjectsBtn,
-            publicProjectsBtn;
+            publicProjectsBtn,
+            btnAccounts;
     @FXML
     private TableView<Project> projectTableView;
 
@@ -62,7 +74,13 @@ public class TechnicianViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
-        fillProjectsTable(projectTableView, "all");
+        fillProjectsTable(projectTableView);
+        lblUsername.setText(LoginController.getUsername());
+
+        if (LoginController.getAccountType().equals(AccountType.PROJECTMANAGER) ||
+                LoginController.getAccountType().equals(AccountType.CEO)) {
+            btnAccounts.setVisible(true);
+        }
         //TODO display public projects
     }
 
@@ -158,7 +176,7 @@ public class TechnicianViewController implements Initializable {
         } else {
             Project selectedProject = projectTableView.getSelectionModel().getSelectedItem();
             projectModel.deleteProject(selectedProject);
-            fillProjectsTable(projectTableView, "all");
+            fillProjectsTable(projectTableView);
         }
     }
 
@@ -217,6 +235,10 @@ public class TechnicianViewController implements Initializable {
         }
     }
 
+    public void fillProjectsTable(TableView projectTableView) {
+        fillProjectsTable(projectTableView, "all");
+    }
+
     public void allProjectsBtnPressed(ActionEvent actionEvent) {
         fillProjectsTable(projectTableView, "all");
     }
@@ -251,12 +273,13 @@ public class TechnicianViewController implements Initializable {
     public void closeBtnPressed(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
+        LoginController.bringUpWindow();
         stage.close();
     }
 
     public void refresh(MouseEvent mouseEvent) {
         if (needsRefresh) {
-            fillProjectsTable(projectTableView, "all");
+            fillProjectsTable(projectTableView);
             needsRefresh = false;
         }
     }
@@ -264,7 +287,8 @@ public class TechnicianViewController implements Initializable {
     public static Project getSelectedProject() {
         return selectedProject;
     }
-
+    public void btnAccountsPressed(ActionEvent actionEvent) {
+    }
 
 }
 
