@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
@@ -22,7 +21,6 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,16 +34,6 @@ public class DrawingViewController implements Initializable {
     private TextField txfSize;
     @FXML
     private Canvas canvas;
-    @FXML
-    private Button
-            btnClear,
-            btnPencil,
-            btnEraser,
-            btnLine,
-            btnCircle,
-            btnSquare,
-            btnSave,
-            btnExit;
     private GraphicsContext graphicsContext;
     private Boolean haveHandler;
     private EventHandler<MouseEvent> mouseHandler;
@@ -57,7 +45,7 @@ public class DrawingViewController implements Initializable {
         haveHandler = false;
     }
 
-    public void pencilDrawing(ActionEvent event) {
+    public void pencilDrawing() {
         Color c = Color.web("#000000");
         canvas.getGraphicsContext2D().setStroke(c);
         drawStuff();
@@ -84,7 +72,7 @@ public class DrawingViewController implements Initializable {
         }
     }
 
-    public void eraserPressed(ActionEvent event) {
+    public void eraserPressed() {
         Color c = Color.web("#17263a");//change later to getBackgroundColor
         canvas.getGraphicsContext2D().setStroke(c);
     }
@@ -105,7 +93,7 @@ public class DrawingViewController implements Initializable {
         closeWindow(event);
     }
 
-    public void btnLinePressed(ActionEvent e) {
+    public void btnLinePressed() {
         //TODO
         if (mouseHandler != null)
             canvas.removeEventHandler(MouseEvent.MOUSE_DRAGGED, mouseHandler);
@@ -130,7 +118,7 @@ public class DrawingViewController implements Initializable {
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseHandler);
     }
 
-    public void clearCanvas(ActionEvent event) {
+    public void clearCanvas() {
         graphicsContext.clearRect(0, 0, graphicsContext.getCanvas().getWidth(), graphicsContext.getCanvas().getHeight());
     }
 
@@ -159,7 +147,7 @@ public class DrawingViewController implements Initializable {
         canvas.getGraphicsContext2D().setLineWidth(Double.parseDouble(txfSize.getText()));
     }
 
-    public void btnSetSizePressed(ActionEvent actionEvent) {
+    public void btnSetSizePressed() {
         setDrawingSize();
     }
 }
