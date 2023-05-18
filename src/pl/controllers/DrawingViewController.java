@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
@@ -29,6 +30,8 @@ import java.util.ResourceBundle;
 
 public class DrawingViewController implements Initializable {
     @FXML
+    public Button btnPencil, btnEraser, btnLine;
+    @FXML
     private TextField txfSize;
     @FXML
     private Canvas canvas;
@@ -40,6 +43,7 @@ public class DrawingViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         graphicsContext = canvas.getGraphicsContext2D();
+        graphicsContext.setLineWidth(Double.parseDouble(txfSize.getText()));
         haveHandler = false;
     }
 
@@ -48,6 +52,9 @@ public class DrawingViewController implements Initializable {
         canvas.getGraphicsContext2D().setStroke(c);
         drawStuff();
         haveHandler = true;
+        btnPencil.setDisable(true);
+        btnLine.setDisable(false);
+        btnEraser.setDisable(false);
     }
 
     private void drawStuff() {
@@ -73,6 +80,10 @@ public class DrawingViewController implements Initializable {
     public void eraserPressed() {
         Color c = Color.web("#17263a");//change later to getBackgroundColor
         canvas.getGraphicsContext2D().setStroke(c);
+        btnPencil.setDisable(false);
+        btnLine.setDisable(false);
+        btnEraser.setDisable(true);
+
     }
 
     public void saveDrawing(ActionEvent event) {
@@ -81,7 +92,7 @@ public class DrawingViewController implements Initializable {
                     (int) graphicsContext.getCanvas().getWidth(),
                     (int) graphicsContext.getCanvas().getHeight());
 
-            canvas.snapshot(null, writableImage);
+            canvas.snapshot(null, writableImage);//edit later
             RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
             ImageIO.write(renderedImage, "png", new File("temp/drawings/lastDrawing.png"));
 
@@ -93,6 +104,13 @@ public class DrawingViewController implements Initializable {
 
     public void btnLinePressed() {
         //TODO
+        btnLine.setDisable(true);
+        btnPencil.setDisable(false);
+        btnEraser.setDisable(false);
+
+        Color c = Color.web("#000000");
+        canvas.getGraphicsContext2D().setStroke(c);
+
         if (mouseHandler != null)
             canvas.removeEventHandler(MouseEvent.MOUSE_DRAGGED, mouseHandler);
         haveHandler = false;
@@ -105,6 +123,7 @@ public class DrawingViewController implements Initializable {
             if (!startSet[0]) {
                 start.setLocation(event.getX(), event.getY());
                 startSet[0] = true;
+                graphicsContext.strokeLine(start.getX(), start.getY(), start.getX(), start.getY());
             } else {
                 end.setLocation(event.getX(), event.getY());
                 startSet[0] = false;
