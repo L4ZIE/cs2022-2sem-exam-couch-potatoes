@@ -2,6 +2,9 @@ package pl.controllers;
 
 import be.AccountType;
 import be.Project;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +22,11 @@ import javafx.stage.Stage;
 import pl.models.ProjectModel;
 
 import javax.swing.*;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class TechnicianViewController implements Initializable {
@@ -61,6 +67,8 @@ public class TechnicianViewController implements Initializable {
     private ProjectModel projectModel;
     private boolean needsRefresh = false;
     private static Project selectedProject;
+
+    //private String refNumber;
 
 
     @Override
@@ -118,7 +126,43 @@ public class TechnicianViewController implements Initializable {
     }
 
     public void previewBtnPressed(ActionEvent actionEvent) {
+        //TODO fix parameters
+        previewPressed(selectedProject.getRefNumber());
     }
+
+    //TODO fix connection
+    public void previewPressed(String refNumber) {
+        Project project =projectModel.getProjectByRefNumber(refNumber);
+
+        if (project != null){
+            try {
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream("project_"+ refNumber + ".pdf"));
+                document.open();
+
+                document.add(new Paragraph("Reference Number: " + project.getRefNumber()));
+                document.add(new Paragraph("Customer Name: " + project.getCustomerName()));
+                document.add(new Paragraph("Customer Email: " + project.getCustomerEmail()));
+                document.add(new Paragraph("Customer Location: " + project.getCustomerLocation()));
+                document.add(new Paragraph("Note: " + project.getNote()));
+                document.add(new Paragraph("Drawing: " + project.getDrawing()));
+                document.add(new Paragraph("Creation Date: " + project.getCreationDate()));
+                document.add(new Paragraph("Project Start Date: " + project.getStartDate()));
+                document.add(new Paragraph("Project End Date: " + project.getEndDate()));
+                document.add(new Paragraph("Approved: " + project.getApproved()));
+                document.add(new Paragraph("Private: " + project.getPrivateProject()));
+                document.add(new Paragraph(""));
+
+                document.close();
+                System.out.println("PDF file generated successfully");
+                }catch (Exception e){
+                throw new RuntimeException(e);
+            }
+            }else {
+            System.out.println("Project with reference number"+ refNumber+"not found.");
+            }
+        }
+
 
     public void saveBtnPressed(ActionEvent actionEvent) {
     }
@@ -243,8 +287,8 @@ public class TechnicianViewController implements Initializable {
     public static Project getSelectedProject() {
         return selectedProject;
     }
-
     public void btnAccountsPressed(ActionEvent actionEvent) {
     }
+
 }
 
