@@ -1,47 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.DrawingViewController">
+<AnchorPane fx:id="anpMain" prefHeight="600.0" prefWidth="800.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.DrawingViewController">
    <children>
-      <AnchorPane layoutX="654.0" layoutY="-1.0" prefHeight="610.0" prefWidth="179.0" style="-fx-background-color: lightgray;">
+      <AnchorPane layoutX="14.0" layoutY="40.0" prefHeight="551.0" prefWidth="781.0" style="-fx-border-color: white;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0" />
+      <AnchorPane layoutX="1.0" layoutY="-1.0" prefHeight="34.0" prefWidth="446.0" styleClass="project-container" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="btnClear" layoutX="62.0" layoutY="22.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="25.0" prefWidth="52.0" text="Clear" />
-            <Label layoutX="10.0" layoutY="84.0" prefHeight="25.0" prefWidth="45.0" text="Tools" AnchorPane.leftAnchor="3.0">
+            <Button fx:id="btnClear" layoutX="540.0" layoutY="2.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="30.0" prefWidth="60.0" styleClass="project-button" text="Clear" textFill="#dc3545" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <Separator layoutY="70.0" prefHeight="3.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <Separator layoutX="-2.0" layoutY="180.0" prefHeight="16.0" prefWidth="214.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <Button fx:id="btnPencil" layoutX="14.0" layoutY="125.0" mnemonicParsing="false" onAction="#pencilDrawing" prefHeight="25.0" prefWidth="52.0" text="Pencil" />
-            <Button fx:id="btnEraser" layoutX="110.0" layoutY="125.0" mnemonicParsing="false" onAction="#eraserPressed" text="Eraser" />
-            <Label layoutX="16.0" layoutY="235.0" prefHeight="25.0" prefWidth="48.0" text="Size:">
+               </font>
+            </Button>
+            <Button fx:id="btnEraser" layoutX="62.0" layoutY="2.0" mnemonicParsing="false" onAction="#eraserPressed" text="Erase" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="3.0">
+               <styleClass>
+                  <String fx:value="project-button" />
+                  <String fx:value="common-text-colour" />
+               </styleClass>
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <Separator layoutX="-2.0" layoutY="316.0" prefHeight="16.0" prefWidth="214.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <Label layoutX="6.0" layoutY="332.0" prefHeight="20.0" prefWidth="60.0" text="Shapes" AnchorPane.leftAnchor="3.0">
+               </font>
+            </Button>
+            <Button fx:id="btnPencil" layoutY="1.0" mnemonicParsing="false" onAction="#pencilDrawing" prefHeight="30.0" prefWidth="60.0" text="Draw" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="3.0">
+               <styleClass>
+                  <String fx:value="project-button" />
+                  <String fx:value="common-text-colour" />
+               </styleClass>
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <Button fx:id="btnCircle" layoutX="61.0" layoutY="369.0" mnemonicParsing="false" text="Circle" />
-            <Label layoutX="10.0" layoutY="435.0" prefHeight="25.0" prefWidth="60.0" text="Colors" AnchorPane.leftAnchor="3.0">
+               </font>
+            </Button>
+            <Label layoutX="134.0" layoutY="4.0" prefHeight="25.0" prefWidth="48.0" text="Size:" AnchorPane.leftAnchor="134.0" AnchorPane.topAnchor="3.0">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <Button fx:id="btnLine" layoutX="12.0" layoutY="369.0" mnemonicParsing="false" onAction="#btnLinePressed" prefHeight="25.0" prefWidth="41.0" text="Line" />
-            <Button fx:id="btnSquare" layoutX="114.0" layoutY="369.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Square" />
-            <TextField fx:id="txfSize" layoutX="48.0" layoutY="235.0" prefHeight="25.0" prefWidth="99.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="common-text-colour" />
+                  <String fx:value="common-text-font" />
+               </styleClass>
+            </Label>
+            <TextField fx:id="txfSize" layoutX="171.0" layoutY="4.0" onKeyPressed="#txfSizeKeyPressed" prefHeight="20.0" prefWidth="34.0" text="2.5" AnchorPane.leftAnchor="170.0" AnchorPane.topAnchor="5.0" />
+            <Label layoutX="271.0" layoutY="6.0" prefHeight="20.0" prefWidth="60.0" styleClass="common-text-colour" text="Shape:" AnchorPane.leftAnchor="271.0" AnchorPane.topAnchor="7.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnLine" layoutX="317.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnLinePressed" prefHeight="30.0" prefWidth="48.0" text="Line" AnchorPane.leftAnchor="317.0" AnchorPane.topAnchor="3.0">
+               <styleClass>
+                  <String fx:value="common-text-colour" />
+                  <String fx:value="project-button" />
+               </styleClass>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Label layoutX="413.0" layoutY="4.0" prefHeight="25.0" prefWidth="60.0" styleClass="common-text-colour" text="Colour:" AnchorPane.leftAnchor="413.0" AnchorPane.topAnchor="3.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnSave" layoutX="484.0" layoutY="-3.0" mnemonicParsing="false" onAction="#saveDrawing" styleClass="project-button" text="Save" textFill="#198754" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="2.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Line endX="14.250985145568848" endY="-23.307106018066406" layoutX="358.0" layoutY="23.0" startX="14.250986099243164" startY="10.385784149169922" stroke="WHITE" AnchorPane.leftAnchor="371.54387855529785" AnchorPane.topAnchor="-1.0142135620117188" />
+            <Line endX="14.250985145568848" endY="-23.307106018066406" layoutX="249.0" layoutY="26.0" startX="14.250986099243164" startY="10.385784149169922" stroke="WHITE" AnchorPane.leftAnchor="262.54387855529785" AnchorPane.topAnchor="1.9857864379882812" />
+            <Button fx:id="btnSetSize" layoutX="210.0" layoutY="4.0" mnemonicParsing="false" onAction="#btnSetSizePressed" prefHeight="30.0" prefWidth="42.0" text="Set" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="2.0">
+               <styleClass>
+                  <String fx:value="project-button" />
+                  <String fx:value="common-text-colour" />
+               </styleClass>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <Canvas fx:id="canvas" height="568.0" layoutX="1.0" layoutY="-1.0" width="628.0" />
-      <Button fx:id="btnSave" layoutX="160.0" layoutY="570.0" mnemonicParsing="false" onAction="#saveDrawing" text="Save" />
-      <Button fx:id="btnExit" layoutX="417.0" layoutY="570.0" mnemonicParsing="false" onAction="#exitPressed" prefHeight="25.0" prefWidth="44.0" text="Exit" />
+      <Polygon fill="#333333" layoutX="630.0" layoutY="60.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.rightAnchor="165.79998779296875" AnchorPane.topAnchor="1.1444091796875E-5" />
+      <HBox alignment="TOP_RIGHT" layoutX="728.0" layoutY="1.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="minBtn" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
+            <Button fx:id="closeBtn" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
+         </children>
+      </HBox>
+      <Line endX="14.250985145568848" endY="-23.307106018066406" layoutX="99.0" layoutY="57.0" startX="14.250986099243164" startY="10.385784149169922" stroke="WHITE" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="0.0" />
+      <Canvas fx:id="canvas" height="543.0" width="772.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0" />
+      <Label layoutX="634.0" layoutY="9.0" styleClass="common-text-colour" text="Drawing" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="5.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
