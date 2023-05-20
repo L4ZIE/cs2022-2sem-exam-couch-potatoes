@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -31,6 +33,8 @@ import java.util.ResourceBundle;
 public class DrawingViewController implements Initializable {
     @FXML
     public Button btnPencil, btnEraser, btnLine;
+    @FXML
+    public AnchorPane anpMain;
     @FXML
     private TextField txfSize;
     @FXML
@@ -92,7 +96,10 @@ public class DrawingViewController implements Initializable {
                     (int) graphicsContext.getCanvas().getWidth(),
                     (int) graphicsContext.getCanvas().getHeight());
 
-            canvas.snapshot(null, writableImage);//edit later
+            SnapshotParameters params = new SnapshotParameters();
+            params.setViewport(new javafx.geometry.Rectangle2D(15, 50,
+                    graphicsContext.getCanvas().getWidth(), graphicsContext.getCanvas().getHeight()));
+            anpMain.snapshot(params, writableImage);
             RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
             ImageIO.write(renderedImage, "png", new File("temp/drawings/lastDrawing.png"));
 
@@ -103,7 +110,6 @@ public class DrawingViewController implements Initializable {
     }
 
     public void btnLinePressed() {
-        //TODO
         btnLine.setDisable(true);
         btnPencil.setDisable(false);
         btnEraser.setDisable(false);
