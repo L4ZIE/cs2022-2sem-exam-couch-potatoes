@@ -42,7 +42,7 @@ public class DevicesDAO implements IDevicesDAO {
             preparedStatement = connector.createConnection().prepareStatement(sql);
 
             preparedStatement.setInt(1, id);
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -28,7 +28,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.codehaus.plexus.component.configurator.converters.basic.UrlConverter;
 import pl.models.AccountModel;
 import pl.models.ProjectModel;
 
@@ -95,6 +94,7 @@ public class ProjectViewController implements Initializable {
     private AccountModel accountModel;
     private Image selectedPicture;
     private static Boolean changed;
+    private static int devicesToAdd;
     private double xOffset;
     private double yOffset;
 
@@ -108,6 +108,7 @@ public class ProjectViewController implements Initializable {
         italicToggled = false;
         underlineToggled = false;
         changed = false;
+        devicesToAdd = 0;
         if (TechnicianViewController.getSelectedProject() != null)
             fillFields(TechnicianViewController.getSelectedProject());
         else {
@@ -120,6 +121,7 @@ public class ProjectViewController implements Initializable {
         anpMain.setOnMousePressed(this::handleMousePressed);
         anpMain.setOnMouseDragged(this::handleMouseDragged);
     }
+
     private void handleMousePressed(MouseEvent event) {
         xOffset = event.getSceneX();
         yOffset = event.getSceneY();
@@ -143,18 +145,13 @@ public class ProjectViewController implements Initializable {
         drawingLocation = selectedProject.getDrawing();
         displayDrawing(drawingLocation);
         fillDevices(projectModel.getAllDevicesForProject(selectedProject.getRefNumber()));
+        fillDeviceChoiceBox();
         fillAccounts();
         List<String> imageLocations = projectModel.getPicturesForProject(selectedProject.getRefNumber());
         for (String s : imageLocations) {
             images.add(new Image(s));
         }
         displayImages();
-
-        BooleanProperty changedProperty = new SimpleBooleanProperty(changed);
-
-        changedProperty.addListener((observable, oldValue, newValue) -> {
-            fillDevices(projectModel.getAllDevicesForProject(selectedProject.getRefNumber()));
-        });
     }
 
     private void displayDrawing(String drawingLocation) {
@@ -186,8 +183,11 @@ public class ProjectViewController implements Initializable {
     }
 
     private void fillDevices(ObservableList<Devices> allDevicesForProject) {
+        devices.addAll(allDevicesForProject);
+    }
+    private void fillDeviceChoiceBox(){
         ObservableList<String> deviceNames = FXCollections.observableArrayList();
-        for (Devices d : allDevicesForProject) {
+        for (Devices d : devices) {
             deviceNames.add(d.getDeviceName());
         }
         chbDevices.setItems(deviceNames);
@@ -198,10 +198,13 @@ public class ProjectViewController implements Initializable {
     public static void saveDeviceToList(Devices device) {//TODO
         device.setRefNumber(staticRefNumber);
         devices.add(device);
+        devicesToAdd ++;
         changed = !changed;
     }
 
-
+    public static int getDevicesToAdd(){
+        return devicesToAdd;
+    }
     public void btnSavePressed() {
         if (TechnicianViewController.getSelectedProject() == null) {
             int rand = (int) (Math.random() * 10000);//TODO change
@@ -250,24 +253,18 @@ public class ProjectViewController implements Initializable {
                     cheDrawInclude.isSelected()));
 
             List<String> existingImages = projectModel.getPicturesForProject(lblRefNumber.getText());
-            for (Image i : images) {
-                for (String s : existingImages) {
-                    Image exim = new Image(s);
-                    if (i.getUrl().equals(exim.getUrl()))
-                        images.remove(i);
-                }
+            for (String s : existingImages) {   //I don't have time for checks, just completely refresh the db
+                                                //it's bad but at least it's a solution
+                projectModel.deletePicture(projectModel.getPictureIDByPath(s));
             }
+
             for (Image i : images) {
                 projectModel.createPicture(i.getUrl(), lblRefNumber.getText());
             }
 
             List<Devices> existingDevices = projectModel.getAllDevicesForProject(lblRefNumber.getText());
-            clearDeletedDevices(existingDevices);
-            for (Devices d : devices) {
-                for (Devices ed : existingDevices) {
-                    if (d.equals(ed))
-                        devices.remove(d);
-                }
+            for (Devices d : existingDevices) { //this is such a huge code smell, but I don't have time to develop
+                projectModel.removeDevice(d.getId());
             }
             for (Devices d : devices) {
                 projectModel.createDevice(d);
@@ -279,21 +276,6 @@ public class ProjectViewController implements Initializable {
         }
         closeWindow();
     }
-
-    private void clearDeletedDevices(List<Devices> existingDevices) {
-        boolean exists;
-        for (Devices ed : existingDevices) {
-            exists = false;
-            for (Devices d : devices)
-                if (d.equals(ed)) {
-                    exists = true;
-                    break; //fk it, why not
-                }
-            if (!exists)
-                projectModel.removeDevice(ed.getId());
-        }
-    }
-
 
     public void btnCancelPressed() {
         closeWindow();
@@ -312,14 +294,15 @@ public class ProjectViewController implements Initializable {
     }
 
     public void displayImages() {
+        gdpPictures.getChildren().clear();
         int maxRow = 4, maxCol = 4;
         int currentRow = 0, currentCol = 0;
         gdpPictures.setHgap(10);
         gdpPictures.setVgap(10);
         for (Image i : images) {
             ImageView imageView = new ImageView(i);
-            imageView.setFitWidth(60);
-            imageView.setFitHeight(60);
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
             imageView.getStyleClass().add("added-pictures");
 
             imageView.setOnMouseClicked(e -> {
@@ -433,7 +416,7 @@ public class ProjectViewController implements Initializable {
 
     public void btnRemoveDevicePressed() {
         devices.remove(getDeviceFromChbByName(chbDevices.getSelectionModel().getSelectedItem()));
-        fillDevices(devices);
+        fillDeviceChoiceBox();
     }
 
     private Devices getDeviceFromChbByName(String name) {

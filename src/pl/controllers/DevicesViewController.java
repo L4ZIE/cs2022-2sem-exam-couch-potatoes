@@ -65,7 +65,8 @@ public class DevicesViewController implements Initializable {
     }
 
     public void saveDevice() {
-        ProjectViewController.saveDeviceToList(new Devices(projectModel.getMaxIdForDevice() + 1,
+        ProjectViewController.saveDeviceToList(
+                new Devices(projectModel.getMaxIdForDevice() + 1 + ProjectViewController.getDevicesToAdd(),
                 txfDeviceName.getText(),
                 txfUserName.getText(),
                 txfUserPassword.getText(),
