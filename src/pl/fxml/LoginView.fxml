@@ -27,7 +27,7 @@
             </Label>
          </children>
       </Pane>
-      <HBox alignment="TOP_RIGHT" layoutX="706.0" layoutY="14.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="TOP_RIGHT" layoutX="706.0" layoutY="14.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
          <children>
             <Button fx:id="btnMin" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_">
                <styleClass>
@@ -51,6 +51,6 @@
          </font>
       </Label>
       <PasswordField fx:id="pwfPassword" layoutX="225.0" layoutY="193.0" onKeyPressed="#pwfPasswordKeyPressed" prefHeight="34.0" prefWidth="260.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0" />
-      <Polygon fill="#333333" layoutX="430.0" layoutY="60.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Polygon fill="#333333" layoutX="428.0" layoutY="61.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" />
    </children>
 </AnchorPane>

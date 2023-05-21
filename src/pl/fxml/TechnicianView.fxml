@@ -74,7 +74,7 @@
         </Button>
         <TextField fx:id="searchField" focusTraversable="false" layoutX="579.0" layoutY="52.0" onKeyPressed="#searchFieldKeyPressed" promptText="Search..." style="-fx-shape: 'M0 0 L150 0 L140 50 L0 50 Z'" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="48.0" />
         <Button fx:id="btnSearch" focusTraversable="false" layoutX="731.0" layoutY="52.0" mnemonicParsing="false" onAction="#btnSearchPressed" prefHeight="25.0" prefWidth="30.0" style="-fx-shape: 'M15 0 L150 0 L85 50 L-50 50 Z'" styleClass="orange-button" text="🔍" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="48.0" />
-        <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-container" stylesheets="@../css/MainStyle.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0">
+        <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-container" stylesheets="@../css/MainStyle.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Button fx:id="allProjectsBtn" focusTraversable="false" mnemonicParsing="false" onAction="#allProjectsBtnPressed" prefHeight="25.0" prefWidth="115.0" stylesheets="@../css/MainStyle.css" text="All Projects">
                     <HBox.margin>
@@ -115,7 +115,7 @@
                 <String fx:value="common-text-font" />
             </styleClass>
         </Button>
-        <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
             <Button fx:id="btnMin" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
             <Button fx:id="btnMax" focusTraversable="false" mnemonicParsing="false" onAction="#maxBtnBtn" text="[ ]" />
             <Button fx:id="btnClose" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />

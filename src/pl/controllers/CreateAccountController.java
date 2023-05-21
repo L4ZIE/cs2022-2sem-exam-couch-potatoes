@@ -69,10 +69,23 @@ public class CreateAccountController implements Initializable {
 
     public void btnSavePressed() {
         if (AccountVIewController.getSelectedAccount() == null){
-            accountModel.createAccount(new Account(accountModel.getMaxID() + 1, txfUsername.getText(),
-                    txfPassword.getText(), chbAccountType.getSelectionModel().getSelectedItem()));
+            if (!txfPassword.getText().equals("") && !txfUsername.getText().equals("")) {
+                accountModel.createAccount(new Account(accountModel.getMaxID() + 1, txfUsername.getText(),
+                        txfPassword.getText(), chbAccountType.getSelectionModel().getSelectedItem()));
 
-            JOptionPane.showMessageDialog(null, "Successfully created account.");
+                JOptionPane.showMessageDialog(null, "Successfully created account.");
+                closeBtnPressed();
+            }
+            else{
+                if(txfPassword.getText().equals("") && txfUsername.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Username and password field is empty.");
+                else if (txfUsername.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Username field is empty.");
+                else
+                    JOptionPane.showMessageDialog(null, "Password field is empty.");
+            }
+
+
         }
 
         else { //no time to optimize
@@ -81,9 +94,10 @@ public class CreateAccountController implements Initializable {
                 accountModel.changePassword(selectedAccount.getId(), txfPassword.getText());
             accountModel.changeAccountType(selectedAccount.getId(), chbAccountType.getSelectionModel().getSelectedItem());
             JOptionPane.showMessageDialog(null, "Successfully updated account.");
+            closeBtnPressed();
         }
         AccountVIewController.refreshTable();
-        closeBtnPressed();
+
 
     }
 

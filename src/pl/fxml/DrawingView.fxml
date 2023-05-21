@@ -89,7 +89,7 @@
          </children>
       </AnchorPane>
       <Polygon fill="#333333" layoutX="630.0" layoutY="60.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.rightAnchor="165.79998779296875" AnchorPane.topAnchor="1.1444091796875E-5" />
-      <HBox alignment="TOP_RIGHT" layoutX="728.0" layoutY="1.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="TOP_RIGHT" layoutX="728.0" layoutY="1.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
          <children>
             <Button fx:id="minBtn" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
             <Button fx:id="closeBtn" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />

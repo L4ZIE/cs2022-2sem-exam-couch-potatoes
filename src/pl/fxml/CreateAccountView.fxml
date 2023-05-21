@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="anpMain" prefHeight="362.0" prefWidth="507.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.CreateAccountController">
    <children>
-      <HBox alignment="TOP_RIGHT" layoutX="767.0" layoutY="1.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="TOP_RIGHT" layoutX="767.0" layoutY="1.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
          <children>
             <Button fx:id="minBtn" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
             <Button fx:id="closeBtn" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
