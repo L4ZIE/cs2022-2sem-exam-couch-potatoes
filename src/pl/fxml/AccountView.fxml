@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anpMain" onMouseMoved="#checkRefreshTable" prefHeight="400.0" prefWidth="506.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.AccountVIewController">
+   <children>
+      <HBox alignment="TOP_RIGHT" layoutX="736.0" layoutY="1.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="minBtn" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
+            <Button fx:id="closeBtn" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
+         </children>
+      </HBox>
+      <AnchorPane layoutY="8.0" prefHeight="34.0" prefWidth="194.0" styleClass="project-container" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="14.0" layoutY="7.0" styleClass="common-text-colour" text="Manage Accounts">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Polygon fill="#333333" layoutX="224.0" layoutY="59.9999885559082" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.topAnchor="0.0" />
+      <TableView fx:id="tbvAccounts" layoutX="14.0" layoutY="47.0" prefHeight="345.0" prefWidth="298.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="45.0">
+        <columns>
+          <TableColumn fx:id="colUsername" prefWidth="171.2000732421875" resizable="false" text="Username" />
+          <TableColumn fx:id="colAccountType" prefWidth="127.199951171875" resizable="false" text="Account Type" />
+        </columns>
+      </TableView>
+      <Label fx:id="lblUsername" layoutX="264.0" layoutY="8.0" text="Username" AnchorPane.topAnchor="8.0">
+         <styleClass>
+            <String fx:value="common-text-colour" />
+            <String fx:value="common-text-font" />
+         </styleClass>
+      </Label>
+      <Button fx:id="btnCreateAccount" layoutX="318.0" layoutY="81.0" mnemonicParsing="false" onAction="#btnCreateAccountPressed" styleClass="positive-button" text="Create Account" />
+      <Button fx:id="btnEditAccount" layoutX="318.0" layoutY="116.0" mnemonicParsing="false" onAction="#btnEditAccountPressed" styleClass="orange-button" text="Edit Account" />
+      <Button fx:id="btnRemoveAccount" layoutX="318.0" layoutY="362.0" mnemonicParsing="false" onAction="#btnRemoveAccount" styleClass="negative-button" text="Remove Account" />
+      <TextField fx:id="txfSearch" focusTraversable="false" layoutX="318.0" layoutY="47.0" onKeyPressed="#searchFieldKeyPressed" promptText="Search..." style="-fx-shape: 'M0 0 L150 0 L140 50 L0 50 Z'" AnchorPane.topAnchor="47.0" />
+      <Button fx:id="btnSearch" focusTraversable="false" layoutX="462.0" layoutY="47.0" mnemonicParsing="false" onAction="#btnSearchPressed" prefHeight="25.0" prefWidth="30.0" style="-fx-shape: 'M15 0 L150 0 L85 50 L-50 50 Z'" styleClass="orange-button" text="🔍" AnchorPane.topAnchor="47.0" />
+   </children>
+</AnchorPane>

@@ -6,6 +6,7 @@ import bll.interfaces.IAccountManager;
 import dal.AccountDAO;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,6 +73,7 @@ public class AccountManager implements IAccountManager {
 
     @Override
     public List<Account> getAllAccounts() {
+        fillAccounts();
         return accounts;
     }
 
@@ -121,5 +123,17 @@ public class AccountManager implements IAccountManager {
         accounts.remove(changedAccount);
         changedAccount.setName(name);
         accounts.add(changedAccount);
+    }
+
+    @Override
+    public List<Account> searchForAccounts(String query) {
+        List<Account> result = new ArrayList<>();
+
+        for (Account a : accounts) {
+            if (a.getName().toLowerCase().contains(query.toLowerCase()))
+                result.add(a);
+        }
+
+        return result;
     }
 }

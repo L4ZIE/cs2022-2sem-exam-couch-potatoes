@@ -17,5 +17,6 @@ public interface IAccountManager {
     void changePassword(int id, String password);
     void changeAccountType(int id, AccountType type);
     void changeAccountName(int id, String name);
+    List<Account> searchForAccounts(String query);
 
 }

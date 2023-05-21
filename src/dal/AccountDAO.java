@@ -68,7 +68,7 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public void changePassword(int id, String newPassword) {
-        String sql = "UPDATE Accounts uPassword = ? WHERE id = ?";
+        String sql = "UPDATE Accounts SET uPassword = ? WHERE id = ?";
         try {
 
             preparedStatement = connector.createConnection().prepareStatement(sql);
@@ -83,7 +83,7 @@ public class AccountDAO implements IAccountDAO {
     }
     @Override
     public void changeType(int id, int type) {
-        String sql = "UPDATE Accounts uType = ? WHERE id = ?";
+        String sql = "UPDATE Accounts SET uType = ? WHERE id = ?";
         try {
 
             preparedStatement = connector.createConnection().prepareStatement(sql);
@@ -98,7 +98,7 @@ public class AccountDAO implements IAccountDAO {
     }
     @Override
     public void changeAccountName(int id, String name) {
-        String sql = "UPDATE Accounts uName = ? WHERE id = ?";
+        String sql = "UPDATE Accounts SET uName = ? WHERE id = ?";
         try {
 
             preparedStatement = connector.createConnection().prepareStatement(sql);

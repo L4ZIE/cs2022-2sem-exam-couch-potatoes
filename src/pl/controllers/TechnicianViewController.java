@@ -346,6 +346,22 @@ public class TechnicianViewController implements Initializable {
     }
 
     public void btnAccountsPressed() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pl/fxml/AccountView.fxml"));
+
+        try {
+            Scene scene = new Scene(loader.load());
+            Stage stageCreate = new Stage();
+
+            stageCreate.setTitle("Accounts");
+            stageCreate.initModality(Modality.APPLICATION_MODAL);
+            stageCreate.setScene(scene);
+            stageCreate.initStyle(StageStyle.UNDECORATED);
+            stageCreate.show();
+
+            stageCreate.setResizable(false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void btnSearchPressed() {

@@ -38,4 +38,10 @@ public class AccountModel {
     }
     public ObservableList<Account> getAllAccounts(){
         return FXCollections.observableArrayList(accountManager.getAllAccounts());    }
+    public ObservableList<Account> searchForAccounts(String query){
+        return FXCollections.observableArrayList(accountManager.searchForAccounts(query));
+    }
+    public int getMaxID(){
+        return accountManager.getMaxID();
+    }
 }
