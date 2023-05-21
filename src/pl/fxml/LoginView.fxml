@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="314.0" prefWidth="600.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.LoginController">
+<AnchorPane fx:id="anpMain" prefHeight="314.0" prefWidth="600.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.LoginController">
    <children>
       <Label layoutX="246.0" layoutY="157.0" styleClass="common-text-colour" text="Password" textAlignment="CENTER">
          <font>

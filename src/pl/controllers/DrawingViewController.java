@@ -47,6 +47,8 @@ public class DrawingViewController implements Initializable {
     private GraphicsContext graphicsContext;
     private Boolean haveHandler;
     private EventHandler<MouseEvent> mouseHandler;
+    private double xOffset;
+    private double yOffset;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,9 +58,20 @@ public class DrawingViewController implements Initializable {
         if(ProjectViewController.getDrawingLocation() != null){
             imvExistingDrawing.setImage(new Image(ProjectViewController.getDrawingLocation()));
         }
+        anpMain.setOnMousePressed(this::handleMousePressed);
+        anpMain.setOnMouseDragged(this::handleMouseDragged);
 
     }
+    private void handleMousePressed(MouseEvent event) {
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    }
 
+    private void handleMouseDragged(MouseEvent event) {
+        Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - xOffset);
+        stage.setY(event.getScreenY() - yOffset);
+    }
     public void pencilDrawing() {
         Color c = Color.web("#000000");
         canvas.getGraphicsContext2D().setStroke(c);

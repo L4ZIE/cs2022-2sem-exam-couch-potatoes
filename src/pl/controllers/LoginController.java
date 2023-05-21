@@ -11,8 +11,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import pl.models.AccountModel;
 
 import javax.swing.*;
@@ -22,6 +25,8 @@ import java.util.ResourceBundle;
 
 
 public class LoginController implements Initializable {
+    @FXML
+    public AnchorPane anpMain;
     @FXML
     private Button btnMin,
             btnClose;
@@ -34,10 +39,14 @@ public class LoginController implements Initializable {
 
     private static String username;
     private static AccountType accountType;
+    private double xOffset;
+    private double yOffset;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         accountModel = new AccountModel();
+        anpMain.setOnMousePressed(this::handleMousePressed);
+        anpMain.setOnMouseDragged(this::handleMouseDragged);
     }
     public void minBtnPressed() {
         Stage stage = (Stage) btnMin.getScene().getWindow();
@@ -76,6 +85,7 @@ public class LoginController implements Initializable {
 
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(scene);
+                stage.initStyle(StageStyle.UNDECORATED);
                 stage.show();
 
             } catch (IOException e) {
@@ -95,8 +105,15 @@ public class LoginController implements Initializable {
         return accountType;
     }
     //TODO later if have time
-    public static void bringUpWindow(){
+    private void handleMousePressed(MouseEvent event) {
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    }
 
+    private void handleMouseDragged(MouseEvent event) {
+        Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - xOffset);
+        stage.setY(event.getScreenY() - yOffset);
     }
 
 }

@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import pl.models.ProjectModel;
 
@@ -20,6 +22,8 @@ import java.util.ResourceBundle;
 import static pl.controllers.ProjectViewController.devices;
 
 public class DevicesViewController implements Initializable {
+    @FXML
+    public AnchorPane anpMain;
     @FXML
     private Label lblRefNumber;
     @FXML
@@ -35,13 +39,26 @@ public class DevicesViewController implements Initializable {
             btnCancelAction, btnClose, btnMinimize;
 
     private ProjectModel projectModel;
+    private double xOffset;
+    private double yOffset;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
+        anpMain.setOnMousePressed(this::handleMousePressed);
+        anpMain.setOnMouseDragged(this::handleMouseDragged);
     }
 
+    private void handleMousePressed(MouseEvent event) {
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    }
 
+    private void handleMouseDragged(MouseEvent event) {
+        Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - xOffset);
+        stage.setY(event.getScreenY() - yOffset);
+    }
     public void cancelPressed() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();

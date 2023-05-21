@@ -20,7 +20,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="532.0" prefWidth="1120.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
+<AnchorPane fx:id="anpMain" prefHeight="532.0" prefWidth="1120.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
     <children>
         <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-container" stylesheets="@../css/MainStyle.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -146,10 +146,10 @@
             </Button>
          </children>
       </Pane>
-      <Pane layoutX="32.0" layoutY="271.0" prefHeight="140.0" prefWidth="267.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0">
+      <Pane layoutX="32.0" layoutY="271.0" prefHeight="140.0" prefWidth="244.0" style="-fx-border-color: -fx-dirty-white;" styleClass="base-background" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0">
          <children>
-            <ImageView fx:id="imvDrawing" fitHeight="140.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="btnDraw" layoutX="225.0" layoutY="115.0" mnemonicParsing="false" onAction="#btnDrawPressed" stylesheets="@../css/MainStyle.css" text="Draw">
+            <ImageView fx:id="imvDrawing" fitHeight="140.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="btnDraw" layoutX="199.0" layoutY="113.0" mnemonicParsing="false" onAction="#btnDrawPressed" stylesheets="@../css/MainStyle.css" text="Draw">
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />

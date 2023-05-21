@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="314.0" prefWidth="600.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.DevicesViewController">
+<AnchorPane fx:id="anpMain" prefHeight="314.0" prefWidth="600.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.DevicesViewController">
    <children>
       <TextField fx:id="txfDeviceName" layoutX="247.0" layoutY="63.0" prefHeight="32.0" prefWidth="287.0" />
       <TextField fx:id="txfUserName" layoutX="247.0" layoutY="139.0" prefHeight="32.0" prefWidth="287.0" />
@@ -50,7 +50,7 @@
             </Label>
          </children>
       </Pane>
-      <Polygon fill="#333333" layoutX="404.0" layoutY="2.0" points="2.000030517578125, 31.9999942779541, 41.666656494140625, -2.0, 2.000030517578125, -2.0000057220458984" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.topAnchor="-5.7220458984375E-6" />
+      <Polygon fill="#333333" layoutX="404.0" layoutY="2.0" points="2.000030517578125, 31.9999942779541, 41.666656494140625, -2.0, 2.000030517578125, -2.0000057220458984" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="0.0" />
       <Button fx:id="btnClose" layoutX="576.0" layoutY="1.0" mnemonicParsing="false" onAction="#closePressed" prefHeight="25.0" prefWidth="18.0" text="X" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <styleClass>
             <String fx:value="negative-button" />

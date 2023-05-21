@@ -19,12 +19,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.codehaus.plexus.component.configurator.converters.basic.UrlConverter;
 import pl.models.AccountModel;
 import pl.models.ProjectModel;
@@ -42,6 +45,8 @@ public class ProjectViewController implements Initializable {
 
     @FXML
     public GridPane gdpPictures;
+    @FXML
+    public AnchorPane anpMain;
     @FXML
     private CheckBox checkBoxPrivateProject,
             chePicturesInclude,
@@ -65,7 +70,9 @@ public class ProjectViewController implements Initializable {
             btnDraw,
             btnBold,
             btnItalic,
-            btnUnderline;
+            btnUnderline,
+            btnAddDevice,
+            btnRemoveDevice;
 
     @FXML
     private TextArea txaNotes;
@@ -88,6 +95,8 @@ public class ProjectViewController implements Initializable {
     private AccountModel accountModel;
     private Image selectedPicture;
     private static Boolean changed;
+    private double xOffset;
+    private double yOffset;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -101,8 +110,25 @@ public class ProjectViewController implements Initializable {
         changed = false;
         if (TechnicianViewController.getSelectedProject() != null)
             fillFields(TechnicianViewController.getSelectedProject());
+        else {
+            btnAddDevice.setDisable(true);
+            btnRemoveDevice.setDisable(true);
+            chbSelectAccount.setDisable(true);
+            chbDevices.setDisable(true);
+        }
         fillComboBox();
+        anpMain.setOnMousePressed(this::handleMousePressed);
+        anpMain.setOnMouseDragged(this::handleMouseDragged);
+    }
+    private void handleMousePressed(MouseEvent event) {
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    }
 
+    private void handleMouseDragged(MouseEvent event) {
+        Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - xOffset);
+        stage.setY(event.getScreenY() - yOffset);
     }
 
     private void fillFields(Project selectedProject) {
@@ -132,13 +158,14 @@ public class ProjectViewController implements Initializable {
     }
 
     private void displayDrawing(String drawingLocation) {
-        imvDrawing.setImage(new Image(drawingLocation));
+        if (drawingLocation != null)
+            imvDrawing.setImage(new Image(drawingLocation));
     }
 
     private void fillAccounts() {
         List<Integer> connectedAccountIDs = projectModel.getAllAccountIDsForProject(lblRefNumber.getText());
         for (int i : connectedAccountIDs) {
-            if (accountModel.getAccountByID(i).getName().equals(usernameLbl.getText()))
+            if (connectedAccountIDs.size() > 1 && accountModel.getAccountByID(i).getName().equals(usernameLbl.getText()))
                 connectedAccountIDs.remove(i);
         }
         List<Account> allAccounts = accountModel.getAllAccounts();
@@ -168,7 +195,7 @@ public class ProjectViewController implements Initializable {
     }
 
 
-    public static void saveDeviceToList(Devices device) {
+    public static void saveDeviceToList(Devices device) {//TODO
         device.setRefNumber(staticRefNumber);
         devices.add(device);
         changed = !changed;
@@ -226,11 +253,11 @@ public class ProjectViewController implements Initializable {
             for (Image i : images) {
                 for (String s : existingImages) {
                     Image exim = new Image(s);
-                    if(i.getUrl().equals(exim.getUrl()))
+                    if (i.getUrl().equals(exim.getUrl()))
                         images.remove(i);
                 }
             }
-            for (Image i: images) {
+            for (Image i : images) {
                 projectModel.createPicture(i.getUrl(), lblRefNumber.getText());
             }
 
@@ -238,7 +265,7 @@ public class ProjectViewController implements Initializable {
             clearDeletedDevices(existingDevices);
             for (Devices d : devices) {
                 for (Devices ed : existingDevices) {
-                    if(d.equals(ed))
+                    if (d.equals(ed))
                         devices.remove(d);
                 }
             }
@@ -295,9 +322,9 @@ public class ProjectViewController implements Initializable {
             imageView.setFitHeight(60);
             imageView.getStyleClass().add("added-pictures");
 
-            imageView.setOnMouseClicked(e->{
+            imageView.setOnMouseClicked(e -> {
                 selectedPicture = i;
-                if(e.getClickCount() > 1){
+                if (e.getClickCount() > 1) {
                     Stage imageStage = new Stage();
                     ImageView imageViewPopup = new ImageView(i);
                     imageViewPopup.setPreserveRatio(true);
@@ -314,10 +341,10 @@ public class ProjectViewController implements Initializable {
 
             gdpPictures.add(imageView, currentCol, currentRow);
             currentCol++;
-            if(currentCol > maxCol){
+            if (currentCol > maxCol) {
                 currentCol = 0;
                 currentRow++;
-                if(currentRow > maxRow)
+                if (currentRow > maxRow)
                     gdpPictures.addRow(currentRow);
             }
         }
@@ -341,6 +368,7 @@ public class ProjectViewController implements Initializable {
             primaryStage.setTitle("Drawing");
             primaryStage.setScene(scene);
             primaryStage.initModality(Modality.APPLICATION_MODAL);
+            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
 
         } catch (IOException e) {
@@ -376,7 +404,6 @@ public class ProjectViewController implements Initializable {
             comboBoxFontSize.getItems().add(i);
         }
         comboBoxFontSize.setValue(14);
-        ;
     }
 
 
@@ -391,6 +418,7 @@ public class ProjectViewController implements Initializable {
             Stage primaryStage = new Stage();
             primaryStage.setTitle("Device");
             primaryStage.setScene(scene);
+            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
 
 
@@ -404,8 +432,17 @@ public class ProjectViewController implements Initializable {
     }
 
     public void btnRemoveDevicePressed() {
-        devices.remove(projectModel.getDeviceByName(chbDevices.getSelectionModel().getSelectedItem()));
+        devices.remove(getDeviceFromChbByName(chbDevices.getSelectionModel().getSelectedItem()));
         fillDevices(devices);
+    }
+
+    private Devices getDeviceFromChbByName(String name) {
+        Devices result = null;
+        for (Devices d : devices) {
+            if (d.getDeviceName().equals(name))
+                result = d;
+        }
+        return result;
     }
 
     public void btnBoldPressed() {

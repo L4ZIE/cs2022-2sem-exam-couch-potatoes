@@ -20,10 +20,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import pl.models.ProjectModel;
 
 import javax.swing.*;
@@ -82,6 +84,8 @@ public class TechnicianViewController implements Initializable {
     private boolean needsRefresh = false;
     private static Project selectedProject;
     private String activeSearchOption;
+    private double xOffset;
+    private double yOffset;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,8 +100,20 @@ public class TechnicianViewController implements Initializable {
             btnAccounts.setVisible(true);
         }
         removeInactiveProjects();
+        anpMain.setOnMousePressed(this::handleMousePressed);
+        anpMain.setOnMouseDragged(this::handleMouseDragged);
     }
 
+    private void handleMousePressed(MouseEvent event) {
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    }
+
+    private void handleMouseDragged(MouseEvent event) {
+        Stage stage = (Stage) ((AnchorPane) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - xOffset);
+        stage.setY(event.getScreenY() - yOffset);
+    }
 
     public void createBtnPressed() {
         selectedProject = null;
@@ -128,7 +144,9 @@ public class TechnicianViewController implements Initializable {
             }
             stageCreate.initModality(Modality.APPLICATION_MODAL);
             stageCreate.setScene(scene);
+            stageCreate.initStyle(StageStyle.UNDECORATED);
             stageCreate.show();
+
             stageCreate.setResizable(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -297,7 +315,6 @@ public class TechnicianViewController implements Initializable {
     public void closeBtnPressed(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        LoginController.bringUpWindow();
         stage.close();
     }
 
