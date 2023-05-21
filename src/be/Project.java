@@ -9,16 +9,18 @@ public class Project {
     private String customerLocation;
     private String note;
     private String drawing;
-    private String creationDate;
+    private final String creationDate;
     private String startDate;
     private String endDate;
     private Boolean approved;
-
     private Boolean privateProject;
+    private Boolean includePictures;
+    private Boolean includeDrawing;
 
     public Project (String refNumber, String customerName, String customerEmail,
                     String customerLocation, String note, String drawing, String creationDate,
-                    String startDate, String endDate, Boolean approved, Boolean privateProject)
+                    String startDate, String endDate, Boolean approved, Boolean privateProject,
+                    Boolean includePictures, Boolean includeDrawing)
     {
         this.refNumber = refNumber;
         this.customerName = customerName;
@@ -31,8 +33,24 @@ public class Project {
         this.endDate = endDate;
         this.approved = approved;
         this.privateProject = privateProject;
+        this.includePictures = includePictures;
+        this.includeDrawing = includeDrawing;
+    }
+    public Boolean getIncludePictures() {
+        return includePictures;
     }
 
+    public void setIncludePictures(Boolean includePictures) {
+        this.includePictures = includePictures;
+    }
+
+    public Boolean getIncludeDrawing() {
+        return includeDrawing;
+    }
+
+    public void setIncludeDrawing(Boolean includeDrawing) {
+        this.includeDrawing = includeDrawing;
+    }
     public String getRefNumber() {
         return refNumber;
     }

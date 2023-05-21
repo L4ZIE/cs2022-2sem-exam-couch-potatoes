@@ -43,8 +43,6 @@ public class DBConnector {
         try {
             FileInputStream sr = new FileInputStream(file);
             properties.load(sr);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

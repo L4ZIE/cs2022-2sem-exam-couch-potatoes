@@ -35,21 +35,19 @@ public class DevicesViewController implements Initializable {
             btnCancelAction, btnClose, btnMinimize;
 
     private ProjectModel projectModel;
-    private ProjectViewController projectViewController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
-        projectViewController = new ProjectViewController();
     }
 
 
-    public void cancelPressed(ActionEvent event) {
+    public void cancelPressed() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();
     }
 
-    public void saveDevice(ActionEvent event) {
+    public void saveDevice() {
         ProjectViewController.saveDeviceToList(new Devices(projectModel.getMaxIdForDevice() + 1,
                 txfDeviceName.getText(),
                 txfUserName.getText(),
@@ -64,11 +62,11 @@ public class DevicesViewController implements Initializable {
 
 
 
-    public void closePressed(ActionEvent event) {
+    public void closePressed() {
         closeWindow();
     }
 
-    public void minimizePressed(ActionEvent event) {
+    public void minimizePressed() {
         Stage stage = (Stage) btnMinimize.getScene().getWindow();
         stage.setIconified(true);
     }

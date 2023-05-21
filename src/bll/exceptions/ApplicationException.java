@@ -1,10 +1,5 @@
 package bll.exceptions;
 
-import dal.connector.DBConnector;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-
 /**
  * The ApplicationException wraps all checked standard Java exception and enriches them with a custom error code.
  * You can use this code to retrieve localized error messages.
@@ -17,8 +12,8 @@ public class ApplicationException extends Exception {
         this.errorCode = errorCode;
     }
     public ApplicationException(String message)  {
-
-        super(message);}
+        super(message);
+    }
     public ApplicationException (String message, Throwable cause)  {
         super(message, cause);
     }

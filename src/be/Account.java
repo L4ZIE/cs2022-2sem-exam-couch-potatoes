@@ -1,7 +1,7 @@
 package be;
 
 public class Account {
-    private int id;
+    private final int id;
     private String name;
     private String password;
     private AccountType type;

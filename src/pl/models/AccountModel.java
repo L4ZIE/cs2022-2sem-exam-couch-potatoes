@@ -3,6 +3,8 @@ package pl.models;
 import be.Account;
 import be.AccountType;
 import bll.AccountManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class AccountModel {
     AccountManager accountManager = new AccountManager();
@@ -31,5 +33,9 @@ public class AccountModel {
     public AccountType getAccountTypeByName(String name){
         return accountManager.getAccountTypeByName(name);
     }
-
+    public Account getAccountByID(int id){
+        return accountManager.getAccountByID(id);
+    }
+    public ObservableList<Account> getAllAccounts(){
+        return FXCollections.observableArrayList(accountManager.getAllAccounts());    }
 }

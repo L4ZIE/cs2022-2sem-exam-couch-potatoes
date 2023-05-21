@@ -9,4 +9,5 @@ public interface ILogDAO {
     void deleteLog(int id);
     int getMaxID();
     ArrayList<EditLog> getAllLogs();
+    String getMaxDateForProject(String refNumber);
 }

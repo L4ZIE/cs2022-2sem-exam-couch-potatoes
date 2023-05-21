@@ -2,7 +2,6 @@ package dal;
 
 import be.Account;
 import be.AccountType;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.connector.DBConnector;
 import dal.interfaces.IAccountDAO;
 
@@ -44,8 +43,6 @@ public class AccountDAO implements IAccountDAO {
             }
             return accounts;
 
-        } catch (SQLServerException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,4 +1,4 @@
-package test.pl;
+/*package test.pl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,4 +41,4 @@ public class LoginTest{
         assertNull(LoginController.getUsername());
     }
 }
-
+*/

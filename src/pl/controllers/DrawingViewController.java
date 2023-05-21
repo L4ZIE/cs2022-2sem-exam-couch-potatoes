@@ -12,12 +12,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -36,6 +39,8 @@ public class DrawingViewController implements Initializable {
     @FXML
     public AnchorPane anpMain;
     @FXML
+    public ImageView imvExistingDrawing;
+    @FXML
     private TextField txfSize;
     @FXML
     private Canvas canvas;
@@ -43,12 +48,15 @@ public class DrawingViewController implements Initializable {
     private Boolean haveHandler;
     private EventHandler<MouseEvent> mouseHandler;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.setLineWidth(Double.parseDouble(txfSize.getText()));
         haveHandler = false;
+        if(ProjectViewController.getDrawingLocation() != null){
+            imvExistingDrawing.setImage(new Image(ProjectViewController.getDrawingLocation()));
+        }
+
     }
 
     public void pencilDrawing() {
@@ -82,6 +90,7 @@ public class DrawingViewController implements Initializable {
     }
 
     public void eraserPressed() {
+        drawStuff();
         Color c = Color.web("#17263a");//change later to getBackgroundColor
         canvas.getGraphicsContext2D().setStroke(c);
         btnPencil.setDisable(false);
@@ -91,6 +100,7 @@ public class DrawingViewController implements Initializable {
     }
 
     public void saveDrawing(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
         try {
             WritableImage writableImage = new WritableImage(
                     (int) graphicsContext.getCanvas().getWidth(),
@@ -101,12 +111,19 @@ public class DrawingViewController implements Initializable {
                     graphicsContext.getCanvas().getWidth(), graphicsContext.getCanvas().getHeight()));
             anpMain.snapshot(params, writableImage);
             RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-            ImageIO.write(renderedImage, "png", new File("temp/drawings/lastDrawing.png"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
+            fileChooser.setInitialFileName("LocationDrawing");
+            File file = fileChooser.showSaveDialog(null);
+            if (file != null){
+                ImageIO.write(renderedImage, "png", file);
+                ProjectViewController.setDrawingLocation(file.getAbsolutePath());
+                closeWindow(event);
+            }
+
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Failed to save Image");
         }
-        closeWindow(event);
     }
 
     public void btnLinePressed() {

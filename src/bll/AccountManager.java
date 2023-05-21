@@ -7,12 +7,16 @@ import dal.AccountDAO;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AccountManager implements IAccountManager {
     List<Account> accounts;
     AccountDAO accountDAO = AccountDAO.getInstance();
 
     public AccountManager() {
+        fillAccounts();
+    }
+    private void fillAccounts(){
         accounts = accountDAO.getAllAccounts();
     }
 
@@ -34,7 +38,7 @@ public class AccountManager implements IAccountManager {
 
     public Boolean checkCredentials(String username, String password) {
         if (checkForAccount(username) != null)
-            return checkPassword(password, checkForAccount(username).getPassword());
+            return checkPassword(password, Objects.requireNonNull(checkForAccount(username)).getPassword());
         else
             return false;
     }
@@ -64,6 +68,11 @@ public class AccountManager implements IAccountManager {
                 return a.getType();
         }
         return null;
+    }
+
+    @Override
+    public List<Account> getAllAccounts() {
+        return accounts;
     }
 
     @Override
@@ -113,5 +122,4 @@ public class AccountManager implements IAccountManager {
         changedAccount.setName(name);
         accounts.add(changedAccount);
     }
-
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polygon?>
 
-<AnchorPane onMouseMoved="#refresh" prefHeight="423.0" prefWidth="770.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.TechnicianViewController">
+<AnchorPane fx:id="anpMain" onMouseMoved="#refresh" prefHeight="423.0" prefWidth="770.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.TechnicianViewController">
     <children>
         <TableView fx:id="projectTableView" layoutX="14.0" layoutY="74.0" prefHeight="329.0" prefWidth="550.0" stylesheets="@../css/MainStyle.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="205.0" AnchorPane.topAnchor="74.0">
             <columns>
@@ -72,8 +72,8 @@
                 <String fx:value="common-text-font" />
             </styleClass>
         </Button>
-        <TextField fx:id="searchField" focusTraversable="false" layoutX="579.0" layoutY="52.0" onKeyPressed="#searchFieldKeyPressed" promptText="Search..." style="-fx-shape: 'M0 0 L150 0 L140 50 L0 50 Z'" AnchorPane.rightAnchor="45.0" />
-        <Button fx:id="btnSearch" focusTraversable="false" layoutX="731.0" layoutY="52.0" mnemonicParsing="false" onAction="#createProjectPressed" prefHeight="25.0" prefWidth="30.0" style="-fx-shape: 'M15 0 L150 0 L85 50 L-50 50 Z'" styleClass="orange-button" text="🔍" AnchorPane.rightAnchor="20.0" />
+        <TextField fx:id="searchField" focusTraversable="false" layoutX="579.0" layoutY="52.0" onKeyPressed="#searchFieldKeyPressed" promptText="Search..." style="-fx-shape: 'M0 0 L150 0 L140 50 L0 50 Z'" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="48.0" />
+        <Button fx:id="btnSearch" focusTraversable="false" layoutX="731.0" layoutY="52.0" mnemonicParsing="false" onAction="#btnSearchPressed" prefHeight="25.0" prefWidth="30.0" style="-fx-shape: 'M15 0 L150 0 L85 50 L-50 50 Z'" styleClass="orange-button" text="🔍" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="48.0" />
         <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-container" stylesheets="@../css/MainStyle.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0">
             <children>
                 <Button fx:id="allProjectsBtn" focusTraversable="false" mnemonicParsing="false" onAction="#allProjectsBtnPressed" prefHeight="25.0" prefWidth="115.0" stylesheets="@../css/MainStyle.css" text="All Projects">
@@ -125,7 +125,7 @@
             <Button fx:id="btnLocSearch" focusTraversable="false" minWidth="150.0" mnemonicParsing="false" onAction="#searchForLocation" text="Customer Location" HBox.hgrow="ALWAYS" />
             <Button fx:id="btnStartSearch" focusTraversable="false" minWidth="80.0" mnemonicParsing="false" onAction="#searchForStart" text="Start Date" HBox.hgrow="ALWAYS" />
             <Button fx:id="btnEndSearch" focusTraversable="false" minWidth="80.0" mnemonicParsing="false" onAction="#searchForEnd" text="End Date" HBox.hgrow="ALWAYS" />
-            <Button fx:id="btnApprovedSearch" focusTraversable="false" minWidth="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Approved" HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnApprovedSearch" focusTraversable="false" minWidth="90.0" mnemonicParsing="false" onAction="#searchForApproved" prefHeight="25.0" prefWidth="83.0" text="Approved" HBox.hgrow="ALWAYS" />
         </HBox>
         <Polygon fill="#333333" layoutX="500.0" layoutY="59.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="-0.5" />
     </children>

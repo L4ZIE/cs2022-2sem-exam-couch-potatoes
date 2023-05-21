@@ -37,13 +37,13 @@ public class ProjectDAO implements IProjectDAO {
                         resultSet.getString("projectStartDate"),
                         resultSet.getString("projectEndDate"),
                         resultSet.getBoolean("approved"),
-                        resultSet.getBoolean("private")
+                        resultSet.getBoolean("private"),
+                        resultSet.getBoolean("includePictures"),
+                        resultSet.getBoolean("includeDrawing")
                 ));
             }
             return projects;
 
-        } catch (SQLServerException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -72,8 +72,6 @@ public class ProjectDAO implements IProjectDAO {
 
             preparedStatement.execute();
 
-        } catch (SQLServerException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -100,8 +98,6 @@ public class ProjectDAO implements IProjectDAO {
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLServerException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -143,7 +139,9 @@ public class ProjectDAO implements IProjectDAO {
                         resultSet.getString("projectStartDate"),
                         resultSet.getString("projectEndDate"),
                         resultSet.getBoolean("approved"),
-                        resultSet.getBoolean("private")
+                        resultSet.getBoolean("private"),
+                        resultSet.getBoolean("includePictures"),
+                        resultSet.getBoolean("includeDrawing")
                 );
             }
             resultSet.close();

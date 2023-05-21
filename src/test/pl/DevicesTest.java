@@ -1,4 +1,5 @@
-package test.pl;
+/*package test.pl;
 
 public class DevicesTest {
 }
+*/

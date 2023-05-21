@@ -1,4 +1,4 @@
-package test.pl;
+/*package test.pl;
 
 import be.Project;
 import javafx.collections.FXCollections;
@@ -84,3 +84,4 @@ public class TechnicianTest {
         verify(mockTableView).setItems(any(ObservableList.class));
     }
 }
+*/

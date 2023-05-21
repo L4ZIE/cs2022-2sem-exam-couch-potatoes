@@ -100,4 +100,21 @@ public class LogDAO implements ILogDAO {
         }
         return logs;
     }
+
+    @Override
+    public String getMaxDateForProject(String refNumber) {
+        String sql = "SELECT MAX(logDate) AS maxDate from Log WHERE refNumber = ?";
+        try {
+            preparedStatement = connector.createConnection().prepareStatement(sql);
+            preparedStatement.setString(1, refNumber);
+            ResultSet results = preparedStatement.executeQuery();
+            if (results.next()) {
+                return results.getString(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

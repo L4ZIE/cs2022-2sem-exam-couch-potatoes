@@ -24,8 +24,7 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
     @FXML
     private Button btnMin,
-            btnClose,
-            btnLogin;
+            btnClose;
     @FXML
     private TextField txfUsername;
     @FXML
@@ -40,17 +39,17 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         accountModel = new AccountModel();
     }
-    public void minBtnPressed(ActionEvent actionEvent) {
+    public void minBtnPressed() {
         Stage stage = (Stage) btnMin.getScene().getWindow();
         stage.setIconified(true);
     }
 
-    public void closeBtnPressed(ActionEvent actionEvent) {
+    public void closeBtnPressed() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();
     }
 
-    public void btnLoginPressed(ActionEvent actionEvent) {
+    public void btnLoginPressed() {
         login();
     }
 

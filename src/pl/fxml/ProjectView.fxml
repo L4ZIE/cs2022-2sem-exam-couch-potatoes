@@ -12,9 +12,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
@@ -112,29 +114,30 @@
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Button>
-      <Pane layoutX="30.0" layoutY="111.0" prefHeight="148.0" prefWidth="267.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="111.0">
+      <Pane layoutX="30.0" layoutY="111.0" prefHeight="214.0" prefWidth="267.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="111.0">
          <children>
-              
-                                    <ImageView fx:id="imvPictures" fitHeight="140.0" fitWidth="266.0" layoutX="1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-            <FlowPane fx:id="flowPane" prefHeight="155.0" prefWidth="267.0" />
-            <Button fx:id="btnAdd" layoutX="-1.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnAddPressed" stylesheets="@../css/MainStyle.css" text="Add">
+            <GridPane fx:id="gdpPictures" layoutY="2.0" prefHeight="214.0" prefWidth="267.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <Button fx:id="btnAdd" layoutX="-1.0" layoutY="189.0" mnemonicParsing="false" onAction="#btnAddPressed" stylesheets="@../css/MainStyle.css" text="Add">
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />
                   <String fx:value="common-text-font" />
                </styleClass>
             </Button>
-            <Label prefHeight="26.0" prefWidth="267.0" stylesheets="@../css/MainStyle.css" text="Pictures">
-               <styleClass>
-                  <String fx:value="common-text-colour" />
-                  <String fx:value="common-text-font" />
-                  <String fx:value="project-container" />
-               </styleClass>
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-            </Label>
-            <Button fx:id="btnRemove" layoutX="210.0" layoutY="124.0" mnemonicParsing="false" onAction="#btnRemovePressed" stylesheets="@../css/MainStyle.css" text="Remove">
+            <Button fx:id="btnRemove" layoutX="209.0" layoutY="189.0" mnemonicParsing="false" onAction="#btnRemovePressed" stylesheets="@../css/MainStyle.css" text="Remove">
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />
@@ -170,23 +173,63 @@
          </styleClass>
       </Label>
       <ComboBox fx:id="comboBoxFont" layoutX="384.0" layoutY="51.0" prefHeight="27.0" prefWidth="194.0" AnchorPane.leftAnchor="384.0" AnchorPane.topAnchor="51.0" />
-      <ComboBox fx:id="comboBoxFontSize" layoutX="646.0" layoutY="50.0" prefHeight="27.0" prefWidth="82.0" AnchorPane.leftAnchor="646.0" AnchorPane.topAnchor="50.0">
+      <ComboBox fx:id="comboBoxFontSize" layoutX="646.0" layoutY="50.0" prefHeight="27.0" prefWidth="43.0" AnchorPane.leftAnchor="646.0" AnchorPane.topAnchor="50.0">
          <padding>
             <Insets left="20.0" />
          </padding></ComboBox>
-      <CheckBox fx:id="checkBoxBold" layoutX="748.0" layoutY="44.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" text="Bold" textFill="WHITE" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="55.0">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></CheckBox>
-      <CheckBox fx:id="checkBoxItalic" layoutX="820.0" layoutY="37.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="71.0" text="Italic" textFill="WHITE" AnchorPane.rightAnchor="228.66666666666663" AnchorPane.topAnchor="47.0">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font></CheckBox>
       <Label layoutX="590.0" layoutY="50.0" prefHeight="27.0" prefWidth="55.0" text="Font Size" textFill="WHITE" AnchorPane.leftAnchor="590.0" AnchorPane.topAnchor="50.0" />
       <Label layoutX="328.0" layoutY="50.0" prefHeight="27.0" prefWidth="55.0" text="Font Style" textFill="WHITE" AnchorPane.leftAnchor="325.0" AnchorPane.topAnchor="50.0" />
-      <CheckBox fx:id="checkBoxPublicProject" layoutX="939.0" layoutY="373.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" text="Public" textFill="WHITE" AnchorPane.bottomAnchor="130.0" AnchorPane.rightAnchor="100.0" />
-      <CheckBox fx:id="checkBoxPrivateProject" layoutX="939.0" layoutY="408.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Private " textFill="WHITE" AnchorPane.bottomAnchor="98.0" AnchorPane.rightAnchor="110.0" />
-      <Button fx:id="btnAddDevice" layoutX="941.0" layoutY="441.0" mnemonicParsing="false" onAction="#addDevicePressed" prefHeight="25.0" prefWidth="149.0" text=" Add Device" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="30.0" />
+      <CheckBox fx:id="checkBoxPrivateProject" layoutX="944.0" layoutY="387.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" text="Private project" textFill="WHITE" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="65.0">
+         <styleClass>
+            <String fx:value="common-text-colour" />
+            <String fx:value="common-text-font" />
+         </styleClass></CheckBox>
+      <Button fx:id="btnAddDevice" layoutX="941.0" layoutY="441.0" mnemonicParsing="false" onAction="#addDevicePressed" prefHeight="26.0" prefWidth="43.0" text=" Add" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="137.0" />
       <Polygon fill="#333333" layoutX="850.0" layoutY="60.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="0.0" />
+      <CheckBox fx:id="cheDrawInclude" layoutX="30.0" layoutY="353.0" mnemonicParsing="false" selected="true" text="Include drawing in customer view" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="30.0">
+         <styleClass>
+            <String fx:value="common-text-colour" />
+            <String fx:value="common-text-font" />
+         </styleClass>
+      </CheckBox>
+      <CheckBox fx:id="chePicturesInclude" layoutX="30.0" layoutY="87.0" mnemonicParsing="false" selected="true" text="Include pictures in customer view" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="55.0">
+         <styleClass>
+            <String fx:value="common-text-colour" />
+            <String fx:value="common-text-font" />
+         </styleClass>
+      </CheckBox>
+      <ChoiceBox fx:id="chbDevices" layoutX="940.0" layoutY="413.0" prefWidth="150.0" AnchorPane.bottomAnchor="95.0" AnchorPane.rightAnchor="30.0" />
+      <Button fx:id="btnRemoveDevice" layoutX="1032.0" layoutY="441.0" mnemonicParsing="false" onAction="#btnRemoveDevicePressed" text="Remove" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="30.0" />
+      <Label layoutX="939.0" layoutY="392.0" text="Devices:" AnchorPane.bottomAnchor="123.0" AnchorPane.rightAnchor="137.0">
+         <styleClass>
+            <String fx:value="common-text-colour" />
+            <String fx:value="common-text-font" />
+         </styleClass>
+      </Label>
+      <HBox alignment="CENTER_RIGHT" layoutX="739.0" layoutY="46.0" prefHeight="34.0" prefWidth="161.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <Button fx:id="btnBold" mnemonicParsing="false" onAction="#btnBoldPressed" prefHeight="22.0" prefWidth="42.0" text="Bold">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnItalic" mnemonicParsing="false" onAction="#btnItalicPressed" prefHeight="22.0" text="Italic">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnUnderline" mnemonicParsing="false" onAction="#btnUnderlinePressed" prefHeight="22.0" text="Underline" />
+         </children>
+      </HBox>
+      <Label layoutX="30.0" layoutY="86.0" prefHeight="26.0" prefWidth="267.0" stylesheets="@../css/MainStyle.css" text="Pictures" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="80.0">
+         <styleClass>
+            <String fx:value="common-text-colour" />
+            <String fx:value="common-text-font" />
+            <String fx:value="project-container" />
+         </styleClass>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
+      </Label>
     </children>
 </AnchorPane>

@@ -5,6 +5,7 @@ import be.Project;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,20 +14,27 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.models.ProjectModel;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TechnicianViewController implements Initializable {
@@ -53,27 +61,33 @@ public class TechnicianViewController implements Initializable {
             publicProjectsBtn,
             btnAccounts;
     @FXML
+    public AnchorPane anpMain;
+    @FXML
     private TableView<Project> projectTableView;
 
     @FXML
     private TextField searchField;
     @FXML
-    private TableColumn colCustomerName,
-            colCustomerLocation,
-            colStartDate,
-            colEndDate,
-            colApproved;
+    private TableColumn<Project, String> colCustomerName;
+    @FXML
+    private TableColumn<Project, String> colCustomerLocation;
+    @FXML
+    private TableColumn<Project, String> colStartDate;
+    @FXML
+    private TableColumn<Project, String> colEndDate;
+    @FXML
+    private TableColumn<Project, String> colApproved;
 
     private ProjectModel projectModel;
     private boolean needsRefresh = false;
     private static Project selectedProject;
-
-    //private String refNumber;
-
+    private String activeSearchOption;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
+        activeSearchOption = "name";
+        activateButton("name");
         fillProjectsTable(projectTableView);
         lblUsername.setText(LoginController.getUsername());
 
@@ -81,15 +95,16 @@ public class TechnicianViewController implements Initializable {
                 LoginController.getAccountType().equals(AccountType.CEO)) {
             btnAccounts.setVisible(true);
         }
-        //TODO display public projects
+        removeInactiveProjects();
     }
 
 
-    public void createBtnPressed(ActionEvent actionEvent) {
+    public void createBtnPressed() {
+        selectedProject = null;
         openWindow();
     }
 
-    public void updateBtnPressed(ActionEvent actionEvent) {
+    public void updateBtnPressed() {
         if (projectTableView.getSelectionModel().getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Please select a project.");
         } else {
@@ -125,52 +140,63 @@ public class TechnicianViewController implements Initializable {
         openWindow(null);
     }
 
-    public void previewBtnPressed(ActionEvent actionEvent) {
-        //TODO fix parameters
-        previewPressed(selectedProject.getRefNumber());
+    public void previewBtnPressed() {
+        selectedProject = projectTableView.getSelectionModel().getSelectedItem();
+        saveBtnPressed("temp/pdf/project_" + selectedProject.getRefNumber() + ".pdf");
     }
 
-    //TODO fix connection
-    public void previewPressed(String refNumber) {
-        Project project = projectModel.getProjectByRefNumber(refNumber);
 
-        if (project != null){
+    public void saveBtnPressed(String location) {
+        Project selectedProject = projectTableView.getSelectionModel().getSelectedItem();
+        FileChooser chooser = new FileChooser();
+        File file = null;
+
+        if (location == null) {
+            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf files (*.pdf)", "*.pdf"));
+            chooser.setInitialFileName(selectedProject.getRefNumber());
+            file = chooser.showSaveDialog(null);
+        }
+
+        if (location != null || file != null) {
             try {
                 Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream("project_"+ refNumber + ".pdf"));
+                if (location == null)
+                    PdfWriter.getInstance(document, new FileOutputStream(file));
+                else
+                    PdfWriter.getInstance(document, new FileOutputStream(location));
+
                 document.open();
 
-                document.add(new Paragraph("Reference Number: " + project.getRefNumber()));
-                document.add(new Paragraph("Customer Name: " + project.getCustomerName()));
-                document.add(new Paragraph("Customer Email: " + project.getCustomerEmail()));
-                document.add(new Paragraph("Customer Location: " + project.getCustomerLocation()));
-                document.add(new Paragraph("Note: " + project.getNote()));
-                document.add(new Paragraph("Drawing: " + project.getDrawing()));
-                document.add(new Paragraph("Creation Date: " + project.getCreationDate()));
-                document.add(new Paragraph("Project Start Date: " + project.getStartDate()));
-                document.add(new Paragraph("Project End Date: " + project.getEndDate()));
-                document.add(new Paragraph("Approved: " + project.getApproved()));
-                document.add(new Paragraph("Private: " + project.getPrivateProject()));
+                document.add(new Paragraph("Reference Number: " + selectedProject.getRefNumber()));
+                document.add(new Paragraph("Customer Name: " + selectedProject.getCustomerName()));
+                document.add(new Paragraph("Customer Email: " + selectedProject.getCustomerEmail()));
+                document.add(new Paragraph("Customer Location: " + selectedProject.getCustomerLocation()));
+                document.add(new Paragraph("Drawing: " + selectedProject.getDrawing()));//TODO
+                document.add(new Paragraph("Note: " + selectedProject.getNote()));
+                document.add(new Paragraph("Pictures: "));//TODO
+                document.add(new Paragraph("Project Start Date: " + selectedProject.getStartDate()));
+                document.add(new Paragraph("Project End Date: " + selectedProject.getEndDate()));
                 document.add(new Paragraph(""));
 
                 document.close();
-                System.out.println("PDF file generated successfully");
-                }catch (Exception e){
-                throw new RuntimeException(e);
-            }
-            }else {
-            System.out.println("Project with reference number"+ refNumber+"not found.");
+                if (location == null)
+                    JOptionPane.showMessageDialog(null, "File successfully saved.");
+                else
+                    Desktop.getDesktop().open(new File(location));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Couldn't save pdf file.");
             }
         }
-
-
-    public void saveBtnPressed(ActionEvent actionEvent) {
     }
 
-    public void sendBtnPressed(ActionEvent actionEvent) {
+    public void saveBtnPressed() {
+        saveBtnPressed(null);
     }
 
-    public void deleteBtnPressed(ActionEvent actionEvent) {
+    public void sendBtnPressed() {
+    }
+
+    public void deleteBtnPressed() {
         if (projectTableView.getSelectionModel().getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Please select a project.");
         } else {
@@ -182,14 +208,12 @@ public class TechnicianViewController implements Initializable {
 
     public void searchFieldKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            //projectModel.searchForProject(searchField.getText());
+            searchForQuery();
         }
     }
 
-
-    public void createProjectPressed(ActionEvent actionEvent) {
-        //projectModel.searchForProject(searchField.getText());
-
+    private void searchForQuery() {
+        updateProjectTable(projectModel.searchForProjects(searchField.getText(), activeSearchOption));
     }
 
     public void updateProjectTable(ObservableList<Project> selectedProjects) {
@@ -197,36 +221,42 @@ public class TechnicianViewController implements Initializable {
     }
 
     public void searchForName() {
-        updateProjectTable(projectModel.searchForProjects(searchField.getText(), "name"));
+        activeSearchOption = "name";
+        activateButton("name");
     }
 
     public void searchForLocation() {
-        updateProjectTable(projectModel.searchForProjects(searchField.getText(), "location"));
+        activeSearchOption = "location";
+        activateButton("location");
     }
 
     public void searchForStart() {
-        updateProjectTable(projectModel.searchForProjects(searchField.getText(), "start"));
+        activeSearchOption = "start";
+        activateButton("start");
     }
 
     public void searchForEnd() {
-        updateProjectTable(projectModel.searchForProjects(searchField.getText(), "end"));
+        activeSearchOption ="end";
+        activateButton("end");
     }
+    public void fillProjectsTable(TableView<Project> projectTableView, String projectType) {
+        colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        colCustomerLocation.setCellValueFactory(new PropertyValueFactory<>("customerLocation"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        colApproved.setCellValueFactory(new PropertyValueFactory<>("approved"));
 
-    //TODO change the fill for Approved to be "Approved or pending"
-    public void fillProjectsTable(TableView projectTableView, String projectType) {
-        colCustomerName.setCellValueFactory(new PropertyValueFactory<Project, String>("customerName"));
-        colCustomerLocation.setCellValueFactory(new PropertyValueFactory<Project, String>("customerLocation"));
-        colStartDate.setCellValueFactory(new PropertyValueFactory<Project, String>("startDate"));
-        colEndDate.setCellValueFactory(new PropertyValueFactory<Project, String>("endDate"));
-        colApproved.setCellValueFactory(new PropertyValueFactory<Project, String>("approved"));
+        colApproved.setCellValueFactory(cellData -> {
+            Boolean approved = cellData.getValue().getApproved();
+            String approvedText = approved ? "Approved" : "Pending";
+            return new SimpleStringProperty(approvedText);
+        });
 
         try {
-            if (projectType.equals("all")) {
-                projectTableView.setItems(projectModel.getAllProjects());
-            } else if (projectType.equals("private")) {
-                projectTableView.setItems(projectModel.getPrivateProjects());
-            } else if (projectType.equals("public")) {
-                projectTableView.setItems(projectModel.getPublicProjects());
+            switch (projectType) {
+                case "all" -> projectTableView.setItems(projectModel.getAllProjects());
+                case "private" -> projectTableView.setItems(projectModel.getPrivateProjects());
+                case "public" -> projectTableView.setItems(projectModel.getPublicProjects());
             }
             projectTableView.getSelectionModel().select(0);
 
@@ -235,24 +265,22 @@ public class TechnicianViewController implements Initializable {
         }
     }
 
-    public void fillProjectsTable(TableView projectTableView) {
+    public void fillProjectsTable(TableView<Project> projectTableView) {
         fillProjectsTable(projectTableView, "all");
     }
 
-    public void allProjectsBtnPressed(ActionEvent actionEvent) {
+    public void allProjectsBtnPressed() {
         fillProjectsTable(projectTableView, "all");
     }
 
-    public void publicProjectsBtnPressed(ActionEvent actionEvent) {
+    public void publicProjectsBtnPressed() {
         fillProjectsTable(projectTableView, "public");
     }
 
-    public void privateProjectsBtnPressed(ActionEvent actionEvent) {
+    public void privateProjectsBtnPressed() {
         fillProjectsTable(projectTableView, "private");
     }
 
-    public void logoutBtnPressed(ActionEvent actionEvent) {
-    }
 
     public void minBtnPressed(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
@@ -263,11 +291,7 @@ public class TechnicianViewController implements Initializable {
     public void maxBtnBtn(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        if (stage.isMaximized()) {
-            stage.setMaximized(false);
-        } else {
-            stage.setMaximized(true);
-        }
+        stage.setMaximized(!stage.isMaximized());
     }
 
     public void closeBtnPressed(ActionEvent actionEvent) {
@@ -277,18 +301,60 @@ public class TechnicianViewController implements Initializable {
         stage.close();
     }
 
-    public void refresh(MouseEvent mouseEvent) {
+    public void refresh() {
         if (needsRefresh) {
             fillProjectsTable(projectTableView);
             needsRefresh = false;
         }
     }
 
+    public void removeInactiveProjects() {
+
+        try {
+            List<Project> allProjects = projectModel.getAllProjects();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+            int thisYear = Integer.parseInt(sdf.format(new Date()));
+            for (Project p : allProjects) {
+                if (projectModel.getLatestLogForProject(p.getRefNumber()) != null)
+                    if (thisYear - Integer.parseInt(projectModel.getLatestLogForProject(p.getRefNumber()).substring(6, 10)) >= 4)
+                        projectModel.deleteProject(p);
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static Project getSelectedProject() {
         return selectedProject;
     }
-    public void btnAccountsPressed(ActionEvent actionEvent) {
+
+    public void btnAccountsPressed() {
     }
 
+    public void btnSearchPressed() {
+        searchForQuery();
+
+    }
+
+    public void searchForApproved() {
+        activateButton("approved");
+        activateButton("approved");
+        activeSearchOption = "approved";
+    }
+    private void activateButton(String buttonName) {
+        btnNameSearch.setDisable(false);
+        btnLocSearch.setDisable(false);
+        btnStartSearch.setDisable(false);
+        btnEndSearch.setDisable(false);
+        btnApprovedSearch.setDisable(false);
+
+        switch (buttonName) {
+            case "name" -> btnNameSearch.setDisable(true);
+            case "location" -> btnLocSearch.setDisable(true);
+            case "start" -> btnStartSearch.setDisable(true);
+            case "end" -> btnEndSearch.setDisable(true);
+            case "approved" -> btnApprovedSearch.setDisable(true);
+        }
+    }
 }
 

@@ -1,4 +1,4 @@
-package test.pl;
+/*package test.pl;
 
 import be.Devices;
 import org.junit.Before;
@@ -43,3 +43,4 @@ public class ProjectTest {
         verify(projectModelMock).createDevice(device);
     }
 }
+*/

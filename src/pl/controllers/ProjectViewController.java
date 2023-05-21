@@ -3,9 +3,10 @@ package pl.controllers;
 import be.Account;
 import be.Devices;
 import be.Project;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,36 +19,33 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.codehaus.plexus.component.configurator.converters.basic.UrlConverter;
+import pl.models.AccountModel;
 import pl.models.ProjectModel;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class ProjectViewController implements Initializable {
+
     @FXML
-    private FlowPane flowPane;
+    public GridPane gdpPictures;
     @FXML
-    private CheckBox checkBoxBold,
-            checkBoxItalic,
-            checkBoxPublicProject,
-            checkBoxPrivateProject;
+    private CheckBox checkBoxPrivateProject,
+            chePicturesInclude,
+            cheDrawInclude;
     @FXML
     private ComboBox<String> comboBoxFont;
     @FXML
@@ -56,11 +54,7 @@ public class ProjectViewController implements Initializable {
     private DatePicker startDate,
             endDate;
     @FXML
-    private ImageView imvPictures,
-            imvDrawing;
-    @FXML
-    private Button goBack,
-            logoutBtn;
+    private ImageView imvDrawing;
     @FXML
     private Label usernameLbl;
     @FXML
@@ -68,14 +62,10 @@ public class ProjectViewController implements Initializable {
     @FXML
     private Button btnMin,
             btnMax,
-            btnSave,
-            btnCancel,
-            btnAdd,
-            btnRemove,
             btnDraw,
-            btnClose,
-            btnAddDevice;
-
+            btnBold,
+            btnItalic,
+            btnUnderline;
 
     @FXML
     private TextArea txaNotes;
@@ -86,19 +76,29 @@ public class ProjectViewController implements Initializable {
     @FXML
     private TextField txfCustomerLocation;
     @FXML
-    private ChoiceBox chbSelectAccount;
+    private ChoiceBox<String> chbSelectAccount;
+    @FXML
+    private ChoiceBox<String> chbDevices;
     private ProjectModel projectModel;
     private List<Image> images = new ArrayList<>();
-    private int currentImageIndex = 0;
-    private DevicesViewController devicesViewController;
     private static String staticRefNumber;
-    public static List<Devices> devices = new ArrayList<>();
-
+    public static ObservableList<Devices> devices = FXCollections.observableArrayList();
+    private static String drawingLocation;
+    private Boolean boldToggled, italicToggled, underlineToggled;
+    private AccountModel accountModel;
+    private Image selectedPicture;
+    private static Boolean changed;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel = new ProjectModel();
-        devicesViewController = new DevicesViewController();
+        accountModel = new AccountModel();
+        selectedPicture = null;
+        usernameLbl.setText(LoginController.getUsername());
+        boldToggled = false;
+        italicToggled = false;
+        underlineToggled = false;
+        changed = false;
         if (TechnicianViewController.getSelectedProject() != null)
             fillFields(TechnicianViewController.getSelectedProject());
         fillComboBox();
@@ -114,51 +114,98 @@ public class ProjectViewController implements Initializable {
         startDate.setValue(LocalDate.parse(selectedProject.getStartDate().substring(0, 10), formatter));
         endDate.setValue(LocalDate.parse(selectedProject.getEndDate().substring(0, 10), formatter));
         txaNotes.setText(selectedProject.getNote());
+        drawingLocation = selectedProject.getDrawing();
+        displayDrawing(drawingLocation);
+        fillDevices(projectModel.getAllDevicesForProject(selectedProject.getRefNumber()));
+        fillAccounts();
         List<String> imageLocations = projectModel.getPicturesForProject(selectedProject.getRefNumber());
         for (String s : imageLocations) {
             images.add(new Image(s));
         }
         displayImages();
-        //TODO fill drawing
+
+        BooleanProperty changedProperty = new SimpleBooleanProperty(changed);
+
+        changedProperty.addListener((observable, oldValue, newValue) -> {
+            fillDevices(projectModel.getAllDevicesForProject(selectedProject.getRefNumber()));
+        });
+    }
+
+    private void displayDrawing(String drawingLocation) {
+        imvDrawing.setImage(new Image(drawingLocation));
+    }
+
+    private void fillAccounts() {
+        List<Integer> connectedAccountIDs = projectModel.getAllAccountIDsForProject(lblRefNumber.getText());
+        for (int i : connectedAccountIDs) {
+            if (accountModel.getAccountByID(i).getName().equals(usernameLbl.getText()))
+                connectedAccountIDs.remove(i);
+        }
+        List<Account> allAccounts = accountModel.getAllAccounts();
+        ObservableList<String> accountNames = FXCollections.observableArrayList();
+        int connectedAccountLocation = -1;
+        int i = 0;
+        for (Account a : allAccounts) {
+            accountNames.add(a.getName());
+            if (connectedAccountIDs.size() > 0 && a.getId() == connectedAccountIDs.get(0))
+                connectedAccountLocation = i;
+            else
+                i++;
+        }
+        accountNames.removeIf(a -> usernameLbl.getText().equals(a));
+        chbSelectAccount.setItems(accountNames);
+        if (connectedAccountLocation >= 0)
+            chbSelectAccount.getSelectionModel().select(connectedAccountLocation);
+    }
+
+    private void fillDevices(ObservableList<Devices> allDevicesForProject) {
+        ObservableList<String> deviceNames = FXCollections.observableArrayList();
+        for (Devices d : allDevicesForProject) {
+            deviceNames.add(d.getDeviceName());
+        }
+        chbDevices.setItems(deviceNames);
+        chbDevices.getSelectionModel().selectFirst();
     }
 
 
     public static void saveDeviceToList(Devices device) {
         device.setRefNumber(staticRefNumber);
         devices.add(device);
+        changed = !changed;
     }
 
 
-    public void btnSavePressed(ActionEvent actionEvent) {
-        int rand = (int) (Math.random() * 10000);
-        String refNumber = txfCustomerName.getText().substring(0, 3) + txfCustomerEmail.getText().substring(0, 3) + rand;
-
+    public void btnSavePressed() {
         if (TechnicianViewController.getSelectedProject() == null) {
+            int rand = (int) (Math.random() * 10000);//TODO change
+            String refNumber = txfCustomerName.getText().substring(0, 3) + txfCustomerEmail.getText().substring(0, 3) + rand;
             projectModel.createProject(new Project(
                             refNumber,
                             txfCustomerName.getText(),
                             txfCustomerEmail.getText(),
                             txfCustomerLocation.getText(),
                             txaNotes.getText(),
-                            "drawing location placeholder", //TODO placeholder, change later
+                            drawingLocation,
                             java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                             startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                             endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                            true,
-                            selectPublicOrPrivate()),
-                    2);
+                            false,
+                            checkBoxPrivateProject.isSelected(),
+                            chePicturesInclude.isSelected(),
+                            cheDrawInclude.isSelected()),
+                    accountModel.getAccountByName(LoginController.getUsername()).getId());
             for (Image img : images) {
                 projectModel.createPicture(img.getUrl(), refNumber);
             }
             for (Devices d : devices) {
                 d.setRefNumber(refNumber);
-                projectModel.createDevice(d);// save to DB
-
+                projectModel.createDevice(d);
             }
             devices.clear();
 
-            //projectModel.recordLog(refNumber, 1);
+            projectModel.recordLog(refNumber, accountModel.getAccountByName(LoginController.getUsername()).getId());
             JOptionPane.showMessageDialog(null, "Successfully saved Project.");
+            closeWindow();
 
         } else {
             projectModel.editProject(new Project(lblRefNumber.getText(),
@@ -166,66 +213,125 @@ public class ProjectViewController implements Initializable {
                     txfCustomerEmail.getText(),
                     txfCustomerLocation.getText(),
                     txaNotes.getText(),
-                    "drawing location placeholder", //TODO placeholder, change later
+                    drawingLocation,
                     java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     startDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     endDate.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    true,
-                    selectPublicOrPrivate())); // change later
-            for (Image img : images) {
-                projectModel.createPicture(img.getUrl(), lblRefNumber.getText());
+                    projectModel.getProjectByRefNumber(lblRefNumber.getText()).getApproved(),
+                    checkBoxPrivateProject.isSelected(),
+                    chePicturesInclude.isSelected(),
+                    cheDrawInclude.isSelected()));
 
-            }
-            for (Devices d : devices) {
-                Project selectedProject = TechnicianViewController.getSelectedProject();
-                if (d.getRefNumber() == selectedProject.getRefNumber()) {
-                    devices.remove(d);
-                    JOptionPane.showMessageDialog(null, "This document has a device");
+            List<String> existingImages = projectModel.getPicturesForProject(lblRefNumber.getText());
+            for (Image i : images) {
+                for (String s : existingImages) {
+                    Image exim = new Image(s);
+                    if(i.getUrl().equals(exim.getUrl()))
+                        images.remove(i);
                 }
             }
+            for (Image i: images) {
+                projectModel.createPicture(i.getUrl(), lblRefNumber.getText());
+            }
+
+            List<Devices> existingDevices = projectModel.getAllDevicesForProject(lblRefNumber.getText());
+            clearDeletedDevices(existingDevices);
+            for (Devices d : devices) {
+                for (Devices ed : existingDevices) {
+                    if(d.equals(ed))
+                        devices.remove(d);
+                }
+            }
+            for (Devices d : devices) {
+                projectModel.createDevice(d);
+            }
+
+            projectModel.recordLog(lblRefNumber.getText(),
+                    accountModel.getAccountByName(LoginController.getUsername()).getId());
             JOptionPane.showMessageDialog(null, "Successfully updated Project.");
         }
         closeWindow();
-        //TODO create a picture,create a draw
+    }
+
+    private void clearDeletedDevices(List<Devices> existingDevices) {
+        boolean exists;
+        for (Devices ed : existingDevices) {
+            exists = false;
+            for (Devices d : devices)
+                if (d.equals(ed)) {
+                    exists = true;
+                    break; //fk it, why not
+                }
+            if (!exists)
+                projectModel.removeDevice(ed.getId());
+        }
     }
 
 
-    public void btnCancelPressed(ActionEvent actionEvent) {
+    public void btnCancelPressed() {
         closeWindow();
     }
 
-    private String path;
-    private File file;
 
-    public void btnAddPressed(ActionEvent actionEvent) {
+    public void btnAddPressed() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images",
                 "*.png", "*.jpg"));
         List<File> files = fileChooser.showOpenMultipleDialog(new Stage());
         if (files != null) {
-            files.forEach((File f) ->
-            {
-                images.add(new Image(f.toURI().toString()));
-            });
+            files.forEach((File f) -> images.add(new Image(f.toURI().toString())));
             displayImages();
         }
     }
 
     public void displayImages() {
-        if (!images.isEmpty()) {
-            imvPictures.setImage(images.get(currentImageIndex));
+        int maxRow = 4, maxCol = 4;
+        int currentRow = 0, currentCol = 0;
+        gdpPictures.setHgap(10);
+        gdpPictures.setVgap(10);
+        for (Image i : images) {
+            ImageView imageView = new ImageView(i);
+            imageView.setFitWidth(60);
+            imageView.setFitHeight(60);
+            imageView.getStyleClass().add("added-pictures");
+
+            imageView.setOnMouseClicked(e->{
+                selectedPicture = i;
+                if(e.getClickCount() > 1){
+                    Stage imageStage = new Stage();
+                    ImageView imageViewPopup = new ImageView(i);
+                    imageViewPopup.setPreserveRatio(true);
+                    imageViewPopup.setFitWidth(400);
+
+                    StackPane stackPane = new StackPane(imageViewPopup);
+                    Scene scene = new Scene(stackPane);
+                    imageStage.setScene(scene);
+                    imageStage.setTitle("Image Viewer");
+                    imageStage.show();
+                }
+
+            });
+
+            gdpPictures.add(imageView, currentCol, currentRow);
+            currentCol++;
+            if(currentCol > maxCol){
+                currentCol = 0;
+                currentRow++;
+                if(currentRow > maxRow)
+                    gdpPictures.addRow(currentRow);
+            }
         }
+
     }
 
 
-    public void btnRemovePressed(ActionEvent actionEvent) {
-        projectModel.deletePicture(projectModel.getPictureIDByPath(imvPictures.getImage().getUrl()));
-        images.remove(imvPictures.getImage());
-        imvPictures.setImage(null);
+    public void btnRemovePressed() {
+        images.remove(selectedPicture);
+        displayImages();
     }
 
 
-    public void btnDrawPressed(ActionEvent actionEvent) {
+    public void btnDrawPressed() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("pl/fxml/DrawingView.fxml"));
             Parent root = loader.load();
@@ -237,28 +343,22 @@ public class ProjectViewController implements Initializable {
             primaryStage.initModality(Modality.APPLICATION_MODAL);
             primaryStage.show();
 
-            closeWindow();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void btnMinPressed(ActionEvent actionEvent) {
+    public void btnMinPressed() {
         Stage stage = (Stage) btnMin.getScene().getWindow();
         stage.setIconified(true);
     }
 
-    public void btnMaxPressed(ActionEvent actionEvent) {
+    public void btnMaxPressed() {
         Stage stage = (Stage) btnMax.getScene().getWindow();
-        if (stage.isMaximized()) {
-            stage.setMaximized(false);
-        } else {
-            stage.setMaximized(true);
-        }
+        stage.setMaximized(!stage.isMaximized());
     }
 
-    public void btnClosePressed(ActionEvent actionEvent) {
+    public void btnClosePressed() {
         closeWindow();
     }
 
@@ -275,65 +375,12 @@ public class ProjectViewController implements Initializable {
         for (int i = 1; i <= 100; i++) {
             comboBoxFontSize.getItems().add(i);
         }
-        comboBoxFontSize.setValue(1);
-
-        comboBoxFont.setOnAction(e -> setFont());
-        comboBoxFontSize.setOnAction(e -> setFont());
-        checkBoxBold.setOnAction(e -> setFont());
-        checkBoxItalic.setOnAction(e -> setFont());
+        comboBoxFontSize.setValue(14);
+        ;
     }
 
-    private void setFont() {
-        FontWeight weight;
-        if (checkBoxBold.isSelected()) {
-            weight = FontWeight.BOLD;
-        } else {
-            weight = FontWeight.NORMAL;
-        }
-        FontPosture posture;
-        if (checkBoxItalic.isSelected()) {
-            posture = FontPosture.ITALIC;
-        } else {
-            posture = FontPosture.REGULAR;
-        }
-        txaNotes.setFont(Font.font(comboBoxFont.getValue(), weight, posture, comboBoxFontSize.getValue()));
-    }
 
-    public Boolean selectPublicOrPrivate() {
-        boolean isSelected;
-        if (checkBoxPublicProject.isSelected()) {
-            isSelected = true;//1
-        } else {
-            isSelected = false;//0
-        }
-        return isSelected;
-    }
-
-    public void displayInactiveProjects() {
-
-        String message = "Please delete unused projects in the last 48 months :\n";
-        boolean showPopup = false;
-        try {
-            List<Project> allProjects = projectModel.getAllProjects();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-            int thisYear = Integer.parseInt(sdf.format(new Date()));
-
-            String endProject;
-            for (Project p : allProjects) {
-                endProject = p.getEndDate();
-                if (thisYear - Integer.parseInt(endProject.substring(6)) >= 4) {
-                    showPopup = true;
-                    message = message + "\n" + p.getRefNumber();
-                }
-            }
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
-        }
-        if (showPopup)
-            JOptionPane.showMessageDialog(null, message);
-    }
-
-    public void addDevicePressed(ActionEvent event) {
+    public void addDevicePressed() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("pl/fxml/DevicesView.fxml"));
             Parent root = loader.load();
@@ -352,10 +399,48 @@ public class ProjectViewController implements Initializable {
         }
     }
 
-    public void goBackPressed(ActionEvent actionEvent) {
+    public void goBackPressed() {
         closeWindow();
     }
 
+    public void btnRemoveDevicePressed() {
+        devices.remove(projectModel.getDeviceByName(chbDevices.getSelectionModel().getSelectedItem()));
+        fillDevices(devices);
+    }
 
+    public void btnBoldPressed() {
+        if (boldToggled) {
+            btnBold.setStyle("-fx-background-color: -fx-dirty-white;");
+        } else {
+            btnBold.setStyle("-fx-background-color: -fx-dark-orange;");
+        }
+        boldToggled = !boldToggled;
+    }
+
+    public void btnItalicPressed() {
+        if (italicToggled) {
+            btnItalic.setStyle("-fx-background-color: -fx-dirty-white;");
+        } else {
+            btnItalic.setStyle("-fx-background-color: -fx-dark-orange;");
+        }
+        italicToggled = !italicToggled;
+    }
+
+    public void btnUnderlinePressed() {
+        if (underlineToggled) {
+            btnUnderline.setStyle("-fx-background-color: -fx-dirty-white;");
+        } else {
+            btnUnderline.setStyle("-fx-background-color: -fx-dark-orange;");
+        }
+        underlineToggled = !underlineToggled;
+    }
+
+    public static void setDrawingLocation(String location) {
+        drawingLocation = location;
+    }
+
+    public static String getDrawingLocation() {
+        return drawingLocation;
+    }
 }
 
