@@ -186,6 +186,7 @@ public class ProjectViewController implements Initializable {
         devices.addAll(allDevicesForProject);
     }
     private void fillDeviceChoiceBox(){
+        chbDevices.getItems().clear();
         ObservableList<String> deviceNames = FXCollections.observableArrayList();
         for (Devices d : devices) {
             deviceNames.add(d.getDeviceName());
