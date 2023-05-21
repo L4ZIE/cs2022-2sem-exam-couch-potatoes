@@ -1,7 +1,6 @@
 package pl.controllers;
 
 import be.Account;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -140,7 +139,7 @@ public class AccountVIewController implements Initializable {
         needsRefresh = true;
     }
 
-    public void checkRefreshTable() {//TODO finish refreshing after window closed
+    public void checkRefreshTable() {
         if (needsRefresh){
             fillAccountsTable(tbvAccounts);
             needsRefresh = false;

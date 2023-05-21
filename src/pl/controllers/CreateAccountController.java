@@ -82,6 +82,7 @@ public class CreateAccountController implements Initializable {
             accountModel.changeAccountType(selectedAccount.getId(), chbAccountType.getSelectionModel().getSelectedItem());
             JOptionPane.showMessageDialog(null, "Successfully updated account.");
         }
+        AccountVIewController.refreshTable();
         closeBtnPressed();
 
     }
