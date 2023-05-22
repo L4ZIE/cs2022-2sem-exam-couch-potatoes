@@ -3,7 +3,9 @@ package pl.controllers;
 import be.AccountType;
 import be.Project;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -177,6 +180,7 @@ public class TechnicianViewController implements Initializable {
 
         if (location != null || file != null) {
             try {
+
                 Document document = new Document();
                 if (location == null)
                     PdfWriter.getInstance(document, new FileOutputStream(file));
@@ -184,16 +188,25 @@ public class TechnicianViewController implements Initializable {
                     PdfWriter.getInstance(document, new FileOutputStream(location));
 
                 document.open();
+                Image drawing = Image.getInstance(selectedProject.getDrawing());
+                drawing.scaleToFit(200, 200);
 
+                Paragraph title = new Paragraph(selectedProject.getCustomerName() + "'s Project");
+                title.setAlignment(Element.ALIGN_CENTER);
+                title.setSpacingAfter(20);
+
+                document.add(title);
+                document.add(new Paragraph(" "));
                 document.add(new Paragraph("Reference Number: " + selectedProject.getRefNumber()));
-                document.add(new Paragraph("Customer Name: " + selectedProject.getCustomerName()));
                 document.add(new Paragraph("Customer Email: " + selectedProject.getCustomerEmail()));
                 document.add(new Paragraph("Customer Location: " + selectedProject.getCustomerLocation()));
-                document.add(new Paragraph("Drawing: " + selectedProject.getDrawing()));//TODO
-                document.add(new Paragraph("Note: " + selectedProject.getNote()));
-                document.add(new Paragraph("Pictures: "));//TODO
                 document.add(new Paragraph("Project Start Date: " + selectedProject.getStartDate()));
                 document.add(new Paragraph("Project End Date: " + selectedProject.getEndDate()));
+                document.add(new Paragraph("Drawing: "));
+                document.add(drawing);
+                document.add(new Paragraph("Notes: " ));
+                document.add(new Paragraph(selectedProject.getNote()));
+                document.add(new Paragraph("Pictures: "));//TODO
                 document.add(new Paragraph(""));
 
                 document.close();
@@ -201,11 +214,17 @@ public class TechnicianViewController implements Initializable {
                     JOptionPane.showMessageDialog(null, "File successfully saved.");
                 else
                     Desktop.getDesktop().open(new File(location));
+
+
+
+
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Couldn't save pdf file.");
             }
         }
     }
+
 
     public void saveBtnPressed() {
         saveBtnPressed(null);
@@ -254,9 +273,10 @@ public class TechnicianViewController implements Initializable {
     }
 
     public void searchForEnd() {
-        activeSearchOption ="end";
+        activeSearchOption = "end";
         activateButton("end");
     }
+
     public void fillProjectsTable(TableView<Project> projectTableView, String projectType) {
         colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         colCustomerLocation.setCellValueFactory(new PropertyValueFactory<>("customerLocation"));
@@ -374,6 +394,7 @@ public class TechnicianViewController implements Initializable {
         activateButton("approved");
         activeSearchOption = "approved";
     }
+
     private void activateButton(String buttonName) {
         btnNameSearch.setDisable(false);
         btnLocSearch.setDisable(false);
