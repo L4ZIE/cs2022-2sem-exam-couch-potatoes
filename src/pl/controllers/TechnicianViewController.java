@@ -38,6 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -195,6 +196,12 @@ public class TechnicianViewController implements Initializable {
                 title.setAlignment(Element.ALIGN_CENTER);
                 title.setSpacingAfter(20);
 
+                List<String> imagePaths = projectModel.getPicturesForProject(selectedProject.getRefNumber());
+                List<Image> images = new ArrayList<>();
+                for (String s : imagePaths) {
+                    images.add(Image.getInstance(s));
+                }
+
                 document.add(title);
                 document.add(new Paragraph(" "));
                 document.add(new Paragraph("Reference Number: " + selectedProject.getRefNumber()));
@@ -207,6 +214,10 @@ public class TechnicianViewController implements Initializable {
                 document.add(new Paragraph("Notes: " ));
                 document.add(new Paragraph(selectedProject.getNote()));
                 document.add(new Paragraph("Pictures: "));//TODO
+                for (Image i : images) {
+                    i.scaleToFit(200, 200);
+                    document.add(i);
+                }
                 document.add(new Paragraph(""));
 
                 document.close();
