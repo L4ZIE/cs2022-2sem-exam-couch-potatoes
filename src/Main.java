@@ -10,7 +10,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("pl/fxml/LoginView.fxml"));
         primaryStage.setTitle("WUAV project");
+
         primaryStage.setResizable(false);
+
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();

@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polygon?>
 
+
 <AnchorPane fx:id="anpMain" onMouseMoved="#refresh" prefHeight="423.0" prefWidth="770.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.TechnicianViewController">
     <children>
         <TableView fx:id="projectTableView" layoutX="14.0" layoutY="74.0" prefHeight="329.0" prefWidth="550.0" stylesheets="@../css/MainStyle.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="205.0" AnchorPane.topAnchor="74.0">
@@ -129,4 +130,5 @@
         </HBox>
         <Polygon fill="#333333" layoutX="500.0" layoutY="59.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="-0.5" />
     </children>
+
 </AnchorPane>

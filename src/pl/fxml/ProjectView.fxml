@@ -16,25 +16,30 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Polygon?>
+
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anpMain" prefHeight="532.0" prefWidth="1120.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.ProjectViewController">
     <children>
         <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="34.0" prefWidth="528.0" styleClass="project-container" stylesheets="@../css/MainStyle.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
             <children>
+
             <Label fx:id="lblRefNumber" alignment="CENTER" prefHeight="25.0" prefWidth="218.0" text="New Project">
                <styleClass>
                   <String fx:value="common-text-colour" />
                   <String fx:value="common-text-font" />
                </styleClass>
+
                <HBox.margin>
                   <Insets left="100.0" />
                </HBox.margin>
             </Label>
             </children>
         </HBox>
+
           <Button fx:id="logoutBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" stylesheets="@../css/MainStyle.css" text="Logout" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="3.0">
          <styleClass>
             <String fx:value="project-button" />
@@ -42,29 +47,38 @@
             <String fx:value="common-text-font" />
          </styleClass>
           </Button>
+
           <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBackPressed" prefHeight="0.0" prefWidth="82.0" stylesheets="@../css/MainStyle.css" text="←" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-10.0">
          <styleClass>
             <String fx:value="project-button" />
             <String fx:value="common-text-colour" />
+
+
          </styleClass>
          <font>
             <Font size="24.0" />
          </font>
           </Button>
+
         <Label fx:id="usernameLbl" alignment="CENTER" layoutX="528.0" layoutY="-1.0" prefHeight="34.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Username" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="0.0">
+
          <styleClass>
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Label>
+
         <HBox layoutX="696.0" layoutY="4.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+
             <children>
                 <Button fx:id="btnMin" mnemonicParsing="false" onAction="#btnMinPressed" text="_" />
                 <Button fx:id="btnMax" mnemonicParsing="false" onAction="#btnMaxPressed" text="[ ]" />
                 <Button fx:id="btnClose" mnemonicParsing="false" onAction="#btnClosePressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
             </children>
         </HBox>
+
       <TextArea fx:id="txaNotes" layoutX="322.0" layoutY="110.0" prefHeight="385.0" prefWidth="568.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="110.0" />
       <Label layoutX="322.0" layoutY="87.0" prefHeight="25.0" prefWidth="217.0" stylesheets="@../css/MainStyle.css" text="Notes" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="87.0">
+
          <styleClass>
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
@@ -80,40 +94,51 @@
             <String fx:value="common-text-colour" />
          </styleClass>
       </Label>
+
       <TextField fx:id="txfCustomerName" layoutX="589.0" layoutY="75.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="75.0" />
+
       <Label layoutX="589.0" layoutY="113.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Customer Email" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="115.0">
          <styleClass>
             <String fx:value="common-text-font" />
             <String fx:value="common-text-colour" />
          </styleClass>
       </Label>
+
       <TextField fx:id="txfCustomerEmail" layoutX="589.0" layoutY="130.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="135.0" />
+
       <Label layoutX="589.0" layoutY="170.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Customer Location" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="165.0">
          <styleClass>
             <String fx:value="common-text-font" />
             <String fx:value="common-text-colour" />
          </styleClass>
       </Label>
+
       <TextField fx:id="txfCustomerLocation" layoutX="589.0" layoutY="187.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="185.0" />
       <ChoiceBox fx:id="chbSelectAccount" layoutX="589.0" layoutY="243.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="235.0" />
       <Label layoutX="589.0" layoutY="226.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Select Manager" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="215.0">
+
          <styleClass>
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass>
       </Label>
+
       <Button fx:id="btnSave" layoutX="577.0" layoutY="370.0" mnemonicParsing="false" onAction="#btnSavePressed" stylesheets="@../css/MainStyle.css" text="Save" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="140.0">
+
          <styleClass>
             <String fx:value="positive-button" />
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Button>
+
       <Button fx:id="btnCancel" layoutX="664.0" layoutY="370.0" mnemonicParsing="false" onAction="#btnCancelPressed" stylesheets="@../css/MainStyle.css" text="Cancel" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="30.0">
+
          <styleClass>
             <String fx:value="negative-button" />
             <String fx:value="common-text-colour" />
             <String fx:value="common-text-font" />
          </styleClass></Button>
+
       <Pane layoutX="30.0" layoutY="111.0" prefHeight="214.0" prefWidth="267.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="111.0">
          <children>
             <GridPane fx:id="gdpPictures" layoutY="2.0" prefHeight="214.0" prefWidth="267.0">
@@ -131,13 +156,16 @@
               </rowConstraints>
             </GridPane>
             <Button fx:id="btnAdd" layoutX="-1.0" layoutY="189.0" mnemonicParsing="false" onAction="#btnAddPressed" stylesheets="@../css/MainStyle.css" text="Add">
+
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />
                   <String fx:value="common-text-font" />
                </styleClass>
             </Button>
+
             <Button fx:id="btnRemove" layoutX="209.0" layoutY="189.0" mnemonicParsing="false" onAction="#btnRemovePressed" stylesheets="@../css/MainStyle.css" text="Remove">
+
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />
@@ -146,10 +174,12 @@
             </Button>
          </children>
       </Pane>
+
       <Pane layoutX="32.0" layoutY="271.0" prefHeight="140.0" prefWidth="244.0" style="-fx-border-color: -fx-dirty-white;" styleClass="base-background" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0">
          <children>
             <ImageView fx:id="imvDrawing" fitHeight="140.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true" />
             <Button fx:id="btnDraw" layoutX="199.0" layoutY="113.0" mnemonicParsing="false" onAction="#btnDrawPressed" stylesheets="@../css/MainStyle.css" text="Draw">
+
                <styleClass>
                   <String fx:value="grey-button" />
                   <String fx:value="common-text-colour" />
@@ -158,6 +188,7 @@
             </Button>
          </children>
       </Pane>
+
       <DatePicker fx:id="startDate" layoutX="590.0" layoutY="291.0" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="285.0" />
       <DatePicker fx:id="endDate" layoutX="589.0" layoutY="338.0" prefHeight="26.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="335.0" />
       <Label layoutX="589.0" layoutY="271.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../css/MainStyle.css" text="Start Date:" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="265.0">
@@ -231,5 +262,6 @@
             <Insets left="5.0" />
          </padding>
       </Label>
+
     </children>
 </AnchorPane>
