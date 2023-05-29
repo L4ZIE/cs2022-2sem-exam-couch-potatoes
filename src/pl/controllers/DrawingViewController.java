@@ -37,7 +37,7 @@ public class DrawingViewController implements Initializable {
     @FXML
     public Button btnPencil, btnEraser, btnLine;
     @FXML
-    public AnchorPane anpMain;
+    public AnchorPane anpMain, anpDrag, anpControls;
     @FXML
     public ImageView imvExistingDrawing;
     @FXML
@@ -58,8 +58,10 @@ public class DrawingViewController implements Initializable {
         if(ProjectViewController.getDrawingLocation() != null){
             imvExistingDrawing.setImage(new Image(ProjectViewController.getDrawingLocation()));
         }
-        //anpMain.setOnMousePressed(this::handleMousePressed);
-        //anpMain.setOnMouseDragged(this::handleMouseDragged);
+        anpDrag.setOnMousePressed(this::handleMousePressed);
+        anpDrag.setOnMouseDragged(this::handleMouseDragged);
+        anpControls.setOnMousePressed(this::handleMousePressed);
+        anpControls.setOnMouseDragged(this::handleMouseDragged);
 
     }
     private void handleMousePressed(MouseEvent event) {
