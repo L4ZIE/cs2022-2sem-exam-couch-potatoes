@@ -1,22 +1,25 @@
 .root {
     -fx-dark-blue: #17263a;
-    -fx-light-blue: #4fa8ed;
+    -fx-light-blue: #2d6086;
     -fx-black: #212529;
     -fx-dark-grey: #333;
+    -fx-light-grey: #a8a8a8;
     -fx-orange: #f84d3b;
     -fx-dark-orange: #e84910;
     -fx-red: #dc3545;
     -fx-green: #198754;
     -fx-dirty-white: #e9e9e9;
+    -fx-focus-color: transparent;
 }
 
 .base-background {
     -fx-background-color: -fx-dark-blue;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
 }
 
 .common-text-colour {
     -fx-text-fill: -fx-dirty-white;
-
 }
 
 .common-text-font {
@@ -29,6 +32,41 @@
 
 .background {
     -fx-background-color: -fx-dark-orange;
+}
+.choice-box{
+    -fx-focus-traversable: false;
+}
+.combo-box{
+    -fx-focus-traversable: false;
+}
+.check-box{
+    -fx-focus-traversable: false;
+}
+.added-pictures:hover{
+    -fx-translate-x: 1.2;
+    -fx-translate-y: 1.2;
+    -fx-translate-z: 1.2;
+}
+.button {
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+    -fx-focus-traversable: false;
+}
+
+.button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+    -fx-scale-x: 1.025;
+    -fx-scale-y: 1.025;
+    -fx-scale-z: 1.025;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 10, 0, 4, 4);
+}
+
+.button:pressed {
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-scale-z: 1;
+    -fx-effect: null;
 }
 
 .button {
@@ -53,9 +91,14 @@
     -fx-background-color: -fx-red;
 
 }
+.orange-button{
+    -fx-background-color: -fx-dark-orange;
+}
 
 .project-container {
+
     -fx-background-color: -fx-dark-grey;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 2, 0, -1, 3);
 }
 
 .back-button {
@@ -75,8 +118,45 @@
     -fx-background-color: transparent;
 
 }
+.login-button{
+    -fx-background-color: -fx-dark-orange;
+    -fx-text-fill: -fx-dirty-white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.login-button:hover{
+    -fx-opacity: 1;
+}
+.control-buttons:hover{
+    -fx-opacity: 1;
+
+}
 
 .project-button:hover {
     -fx-opacity: 1;
     -fx-text-fill: -fx-dark-orange;
+
+}
+
+.table-view{
+    -fx-background-color: -fx-black;
+}
+
+.table-view .column-header {
+    -fx-background-color: -fx-dark-orange;
+    -fx-border-width: 0px;
+}
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dirty-white;
+}
+.table-row-cell{
+    -fx-background-color: -fx-dirty-white;
+}
+.table-row-cell:odd{
+    -fx-background-color: -fx-light-grey;
+
+}
+.table-row-cell:selected{
+    -fx-background-color: -fx-light-blue;
 }

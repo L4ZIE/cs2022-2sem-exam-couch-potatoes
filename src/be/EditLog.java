@@ -1,10 +1,5 @@
 package be;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-
 public class EditLog {
     int id;
     int accountID;

@@ -10,4 +10,7 @@ public interface IProjectDAO {
     void createProject(Project project);
 
     void editProject(Project selectedProject);
+
+    void deleteProject(String refNumber);
+    Project getProjectByRefNumber(String refNumber);
 }

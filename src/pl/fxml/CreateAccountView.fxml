@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anpMain" prefHeight="362.0" prefWidth="507.0" styleClass="base-background" stylesheets="@../css/MainStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.controllers.CreateAccountController">
+   <children>
+      <HBox alignment="TOP_RIGHT" layoutX="767.0" layoutY="1.0" prefHeight="25.0" prefWidth="71.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+         <children>
+            <Button fx:id="minBtn" focusTraversable="false" mnemonicParsing="false" onAction="#minBtnPressed" text="_" />
+            <Button fx:id="closeBtn" focusTraversable="false" mnemonicParsing="false" onAction="#closeBtnPressed" styleClass="negative-button" stylesheets="@../css/MainStyle.css" text="X" />
+         </children>
+      </HBox>
+      <AnchorPane layoutY="8.0" prefHeight="34.0" prefWidth="297.0" styleClass="project-container" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblTitle" layoutX="14.0" layoutY="7.0" styleClass="common-text-colour" text="Create Account">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Polygon fill="#333333" layoutX="327.0" layoutY="60.0" points="-30.0, -25.599994659423828, 4.20001220703125, -59.9999885559082, -30.0, -59.9999885559082" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Label fx:id="lblUsername" layoutX="348.0" layoutY="8.0" text="Username">
+         <styleClass>
+            <String fx:value="common-text-colour" />
+            <String fx:value="common-text-font" />
+         </styleClass>
+      </Label>
+      <TextField fx:id="txfUsername" layoutX="179.0" layoutY="89.0" />
+      <ChoiceBox fx:id="chbAccountType" layoutX="178.0" layoutY="252.0" prefWidth="150.0" />
+      <Button fx:id="btnSave" layoutX="179.0" layoutY="305.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="26.0" prefWidth="150.0" styleClass="positive-button" text="Save" />
+      <Label layoutX="212.0" layoutY="54.0" styleClass="common-text-colour" text="Username">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="214.0" layoutY="139.0" styleClass="common-text-colour" text="Password">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="197.0" layoutY="215.0" styleClass="common-text-colour" text="Account Type">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfPassword" layoutX="178.0" layoutY="175.0" />
+   </children>
+</AnchorPane>

@@ -1,22 +1,25 @@
 package be;
 
-import javafx.scene.text.Text;
 
 public class Project {
-    private String refNumber;
+    private final String refNumber;
     private String customerName;
     private String customerEmail;
     private String customerLocation;
     private String note;
     private String drawing;
-    private String creationDate;
+    private final String creationDate;
     private String startDate;
     private String endDate;
     private Boolean approved;
+    private Boolean privateProject;
+    private Boolean includePictures;
+    private Boolean includeDrawing;
 
     public Project (String refNumber, String customerName, String customerEmail,
                     String customerLocation, String note, String drawing, String creationDate,
-                    String startDate, String endDate, Boolean approved)
+                    String startDate, String endDate, Boolean approved, Boolean privateProject,
+                    Boolean includePictures, Boolean includeDrawing)
     {
         this.refNumber = refNumber;
         this.customerName = customerName;
@@ -28,8 +31,25 @@ public class Project {
         this.startDate = startDate;
         this.endDate = endDate;
         this.approved = approved;
+        this.privateProject = privateProject;
+        this.includePictures = includePictures;
+        this.includeDrawing = includeDrawing;
+    }
+    public Boolean getIncludePictures() {
+        return includePictures;
     }
 
+    public void setIncludePictures(Boolean includePictures) {
+        this.includePictures = includePictures;
+    }
+
+    public Boolean getIncludeDrawing() {
+        return includeDrawing;
+    }
+
+    public void setIncludeDrawing(Boolean includeDrawing) {
+        this.includeDrawing = includeDrawing;
+    }
     public String getRefNumber() {
         return refNumber;
     }
@@ -84,6 +104,8 @@ public class Project {
     public void setApproved(Boolean approved) {
         this.approved = approved;
     }
+    public void setPrivateProject (Boolean privateProject){this.privateProject = privateProject;}
+    public Boolean getPrivateProject(){return privateProject;}
     @Override
     public String toString() {
         return refNumber + " " + customerName + " " + customerEmail+ " " + customerLocation + " " + note+ " " +
