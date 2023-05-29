@@ -1,5 +1,7 @@
 /*package test.pl;
 
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import org.junit.Before;
 import org.junit.Test;
 import pl.controllers.LoginController;
@@ -16,11 +18,15 @@ public class LoginTest{
 
     @Test
     public void testLoginWithCorrectCredentials() {
+
         String username = "Bob";
         String password = "123";
+        PasswordField pwf = new PasswordField();
+        pwf.setText(password);
 
-        controller.txfUsername.setText(username);
-        controller.pwfPassword.setText(password);
+        controller.txfUsername = new TextField(username);
+        controller.pwfPassword = pwf;
+
 
         controller.login();
 
@@ -41,4 +47,5 @@ public class LoginTest{
         assertNull(LoginController.getUsername());
     }
 }
+
 */

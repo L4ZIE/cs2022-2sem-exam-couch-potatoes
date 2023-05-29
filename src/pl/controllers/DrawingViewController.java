@@ -58,8 +58,8 @@ public class DrawingViewController implements Initializable {
         if(ProjectViewController.getDrawingLocation() != null){
             imvExistingDrawing.setImage(new Image(ProjectViewController.getDrawingLocation()));
         }
-        anpMain.setOnMousePressed(this::handleMousePressed);
-        anpMain.setOnMouseDragged(this::handleMouseDragged);
+        //anpMain.setOnMousePressed(this::handleMousePressed);
+        //anpMain.setOnMouseDragged(this::handleMouseDragged);
 
     }
     private void handleMousePressed(MouseEvent event) {

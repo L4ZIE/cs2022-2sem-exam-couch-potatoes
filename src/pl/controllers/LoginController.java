@@ -28,14 +28,15 @@ public class LoginController implements Initializable {
     @FXML
     public AnchorPane anpMain;
     @FXML
-    private Button btnMin,
-            btnClose;
+    public Button btnMin;
     @FXML
-    private TextField txfUsername;
+    public Button btnClose;
     @FXML
-    private PasswordField pwfPassword;
+    public TextField txfUsername;
+    @FXML
+    public PasswordField pwfPassword;
 
-    private AccountModel accountModel;
+    public AccountModel accountModel;
 
     private static String username;
     private static AccountType accountType;
@@ -67,7 +68,7 @@ public class LoginController implements Initializable {
             login();
     }
 
-    private void login() {
+    public void login() {
         //Bob, 123
         //Bob CEO, 567
         if(accountModel.checkCredentials(txfUsername.getText(), pwfPassword.getText())){

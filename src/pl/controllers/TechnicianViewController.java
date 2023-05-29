@@ -20,7 +20,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -209,15 +208,23 @@ public class TechnicianViewController implements Initializable {
                 document.add(new Paragraph("Customer Location: " + selectedProject.getCustomerLocation()));
                 document.add(new Paragraph("Project Start Date: " + selectedProject.getStartDate()));
                 document.add(new Paragraph("Project End Date: " + selectedProject.getEndDate()));
-                document.add(new Paragraph("Drawing: "));
-                document.add(drawing);
-                document.add(new Paragraph("Notes: " ));
-                document.add(new Paragraph(selectedProject.getNote()));
-                document.add(new Paragraph("Pictures: "));//TODO
-                for (Image i : images) {
-                    i.scaleToFit(200, 200);
-                    document.add(i);
+
+                if (selectedProject.getIncludeDrawing()) {
+                    document.add(new Paragraph("Drawing: "));
+                    document.add(drawing);
                 }
+
+                document.add(new Paragraph("Notes: "));
+                document.add(new Paragraph(selectedProject.getNote()));
+
+                if (selectedProject.getIncludePictures()) {
+                    document.add(new Paragraph("Pictures: "));
+                    for (Image i : images) {
+                        i.scaleToFit(200, 200);
+                        document.add(i);
+                    }
+                }
+
                 document.add(new Paragraph(""));
 
                 document.close();
@@ -225,9 +232,6 @@ public class TechnicianViewController implements Initializable {
                     JOptionPane.showMessageDialog(null, "File successfully saved.");
                 else
                     Desktop.getDesktop().open(new File(location));
-
-
-
 
 
             } catch (Exception e) {

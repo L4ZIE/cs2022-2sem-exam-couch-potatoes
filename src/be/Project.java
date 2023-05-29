@@ -1,9 +1,8 @@
 package be;
 
-import javafx.scene.text.Text;
 
 public class Project {
-    private String refNumber;
+    private final String refNumber;
     private String customerName;
     private String customerEmail;
     private String customerLocation;

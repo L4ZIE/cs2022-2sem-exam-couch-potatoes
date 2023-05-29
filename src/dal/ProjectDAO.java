@@ -53,8 +53,8 @@ public class ProjectDAO implements IProjectDAO {
     public void createProject(Project project) {
 
         String sql = "INSERT INTO Projects ( refNumber, customerName, customerEmail, customerLocation, note, " +
-                "drawing, creationDate, projectStartDate, projectEndDate, approved) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?)";
+                "drawing, creationDate, projectStartDate, projectEndDate, approved, private, includePictures, includeDrawing) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             preparedStatement = connector.createConnection().prepareStatement(sql);
@@ -69,6 +69,9 @@ public class ProjectDAO implements IProjectDAO {
             preparedStatement.setString(8, project.getStartDate());
             preparedStatement.setString(9, project.getEndDate());
             preparedStatement.setBoolean(10, project.getApproved());
+            preparedStatement.setBoolean(11, project.getPrivateProject());
+            preparedStatement.setBoolean(12, project.getIncludePictures());
+            preparedStatement.setBoolean(13, project.getIncludeDrawing());
 
             preparedStatement.execute();
 
@@ -81,7 +84,8 @@ public class ProjectDAO implements IProjectDAO {
     public void editProject(Project selectedProject) {
 
         String sql = "UPDATE Projects SET customerName = ?,customerEmail = ?, customerLocation = ?, note = ?, drawing = ?, " +
-                "creationDate = ?, projectStartDate = ?, projectEndDate = ?, approved = ? WHERE refNumber = ? ";
+                "creationDate = ?, projectStartDate = ?, projectEndDate = ?, approved = ?, private = ?, " +
+                "includePictures = ?, includeDrawing = ? WHERE refNumber = ? ";
         try {
             Connection conn = connector.createConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -94,7 +98,10 @@ public class ProjectDAO implements IProjectDAO {
             preparedStatement.setString(7, selectedProject.getStartDate());
             preparedStatement.setString(8, selectedProject.getEndDate());
             preparedStatement.setBoolean(9, selectedProject.getApproved());
-            preparedStatement.setString(10, selectedProject.getRefNumber());
+            preparedStatement.setBoolean(10, selectedProject.getPrivateProject());
+            preparedStatement.setBoolean(11, selectedProject.getIncludePictures());
+            preparedStatement.setBoolean(12, selectedProject.getIncludeDrawing());
+            preparedStatement.setString(13, selectedProject.getRefNumber());
 
             preparedStatement.executeUpdate();
 

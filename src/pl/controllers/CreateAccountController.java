@@ -90,7 +90,7 @@ public class CreateAccountController implements Initializable {
 
         else { //no time to optimize
             accountModel.changeAccountName(selectedAccount.getId(), txfUsername.getText());
-            if (txfPassword.getText() != null)
+            if (txfPassword.getText().equals(""))
                 accountModel.changePassword(selectedAccount.getId(), txfPassword.getText());
             accountModel.changeAccountType(selectedAccount.getId(), chbAccountType.getSelectionModel().getSelectedItem());
             JOptionPane.showMessageDialog(null, "Successfully updated account.");

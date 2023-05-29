@@ -143,6 +143,8 @@ public class ProjectViewController implements Initializable {
         endDate.setValue(LocalDate.parse(selectedProject.getEndDate().substring(0, 10), formatter));
         txaNotes.setText(selectedProject.getNote());
         drawingLocation = selectedProject.getDrawing();
+        cheDrawInclude.setSelected(selectedProject.getIncludeDrawing());
+        chePicturesInclude.setSelected(selectedProject.getIncludePictures());
         displayDrawing(drawingLocation);
         fillDevices(projectModel.getAllDevicesForProject(selectedProject.getRefNumber()));
         fillDeviceChoiceBox();
@@ -196,7 +198,7 @@ public class ProjectViewController implements Initializable {
     }
 
 
-    public static void saveDeviceToList(Devices device) {//TODO
+    public static void saveDeviceToList(Devices device) {
         device.setRefNumber(staticRefNumber);
         devices.add(device);
         devicesToAdd ++;
